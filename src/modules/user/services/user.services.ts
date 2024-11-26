@@ -1,0 +1,37 @@
+import { randomInt } from 'node:crypto'
+import type { NewUser, Users } from '@/@types/user.ts'
+import { passwordHash } from '@/utils/hash.ts'
+import type { IUserServices } from '../interface/user.interface.ts'
+import { UserRepository } from '../repositories/user.repositories.ts'
+
+export class UserServices implements IUserServices {
+  private repository: UserRepository
+  constructor() {
+    this.repository = new UserRepository()
+  }
+  async getAll(): Promise<Users[]> {
+    const users = await this.repository.getAllUsers()
+    return users
+  }
+
+  async getUserById(id: number): Promise<Users> {
+    const user = await this.repository.findUserById(id)
+    return user
+  }
+  async create(user: NewUser): Promise<Users> {
+    const userExists = await this.repository.findUserByEmail(user.email)
+
+    if (userExists) {
+      throw new Error('Usuário já cadastrado')
+    }
+
+    const salt: number = randomInt(10, 16)
+    const password = await passwordHash(user.password, salt)
+    const newUser = await this.repository.create({
+      username: user.username,
+      email: user.email,
+      password,
+    })
+    return newUser
+  }
+}
