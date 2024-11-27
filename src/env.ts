@@ -3,7 +3,10 @@ import { z } from 'zod'
 
 const envSchema = z.object({
   DATABASE_URL: z.string(),
-  PORT: z.string().default('3000'),
+  PORT: z
+    .string()
+    .default('3000')
+    .transform(val => Number(val)),
   JWT_SECRET: z.string(),
 })
 

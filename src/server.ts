@@ -46,7 +46,7 @@ class Server {
   }
 
   run() {
-    this.instance.listen({ port: Number(env.PORT) }, (error, adress) => {
+    this.instance.listen({ port: env.PORT }, (error, adress) => {
       if (error) {
         console.error(error)
         process.exit(1)

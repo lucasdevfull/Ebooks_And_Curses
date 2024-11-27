@@ -57,7 +57,7 @@ export const deleteCursosRouterOptions: RouteShorthandOptions = {
     params: z.object({
       id: z.string(),
     }),
-    body: cursoInsertSchema,
+    //body: cursoInsertSchema,
     response: {
       200: z.object({
         message: z.string(),

@@ -14,7 +14,7 @@ const professorSchema = z.object({
 export const cursoSchema = z.object({
   cursoId: z.number(),
   titulo: z.string(),
-  valor: z.string(),
+  valor: z.string().transform(val => Number(val)),
   categoria: categoriaSchema,
   professor: professorSchema,
 })
