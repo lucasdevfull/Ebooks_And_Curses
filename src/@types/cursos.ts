@@ -15,3 +15,13 @@ export type NewCategoria = typeof categoria.$inferInsert
 export type TCategoria = typeof categoria.$inferSelect
 
 export type Curso = z.infer<typeof cursoSchema>
+
+export interface Cursos {
+    cursoId: number,
+    titulo: string,
+    valor: string,
+    categoriaId: number,
+    categoriaName: string,
+    professorId: number,
+    professorName: string,
+}
