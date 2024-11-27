@@ -6,9 +6,9 @@ import {
   curso,
   professor,
 } from '@/db/schema/cursos.ts'
+import { curseResponse } from '@/utils/curso-response.ts'
 import { eq } from 'drizzle-orm'
 import type { ICursoRepository } from '../interface/curso.interface.ts'
-import { curseResponse } from '@/utils/curso-response.ts'
 
 export class CursoRepository implements ICursoRepository {
   async getAll(): Promise<Curso[]> {
@@ -52,7 +52,7 @@ export class CursoRepository implements ICursoRepository {
         categoria,
         eq(categoriaCursos.categoriaId, categoria.categoriaId)
       )
-      const response = curseResponse(curse)
+    const response = curseResponse(curse)
     return response[0]
   }
 
