@@ -8,6 +8,7 @@ import {
   serializerCompiler,
   validatorCompiler,
 } from 'fastify-type-provider-zod'
+import type { IServer } from './@types/server.ts'
 import { authRoutes } from './routes/auth/auth.router.ts'
 import { authorsRoutes } from './routes/authors/authors.router.ts'
 import { categoryRoutes } from './routes/category/category.router.ts'
@@ -16,14 +17,14 @@ import { genreRoutes } from './routes/genre/genre.routes.ts'
 import { professorRoutes } from './routes/professor/professor.router.ts'
 import { userRoutes } from './routes/user/user.router.ts'
 
-class Server {
+class Server implements IServer {
   instance: FastifyInstance
   constructor() {
     this.instance = fastify({ logger: true })
     this.plugins()
     this.routes()
   }
-  plugins() {
+  plugins(): void {
     this.instance.setValidatorCompiler(validatorCompiler)
     this.instance.setSerializerCompiler(serializerCompiler)
     this.instance.withTypeProvider<ZodTypeProvider>()
@@ -35,7 +36,7 @@ class Server {
       origin: '*',
     })
   }
-  routes() {
+  routes(): void {
     this.instance.register(userRoutes)
     this.instance.register(authRoutes)
     this.instance.register(genreRoutes)
@@ -45,7 +46,7 @@ class Server {
     this.instance.register(cursoRouter)
   }
 
-  run() {
+  run(): void {
     this.instance.listen({ port: env.PORT }, (error, adress) => {
       if (error) {
         console.error(error)
