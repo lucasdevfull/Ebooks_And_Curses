@@ -7,7 +7,7 @@ import type { ICategoriaRepository } from '../interface/categoria.interface.ts'
 
 export class CategoryRepository implements ICategoriaRepository {
   async getAll(): Promise<TCategoria[]> {
-    const categories = await db.select().from(categoria)
+    const categories: TCategoria[] = await db.select().from(categoria)
     const result = categorySelectSchema.array().safeParse(categories)
     if (!result.success) {
       throw new Error(result.error.message)
@@ -16,7 +16,7 @@ export class CategoryRepository implements ICategoriaRepository {
   }
 
   async getById(id: number): Promise<TCategoria> {
-    const category = await db
+    const category: TCategoria[] = await db
       .select()
       .from(categoria)
       .where(eq(categoria.categoriaId, id))
@@ -28,12 +28,12 @@ export class CategoryRepository implements ICategoriaRepository {
   }
 
   async create(data: NewCategoria): Promise<TCategoria> {
-    const category = await db.insert(categoria).values(data).returning()
+    const category: TCategoria[] = await db.insert(categoria).values(data).returning()
     return category[0]
   }
 
   async getByName(nome: string): Promise<TCategoria> {
-    const category = await db
+    const category: TCategoria[] = await db
       .select()
       .from(categoria)
       .where(eq(categoria.name, nome))
@@ -45,7 +45,7 @@ export class CategoryRepository implements ICategoriaRepository {
   }
 
   async update(id: number, data: NewCategoria): Promise<TCategoria> {
-    const category = await db
+    const category: TCategoria[] = await db
       .update(categoria)
       .set(data)
       .where(eq(categoria.categoriaId, id))
@@ -54,7 +54,7 @@ export class CategoryRepository implements ICategoriaRepository {
   }
 
   async delete(id: number): Promise<TCategoria> {
-    const category = await db
+    const category: TCategoria[] = await db
       .delete(categoria)
       .where(eq(categoria.categoriaId, id))
       .returning()

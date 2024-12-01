@@ -1,6 +1,13 @@
 import type { NewUser, Users } from '@/@types/user.ts'
-import type { FastifyReply, FastifyRequest } from 'fastify'
-import type { IUserController } from '../interface/user.interface.ts'
+import type {
+  FastifyReply,
+  FastifyRequest,
+  RouteGenericInterface,
+} from 'fastify'
+import type {
+  IUserController,
+  UserRequest,
+} from '../interface/user.interface.ts'
 import { UserServices } from '../services/user.services.ts'
 
 export class UserController implements IUserController {
@@ -12,15 +19,15 @@ export class UserController implements IUserController {
     request: FastifyRequest,
     reply: FastifyReply
   ): Promise<Users[]> => {
-    const users = await this.service.getAll()
+    const users: Users[] = await this.service.getAll()
     return reply.status(200).send(users)
   }
 
   getUser = async (
-    request: FastifyRequest,
+    request: FastifyRequest<UserRequest>,
     reply: FastifyReply
   ): Promise<Users> => {
-    const { id } = request.params as { id: string }
+    const { id } = request.params
     const user: Users = await this.service.getUserById(Number(id))
     if (!user) {
       return reply.status(404).send({
@@ -38,7 +45,7 @@ export class UserController implements IUserController {
   ): Promise<Users | never> => {
     try {
       const user = request.body as NewUser
-      const result = await this.service.create(user)
+      const result: Users = await this.service.create(user)
       return reply.status(201).send(result)
     } catch (error) {
       return reply.status(500).send(error)

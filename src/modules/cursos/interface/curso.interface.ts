@@ -1,9 +1,15 @@
 import type { Curso, NewCurso, TCurso } from '@/@types/cursos.ts'
-import type { FastifyReply, FastifyRequest } from 'fastify'
+import type { FastifyReply, FastifyRequest, RouteGenericInterface } from 'fastify'
+
+export interface CursoRequest extends RouteGenericInterface {
+  Params: {
+    id: string
+  }
+}
 
 export interface ICursoController {
   getAllCursos(request: FastifyRequest, reply: FastifyReply): Promise<Curso[]>
-  getCursosById(request: FastifyRequest, reply: FastifyReply): Promise<Curso>
+  getCursosById(request: FastifyRequest<CursoRequest>, reply: FastifyReply): Promise<Curso>
   createCursos(request: FastifyRequest, reply: FastifyReply): Promise<TCurso>
   updateCursos(request: FastifyRequest, reply: FastifyReply): Promise<TCurso>
   deleteCursos(

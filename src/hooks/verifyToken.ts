@@ -3,7 +3,7 @@ import type { FastifyReply, FastifyRequest } from 'fastify'
 export const verifyToken = (
   request: FastifyRequest,
   reply: FastifyReply,
-  done:any
+  done: any
 ) => {
   const token = request.headers.authorization?.split(' ')[1]
   if (!token) {

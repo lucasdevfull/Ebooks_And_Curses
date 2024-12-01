@@ -9,35 +9,33 @@ export class ProfessorServices implements IProfessorServices {
   }
 
   async getAllProfessors(): Promise<TProfessor[]> {
-    const professors = await this.repository.getAll()
+    const professors: TProfessor[] = await this.repository.getAll()
     return professors
   }
 
   async getProfessorById(id: number): Promise<TProfessor> {
-    const professor = await this.repository.getById(id)
+    const professor: TProfessor = await this.repository.getById(id)
     return professor
   }
 
   async createProfessor(data: NewProfessor): Promise<TProfessor> {
-    const professor = await this.repository.create(data)
+    const professor: TProfessor = await this.repository.create(data)
     return professor
   }
 
   async updateProfessor(id: number, data: NewProfessor): Promise<TProfessor> {
-    const professorExist = await this.repository.getById(id)
-    if (!professorExist) {
-      throw new Error('Professor not found')
-    }
-    const professor = await this.repository.update(id, data)
+    const professorExist: TProfessor = await this.repository.getById(id)
+    if (!professorExist) throw new Error('Professor not found')
+    
+    const professor: TProfessor = await this.repository.update(id, data)
     return professor
   }
 
   async deleteProfessor(id: number): Promise<{ message: string }> {
     const professorExist = await this.repository.getById(id)
-    if (!professorExist) {
-      throw new Error('Professor not found')
-    }
-    const professor = await this.repository.delete(id)
+    if (!professorExist) throw new Error('Professor not found')
+
+    const professor: TProfessor = await this.repository.delete(id)
     return { message: 'Professor deleted successfully' }
   }
 }

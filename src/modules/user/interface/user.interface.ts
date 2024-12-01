@@ -1,8 +1,21 @@
 import type { NewUser, Users } from '@/@types/user.ts'
-import type { FastifyReply, FastifyRequest } from 'fastify'
+import type {
+  FastifyReply,
+  FastifyRequest,
+  RouteGenericInterface,
+} from 'fastify'
+
+export interface UserRequest extends RouteGenericInterface {
+  Params: {
+    id: string
+  }
+}
 
 export interface IUserController {
-  getUser: (request: FastifyRequest, reply: FastifyReply) => Promise<Users>
+  getUser: (
+    request: FastifyRequest<UserRequest>,
+    reply: FastifyReply
+  ) => Promise<Users>
   getUsers: (request: FastifyRequest, reply: FastifyReply) => Promise<Users[]>
   createUser: (
     request: FastifyRequest,

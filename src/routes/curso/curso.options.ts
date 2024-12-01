@@ -16,7 +16,7 @@ export const getAllCursosRouterOptions: RouteShorthandOptions = {
       500: httpSchema,
     },
   },
-  onRequest: verifyToken
+  onRequest: verifyToken,
 }
 
 export const getCursoByIdRouterOptions: RouteShorthandOptions = {
@@ -31,7 +31,7 @@ export const getCursoByIdRouterOptions: RouteShorthandOptions = {
       500: httpSchema,
     },
   },
-  onRequest: verifyToken
+  onRequest: verifyToken,
 }
 
 export const createCursosRouterOptions: RouteShorthandOptions = {
@@ -43,7 +43,7 @@ export const createCursosRouterOptions: RouteShorthandOptions = {
       500: httpSchema,
     },
   },
-  onRequest: verifyToken
+  onRequest: verifyToken,
 }
 
 export const updateCursosRouterOptions: RouteShorthandOptions = {
@@ -58,7 +58,7 @@ export const updateCursosRouterOptions: RouteShorthandOptions = {
       500: httpSchema,
     },
   },
-  onRequest: verifyToken
+  onRequest: verifyToken,
 }
 
 export const deleteCursosRouterOptions: RouteShorthandOptions = {
@@ -75,5 +75,5 @@ export const deleteCursosRouterOptions: RouteShorthandOptions = {
       500: httpSchema,
     },
   },
-  onRequest: verifyToken
+  onRequest: verifyToken,
 }

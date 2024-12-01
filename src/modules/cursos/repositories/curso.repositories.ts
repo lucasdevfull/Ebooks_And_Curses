@@ -29,7 +29,7 @@ export class CursoRepository implements ICursoRepository {
         categoria,
         eq(categoriaCursos.categoriaId, categoria.categoriaId)
       )
-    const response = curseResponse(cursos)
+    const response: Curso[] = curseResponse(cursos)
     return response
   }
 
@@ -52,16 +52,16 @@ export class CursoRepository implements ICursoRepository {
         categoria,
         eq(categoriaCursos.categoriaId, categoria.categoriaId)
       )
-    const response = curseResponse(curse)
+    const response: Curso[] = curseResponse(curse)
     return response[0]
   }
 
   async getByName(name: string): Promise<TCurso> {
-    const curse = await db.select().from(curso).where(eq(curso.titulo, name))
+    const curse: TCurso[] = await db.select().from(curso).where(eq(curso.titulo, name))
     return curse[0]
   }
   async create(data: NewCurso): Promise<TCurso> {
-    const curse = await db.insert(curso).values(data).returning()
+    const curse: TCurso[] = await db.insert(curso).values(data).returning()
     const categoryCurses = await db
       .insert(categoriaCursos)
       .values({
@@ -73,7 +73,7 @@ export class CursoRepository implements ICursoRepository {
   }
 
   async update(id: number, data: NewCurso): Promise<TCurso> {
-    const curse = await db
+    const curse: TCurso[] = await db
       .update(curso)
       .set(data)
       .where(eq(curso.cursoId, id))
@@ -82,7 +82,7 @@ export class CursoRepository implements ICursoRepository {
   }
 
   async delete(id: number): Promise<TCurso> {
-    const curse = await db
+    const curse: TCurso[] = await db
       .delete(curso)
       .where(eq(curso.cursoId, id))
       .returning()

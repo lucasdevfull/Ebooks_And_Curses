@@ -12,7 +12,7 @@ export const getAllGenresRouterOptions: RouteShorthandOptions = {
       500: httpSchema,
     },
   },
-  onRequest: verifyToken
+  onRequest: verifyToken,
 }
 
 export const getGenreByIdRouterOptions: RouteShorthandOptions = {
@@ -27,7 +27,7 @@ export const getGenreByIdRouterOptions: RouteShorthandOptions = {
       500: httpSchema,
     },
   },
-  onRequest: verifyToken
+  onRequest: verifyToken,
 }
 
 export const createGenreRouterOptions: RouteShorthandOptions = {
@@ -40,7 +40,7 @@ export const createGenreRouterOptions: RouteShorthandOptions = {
       500: httpSchema,
     },
   },
-  onRequest: verifyToken
+  onRequest: verifyToken,
 }
 
 export const updateGenreRouterOptions: RouteShorthandOptions = {
@@ -56,7 +56,7 @@ export const updateGenreRouterOptions: RouteShorthandOptions = {
       500: httpSchema,
     },
   },
-  onRequest: verifyToken
+  onRequest: verifyToken,
 }
 
 export const deleteGenreRouterOptions: RouteShorthandOptions = {
@@ -70,5 +70,5 @@ export const deleteGenreRouterOptions: RouteShorthandOptions = {
       500: httpSchema,
     },
   },
-  onRequest: verifyToken
+  onRequest: verifyToken,
 }

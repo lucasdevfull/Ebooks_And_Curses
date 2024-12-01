@@ -7,7 +7,7 @@ import type { IProfessorRepository } from '../interface/professor.interface.ts'
 
 export class ProfessorRepository implements IProfessorRepository {
   async getAll(): Promise<TProfessor[]> {
-    const professors = await db.select().from(professor)
+    const professors: TProfessor[] = await db.select().from(professor)
     const result = professorSelectSchema.array().safeParse(professors)
     if (!result.success) {
       throw new Error(result.error.message)
@@ -16,12 +16,12 @@ export class ProfessorRepository implements IProfessorRepository {
   }
 
   async create(data: NewProfessor): Promise<TProfessor> {
-    const prof = await db.insert(professor).values(data).returning()
+    const prof: TProfessor[] = await db.insert(professor).values(data).returning()
     return prof[0]
   }
 
   async getById(id: number): Promise<TProfessor> {
-    const prof = await db
+    const prof: TProfessor[] = await db
       .select()
       .from(professor)
       .where(eq(professor.professorId, id))
@@ -33,7 +33,7 @@ export class ProfessorRepository implements IProfessorRepository {
   }
 
   async update(id: number, data: NewProfessor): Promise<TProfessor> {
-    const prof = await db
+    const prof: TProfessor[] = await db
       .update(professor)
       .set(data)
       .where(eq(professor.professorId, id))
@@ -42,7 +42,7 @@ export class ProfessorRepository implements IProfessorRepository {
   }
 
   async delete(id: number): Promise<TProfessor> {
-    const prof = await db
+    const prof: TProfessor[] = await db
       .delete(professor)
       .where(eq(professor.professorId, id))
       .returning()

@@ -10,26 +10,23 @@ export class UserServices implements IUserServices {
     this.repository = new UserRepository()
   }
   async getAll(): Promise<Users[]> {
-    const users = await this.repository.getAllUsers()
+    const users: Users[] = await this.repository.getAllUsers()
     return users
   }
 
   async getUserById(id: number): Promise<Users> {
-    const user = await this.repository.findUserById(id)
+    const user: Users = await this.repository.findUserById(id)
     return user
   }
   async create(user: NewUser): Promise<Users> {
-    const userExists = await this.repository.findUserByEmail(user.email)
+    const userExists: Users = await this.repository.findUserByEmail(user.email)
 
-    if (userExists) {
-      throw new Error('Usuário já cadastrado')
-    }
+    if (userExists) throw new Error('Usuário já cadastrado')
 
     const salt: number = randomInt(10, 16)
-    const password = await passwordHash(user.password, salt)
-    const newUser = await this.repository.create({
-      username: user.username,
-      email: user.email,
+    const password: string = await passwordHash(user.password, salt)
+    const newUser: Users = await this.repository.create({
+      ...user,
       password,
     })
     return newUser

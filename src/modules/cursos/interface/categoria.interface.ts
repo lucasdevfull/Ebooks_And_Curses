@@ -1,5 +1,11 @@
 import type { NewCategoria, TCategoria } from '@/@types/cursos.ts'
-import type { FastifyReply, FastifyRequest } from 'fastify'
+import type { FastifyReply, FastifyRequest, RouteGenericInterface } from 'fastify'
+
+export interface CategoryRequest extends RouteGenericInterface {
+  Params: {
+    id: string
+  }
+}
 
 export interface ICategoriaController {
   getAllCategories(
@@ -7,7 +13,7 @@ export interface ICategoriaController {
     reply: FastifyReply
   ): Promise<TCategoria[]>
   getCategoryById(
-    request: FastifyRequest,
+    request: FastifyRequest<CategoryRequest>,
     reply: FastifyReply
   ): Promise<TCategoria>
   createCategory(

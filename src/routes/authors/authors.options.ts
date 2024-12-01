@@ -16,7 +16,7 @@ export const getAllAuthorsRouterOptions: RouteShorthandOptions = {
       500: httpSchema,
     },
   },
-  onRequest: verifyToken
+  onRequest: verifyToken,
 }
 
 export const getAuthorsByIdRouterOptions: RouteShorthandOptions = {
@@ -31,7 +31,7 @@ export const getAuthorsByIdRouterOptions: RouteShorthandOptions = {
       500: httpSchema,
     },
   },
-  onRequest: verifyToken
+  onRequest: verifyToken,
 }
 
 export const createAuthorsRouterOptions: RouteShorthandOptions = {
@@ -44,7 +44,7 @@ export const createAuthorsRouterOptions: RouteShorthandOptions = {
       500: httpSchema,
     },
   },
-  onRequest: verifyToken
+  onRequest: verifyToken,
 }
 
 export const updateAuthorsRouterOptions: RouteShorthandOptions = {
@@ -60,7 +60,7 @@ export const updateAuthorsRouterOptions: RouteShorthandOptions = {
       500: httpSchema,
     },
   },
-  onRequest: verifyToken
+  onRequest: verifyToken,
 }
 
 export const deleteAuthorsRouterOptions: RouteShorthandOptions = {
@@ -74,5 +74,5 @@ export const deleteAuthorsRouterOptions: RouteShorthandOptions = {
       500: httpSchema,
     },
   },
-  onRequest: verifyToken
+  onRequest: verifyToken,
 }

@@ -7,7 +7,7 @@ import type { IUserRepository } from '../interface/user.interface.ts'
 
 export class UserRepository implements IUserRepository {
   async getAllUsers(): Promise<Users[]> {
-    const usuarios = await db.select().from(users)
+    const usuarios: Users[] = await db.select().from(users)
     const result = userSelectSchema.array().safeParse(usuarios)
     if (!result.success) {
       throw new Error(result.error.message)
@@ -15,7 +15,7 @@ export class UserRepository implements IUserRepository {
     return result.data
   }
   async create(user: NewUser): Promise<Users> {
-    const newUser = await db.insert(users).values(user).returning({
+    const newUser: Users[] = await db.insert(users).values(user).returning({
       userId: users.userId,
       username: users.username,
       email: users.email,
@@ -26,7 +26,10 @@ export class UserRepository implements IUserRepository {
   }
 
   async findUserById(id: number): Promise<Users> {
-    const userExists = await db.select().from(users).where(eq(users.userId, id))
+    const userExists: Users[] = await db
+      .select()
+      .from(users)
+      .where(eq(users.userId, id))
     const result = userSelectSchema.array().safeParse(userExists)
     if (!result.success) {
       throw new Error(result.error.message)
@@ -35,7 +38,7 @@ export class UserRepository implements IUserRepository {
   }
 
   async findUserByEmail(userEmail: string): Promise<Users> {
-    const userExists = await db
+    const userExists: Users[] = await db
       .select()
       .from(users)
       .where(eq(users.email, userEmail))
@@ -48,7 +51,7 @@ export class UserRepository implements IUserRepository {
   }
 
   async findUserByUsername(userName: string): Promise<Users> {
-    const userExists = await db
+    const userExists: Users[] = await db
       .select()
       .from(users)
       .where(eq(users.username, userName))
