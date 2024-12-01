@@ -1,3 +1,4 @@
+import { verifyToken } from '@/hooks/verifyToken.ts'
 import {
   authorsInsertSchema,
   authorsSelectSchema,
@@ -11,9 +12,11 @@ export const getAllAuthorsRouterOptions: RouteShorthandOptions = {
   schema: {
     response: {
       200: categorySelectSchema.array(),
+      401: httpSchema,
       500: httpSchema,
     },
   },
+  onRequest: verifyToken
 }
 
 export const getAuthorsByIdRouterOptions: RouteShorthandOptions = {
@@ -23,10 +26,12 @@ export const getAuthorsByIdRouterOptions: RouteShorthandOptions = {
     }),
     response: {
       200: categorySelectSchema,
+      401: httpSchema,
       404: httpSchema,
       500: httpSchema,
     },
   },
+  onRequest: verifyToken
 }
 
 export const createAuthorsRouterOptions: RouteShorthandOptions = {
@@ -35,9 +40,11 @@ export const createAuthorsRouterOptions: RouteShorthandOptions = {
     response: {
       201: authorsSelectSchema,
       400: httpSchema,
+      401: httpSchema,
       500: httpSchema,
     },
   },
+  onRequest: verifyToken
 }
 
 export const updateAuthorsRouterOptions: RouteShorthandOptions = {
@@ -49,9 +56,11 @@ export const updateAuthorsRouterOptions: RouteShorthandOptions = {
     response: {
       200: authorsSelectSchema,
       400: httpSchema,
+      401: httpSchema,
       500: httpSchema,
     },
   },
+  onRequest: verifyToken
 }
 
 export const deleteAuthorsRouterOptions: RouteShorthandOptions = {
@@ -61,7 +70,9 @@ export const deleteAuthorsRouterOptions: RouteShorthandOptions = {
         message: z.string(),
       }),
       400: httpSchema,
+      401: httpSchema,
       500: httpSchema,
     },
   },
+  onRequest: verifyToken
 }

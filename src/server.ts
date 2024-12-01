@@ -1,3 +1,4 @@
+import type { IncomingMessage, Server, ServerResponse } from 'node:http'
 import { env } from '@/env.ts'
 import fastifyCors from '@fastify/cors'
 import fastifyHelmet from '@fastify/helmet'
@@ -16,9 +17,8 @@ import { cursoRouter } from './routes/curso/curso.router.ts'
 import { genreRoutes } from './routes/genre/genre.routes.ts'
 import { professorRoutes } from './routes/professor/professor.router.ts'
 import { userRoutes } from './routes/user/user.router.ts'
-
-class Server implements IServer {
-  instance: FastifyInstance
+class FastifyServer implements IServer {
+  instance: FastifyInstance<Server, IncomingMessage, ServerResponse>
   constructor() {
     this.instance = fastify({ logger: true })
     this.plugins()
@@ -57,5 +57,5 @@ class Server implements IServer {
   }
 }
 
-export const server = new Server()
+export const server = new FastifyServer()
 server.run()

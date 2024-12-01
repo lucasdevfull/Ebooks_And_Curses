@@ -1,3 +1,4 @@
+import { verifyToken } from '@/hooks/verifyToken.ts'
 import {
   cursoInsertSchema,
   cursoSchema,
@@ -11,9 +12,11 @@ export const getAllCursosRouterOptions: RouteShorthandOptions = {
   schema: {
     response: {
       200: cursoSchema.array(),
+      401: httpSchema,
       500: httpSchema,
     },
   },
+  onRequest: verifyToken
 }
 
 export const getCursoByIdRouterOptions: RouteShorthandOptions = {
@@ -23,10 +26,12 @@ export const getCursoByIdRouterOptions: RouteShorthandOptions = {
     }),
     response: {
       200: cursoSchema,
+      401: httpSchema,
       404: httpSchema,
       500: httpSchema,
     },
   },
+  onRequest: verifyToken
 }
 
 export const createCursosRouterOptions: RouteShorthandOptions = {
@@ -34,9 +39,11 @@ export const createCursosRouterOptions: RouteShorthandOptions = {
     body: cursoInsertSchema,
     response: {
       200: cursoSelectSchema,
+      401: httpSchema,
       500: httpSchema,
     },
   },
+  onRequest: verifyToken
 }
 
 export const updateCursosRouterOptions: RouteShorthandOptions = {
@@ -47,9 +54,11 @@ export const updateCursosRouterOptions: RouteShorthandOptions = {
     body: cursoInsertSchema,
     response: {
       200: cursoSelectSchema,
+      401: httpSchema,
       500: httpSchema,
     },
   },
+  onRequest: verifyToken
 }
 
 export const deleteCursosRouterOptions: RouteShorthandOptions = {
@@ -62,7 +71,9 @@ export const deleteCursosRouterOptions: RouteShorthandOptions = {
       200: z.object({
         message: z.string(),
       }),
+      401: httpSchema,
       500: httpSchema,
     },
   },
+  onRequest: verifyToken
 }

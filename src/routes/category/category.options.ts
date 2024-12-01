@@ -1,3 +1,4 @@
+import { verifyToken } from '@/hooks/verifyToken.ts'
 import {
   categoryInsertSchema,
   categorySelectSchema,
@@ -10,9 +11,11 @@ export const getAllCategoriesRouterOptions: RouteShorthandOptions = {
   schema: {
     response: {
       200: categorySelectSchema.array(),
+      401: httpSchema,
       500: httpSchema,
     },
   },
+  onRequest: verifyToken,
 }
 
 export const getCategoryByIdRouterOptions: RouteShorthandOptions = {
@@ -22,10 +25,12 @@ export const getCategoryByIdRouterOptions: RouteShorthandOptions = {
     }),
     response: {
       200: categorySelectSchema,
+      401: httpSchema,
       404: httpSchema,
       500: httpSchema,
     },
   },
+  onRequest: verifyToken,
 }
 
 export const createCategoryRouterOptions: RouteShorthandOptions = {
@@ -34,9 +39,11 @@ export const createCategoryRouterOptions: RouteShorthandOptions = {
     response: {
       201: categorySelectSchema,
       400: httpSchema,
+      401: httpSchema,
       500: httpSchema,
     },
   },
+  onRequest: verifyToken,
 }
 
 export const updateCategoryRouterOptions: RouteShorthandOptions = {
@@ -48,9 +55,11 @@ export const updateCategoryRouterOptions: RouteShorthandOptions = {
     response: {
       200: categorySelectSchema,
       400: httpSchema,
+      401: httpSchema,
       500: httpSchema,
     },
   },
+  onRequest: verifyToken,
 }
 
 export const deleteCategoryRouterOptions: RouteShorthandOptions = {
@@ -60,7 +69,9 @@ export const deleteCategoryRouterOptions: RouteShorthandOptions = {
         message: z.string(),
       }),
       400: httpSchema,
+      401: httpSchema,
       500: httpSchema,
     },
   },
+  onRequest: verifyToken,
 }

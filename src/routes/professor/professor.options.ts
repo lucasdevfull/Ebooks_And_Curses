@@ -1,3 +1,4 @@
+import { verifyToken } from '@/hooks/verifyToken.ts'
 import { httpSchema } from '@/schema/http.schema.ts'
 import {
   professorInsertSchema,
@@ -13,6 +14,7 @@ export const getAllProfessorsRouterOptions: RouteShorthandOptions = {
       500: httpSchema,
     },
   },
+  onRequest: verifyToken,
 }
 
 export const getProfessorByIdRouterOptions: RouteShorthandOptions = {
@@ -23,6 +25,7 @@ export const getProfessorByIdRouterOptions: RouteShorthandOptions = {
       500: httpSchema,
     },
   },
+  onRequest: verifyToken,
 }
 
 export const createProfessorRouterOptions: RouteShorthandOptions = {
@@ -34,6 +37,7 @@ export const createProfessorRouterOptions: RouteShorthandOptions = {
       500: httpSchema,
     },
   },
+  onRequest: verifyToken,
 }
 
 export const updateProfessorRouterOptions: RouteShorthandOptions = {
@@ -48,6 +52,7 @@ export const updateProfessorRouterOptions: RouteShorthandOptions = {
       500: httpSchema,
     },
   },
+  onRequest: verifyToken,
 }
 
 export const deleteProfessorRouterOptions: RouteShorthandOptions = {
@@ -60,4 +65,5 @@ export const deleteProfessorRouterOptions: RouteShorthandOptions = {
       500: httpSchema,
     },
   },
+  onRequest: verifyToken,
 }

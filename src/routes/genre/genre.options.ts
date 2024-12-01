@@ -1,3 +1,4 @@
+import { verifyToken } from '@/hooks/verifyToken.ts'
 import { genreIsertSchema, genreSelectSchema } from '@/schema/genre.schema.ts'
 import { httpSchema } from '@/schema/http.schema.ts'
 import type { RouteShorthandOptions } from 'fastify'
@@ -7,9 +8,11 @@ export const getAllGenresRouterOptions: RouteShorthandOptions = {
   schema: {
     response: {
       200: genreSelectSchema.array(),
+      401: httpSchema,
       500: httpSchema,
     },
   },
+  onRequest: verifyToken
 }
 
 export const getGenreByIdRouterOptions: RouteShorthandOptions = {
@@ -19,10 +22,12 @@ export const getGenreByIdRouterOptions: RouteShorthandOptions = {
     }),
     response: {
       200: genreSelectSchema,
+      401: httpSchema,
       404: httpSchema,
       500: httpSchema,
     },
   },
+  onRequest: verifyToken
 }
 
 export const createGenreRouterOptions: RouteShorthandOptions = {
@@ -31,9 +36,11 @@ export const createGenreRouterOptions: RouteShorthandOptions = {
     response: {
       201: genreSelectSchema,
       400: httpSchema,
+      401: httpSchema,
       500: httpSchema,
     },
   },
+  onRequest: verifyToken
 }
 
 export const updateGenreRouterOptions: RouteShorthandOptions = {
@@ -45,9 +52,11 @@ export const updateGenreRouterOptions: RouteShorthandOptions = {
     response: {
       200: genreSelectSchema,
       400: httpSchema,
+      401: httpSchema,
       500: httpSchema,
     },
   },
+  onRequest: verifyToken
 }
 
 export const deleteGenreRouterOptions: RouteShorthandOptions = {
@@ -57,7 +66,9 @@ export const deleteGenreRouterOptions: RouteShorthandOptions = {
         message: z.string(),
       }),
       400: httpSchema,
+      401: httpSchema,
       500: httpSchema,
     },
   },
+  onRequest: verifyToken
 }
