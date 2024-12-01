@@ -20,6 +20,7 @@ export class UserRepository implements IUserRepository {
       username: users.username,
       email: users.email,
       password: users.password,
+      createdAt: users.createdAt,
     })
     return newUser[0]
   }
