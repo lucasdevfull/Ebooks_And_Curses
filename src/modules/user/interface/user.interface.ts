@@ -11,6 +11,9 @@ export interface UserRequest extends RouteGenericInterface {
   }
 }
 
+export interface UserBodyRequest extends UserRequest {
+  Body: NewUser
+}
 export interface IUserController {
   getUser: (
     request: FastifyRequest<UserRequest>,
@@ -18,7 +21,7 @@ export interface IUserController {
   ) => Promise<Users>
   getUsers: (request: FastifyRequest, reply: FastifyReply) => Promise<Users[]>
   createUser: (
-    request: FastifyRequest,
+    request: FastifyRequest<UserBodyRequest>,
     reply: FastifyReply
   ) => Promise<Users | never>
 }

@@ -1,5 +1,4 @@
-import type { NewAuthor } from '@/@types/ebooks.ts'
-import type { Author } from '../entities/author.entities.ts'
+import type { NewAuthor, TAuthor } from '@/@types/ebooks.ts'
 import type { IAuthorServices } from '../interface/authors.interface.ts'
 import { AuthorRepository } from '../repositories/author.repositories.ts'
 
@@ -9,36 +8,40 @@ export class AuthorServices implements IAuthorServices {
     this.repository = new AuthorRepository()
   }
 
-  async getAllAuthors(): Promise<Author[]> {
-    const authors = await this.repository.getAllAuthors()
+  async getAllAuthors(): Promise<TAuthor[]> {
+    const authors: TAuthor[] = await this.repository.getAllAuthors()
     return authors
   }
 
-  async createAuthor(data: NewAuthor): Promise<Author> {
-    const author = await this.repository.create(data)
+  async createAuthor(data: NewAuthor): Promise<TAuthor> {
+    const author: TAuthor = await this.repository.create(data)
     return author
   }
 
-  async getAuthorById(authorId: number): Promise<Author> {
-    const author = await this.repository.findAuthorById(authorId)
+  async getAuthorById(authorId: number): Promise<TAuthor> {
+    const author: TAuthor = await this.repository.findAuthorById(authorId)
     return author
   }
 
-  async updateAuthor(authorId: number, data: NewAuthor): Promise<Author> {
-    const author = await this.repository.findAuthorById(authorId)
+  async updateAuthor(authorId: number, data: NewAuthor): Promise<TAuthor> {
+    const author: TAuthor = await this.repository.findAuthorById(authorId)
     if (!author) {
       throw new Error('Autor não encontrado')
     }
-    const updatedAuthor = await this.repository.updateAuthor(authorId, data)
+    const updatedAuthor: TAuthor = await this.repository.updateAuthor(
+      authorId,
+      data
+    )
     return updatedAuthor
   }
   async deleteAuthor(authorId: number): Promise<{ message: string }> {
-    const author = await this.repository.findAuthorById(authorId)
+    const author: TAuthor = await this.repository.findAuthorById(authorId)
     if (!author) {
       throw new Error('Autor não encontrado')
     }
     try {
-      const deletedAuthor = await this.repository.deleteAuthor(authorId)
+      const deletedAuthor: TAuthor =
+        await this.repository.deleteAuthor(authorId)
       return { message: 'Autor deletado com sucesso' }
     } catch (error) {
       throw new Error('Erro ao deletar autor')

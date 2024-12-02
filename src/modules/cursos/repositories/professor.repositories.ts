@@ -16,7 +16,10 @@ export class ProfessorRepository implements IProfessorRepository {
   }
 
   async create(data: NewProfessor): Promise<TProfessor> {
-    const prof: TProfessor[] = await db.insert(professor).values(data).returning()
+    const prof: TProfessor[] = await db
+      .insert(professor)
+      .values(data)
+      .returning()
     return prof[0]
   }
 

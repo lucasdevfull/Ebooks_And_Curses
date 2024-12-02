@@ -9,11 +9,11 @@ export class GenreServices implements IGenreServices {
   }
 
   async getAllGenres(): Promise<TGenre[]> {
-    const generes = await this.repository.getAll()
+    const generes: TGenre[] = await this.repository.getAll()
     return generes
   }
   async createGenre(data: NewGenre): Promise<TGenre> {
-    const genreExists = await this.repository.getByName(data.name)
+    const genreExists: TGenre = await this.repository.getByName(data.name)
     if (genreExists) {
       throw new Error('Genre already exists')
     }
@@ -22,22 +22,22 @@ export class GenreServices implements IGenreServices {
   }
 
   async getGenreById(id: number): Promise<TGenre> {
-    const genre = await this.repository.getById(id)
+    const genre: TGenre = await this.repository.getById(id)
     return genre
   }
 
   async updateGenre(id: number, data: NewGenre): Promise<TGenre> {
-    const genre = await this.repository.update(id, data)
+    const genre: TGenre = await this.repository.update(id, data)
     return genre
   }
 
   async deleteGenre(id: number): Promise<{ message: string }> {
-    const genreExists = await this.repository.getById(id)
+    const genreExists: TGenre = await this.repository.getById(id)
     if (!genreExists) {
       throw new Error('Genre not found')
     }
     try {
-      const genre = await this.repository.delete(id)
+      const genre: TGenre = await this.repository.delete(id)
       return { message: 'Genre deleted successfully' }
     } catch (error) {
       throw new Error('Error deleting genre')

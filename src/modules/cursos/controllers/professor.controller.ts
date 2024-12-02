@@ -1,7 +1,10 @@
-import type { NewProfessor } from '@/@types/cursos.ts'
+import type { NewProfessor, TProfessor } from '@/@types/cursos.ts'
 import type { FastifyReply, FastifyRequest } from 'fastify'
-import type { Professor } from '../entities/professor.entities.ts'
-import type { IProfessorController } from '../interface/professor.interface.ts'
+import type {
+  IProfessorController,
+  ProfessorBodyRequest,
+  ProfessorRequest,
+} from '../interface/professor.interface.ts'
 import { ProfessorServices } from '../services/professor.services.ts'
 
 export class ProfessorController implements IProfessorController {
@@ -13,16 +16,16 @@ export class ProfessorController implements IProfessorController {
   getAllProfessors = async (
     request: FastifyRequest,
     reply: FastifyReply
-  ): Promise<Professor[]> => {
+  ): Promise<TProfessor[]> => {
     const professors = await this.service.getAllProfessors()
     return reply.status(200).send(professors)
   }
 
   getProfessorById = async (
-    request: FastifyRequest,
+    request: FastifyRequest<ProfessorRequest>,
     reply: FastifyReply
-  ): Promise<Professor> => {
-    const { id } = request.params as { id: string }
+  ): Promise<TProfessor> => {
+    const { id } = request.params
     const professor = await this.service.getProfessorById(Number(id))
     if (!professor) {
       return reply.status(404).send({
@@ -35,11 +38,11 @@ export class ProfessorController implements IProfessorController {
   }
 
   createProfessor = async (
-    request: FastifyRequest,
+    request: FastifyRequest<ProfessorBodyRequest>,
     reply: FastifyReply
-  ): Promise<Professor> => {
+  ): Promise<TProfessor> => {
     try {
-      const professor = request.body as NewProfessor
+      const professor: NewProfessor = request.body
       const result = await this.service.createProfessor(professor)
       return reply.status(201).send(result)
     } catch (error) {
@@ -48,12 +51,12 @@ export class ProfessorController implements IProfessorController {
   }
 
   updateProfessor = async (
-    request: FastifyRequest,
+    request: FastifyRequest<ProfessorBodyRequest>,
     reply: FastifyReply
-  ): Promise<Professor> => {
+  ): Promise<TProfessor> => {
     try {
-      const { id } = request.params as { id: string }
-      const professor = request.body as NewProfessor
+      const { id } = request.params
+      const professor: NewProfessor = request.body
       const result = await this.service.updateProfessor(Number(id), professor)
       return reply.status(200).send(result)
     } catch (error) {
@@ -62,11 +65,11 @@ export class ProfessorController implements IProfessorController {
   }
 
   deleteProfessor = async (
-    request: FastifyRequest,
+    request: FastifyRequest<ProfessorRequest>,
     reply: FastifyReply
   ): Promise<{ message: string }> => {
     try {
-      const { id } = request.params as { id: string }
+      const { id } = request.params
       const result = await this.service.deleteProfessor(Number(id))
       return reply.status(204).send(result)
     } catch (error) {

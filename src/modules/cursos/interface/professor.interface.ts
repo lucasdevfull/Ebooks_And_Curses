@@ -1,10 +1,18 @@
 import type { NewProfessor, TProfessor } from '@/@types/cursos.ts'
-import type { FastifyReply, FastifyRequest, RouteGenericInterface } from 'fastify'
+import type {
+  FastifyReply,
+  FastifyRequest,
+  RouteGenericInterface,
+} from 'fastify'
 
 export interface ProfessorRequest extends RouteGenericInterface {
   Params: {
     id: string
   }
+}
+
+export interface ProfessorBodyRequest extends ProfessorRequest {
+  Body: NewProfessor
 }
 
 export interface IProfessorController {
@@ -17,15 +25,15 @@ export interface IProfessorController {
     reply: FastifyReply
   ): Promise<TProfessor>
   createProfessor(
-    request: FastifyRequest,
+    request: FastifyRequest<ProfessorBodyRequest>,
     reply: FastifyReply
   ): Promise<TProfessor>
   updateProfessor(
-    request: FastifyRequest,
+    request: FastifyRequest<ProfessorBodyRequest>,
     reply: FastifyReply
   ): Promise<TProfessor>
   deleteProfessor(
-    request: FastifyRequest,
+    request: FastifyRequest<ProfessorRequest>,
     reply: FastifyReply
   ): Promise<{ message: string }>
 }

@@ -1,6 +1,10 @@
 import type { NewGenre, TGenre } from '@/@types/ebooks.ts'
 import type { FastifyReply, FastifyRequest } from 'fastify'
-import type { IGenreController } from '../interface/genre.interface.ts'
+import type {
+  GerneBodyRequest,
+  GerneRequest,
+  IGenreController,
+} from '../interface/genre.interface.ts'
 import { GenreServices } from '../services/genre.services.ts'
 
 export class GenreController implements IGenreController {
@@ -21,11 +25,11 @@ export class GenreController implements IGenreController {
     }
   }
   createGenre = async (
-    request: FastifyRequest,
+    request: FastifyRequest<GerneBodyRequest>,
     reply: FastifyReply
   ): Promise<TGenre> => {
     try {
-      const genre = request.body as NewGenre
+      const genre: NewGenre = request.body
       const result = await this.service.createGenre(genre)
       return reply.status(201).send(result)
     } catch (error) {
@@ -34,11 +38,11 @@ export class GenreController implements IGenreController {
   }
 
   getGenre = async (
-    request: FastifyRequest,
+    request: FastifyRequest<GerneRequest>,
     reply: FastifyReply
   ): Promise<TGenre> => {
     try {
-      const { id } = request.params as { id: string }
+      const { id } = request.params
       const result = this.service.getGenreById(Number(id))
       if (!result) {
         return reply.status(404).send({
@@ -54,12 +58,12 @@ export class GenreController implements IGenreController {
   }
 
   updateGenre = async (
-    request: FastifyRequest,
+    request: FastifyRequest<GerneBodyRequest>,
     reply: FastifyReply
   ): Promise<TGenre> => {
     try {
-      const { id } = request.params as { id: string }
-      const genre = request.body as NewGenre
+      const { id } = request.params
+      const genre: NewGenre = request.body
       const result = await this.service.updateGenre(Number(id), genre)
       return reply.status(200).send(result)
     } catch (error) {
@@ -68,11 +72,11 @@ export class GenreController implements IGenreController {
   }
 
   deleteGenre = async (
-    request: FastifyRequest,
+    request: FastifyRequest<GerneRequest>,
     reply: FastifyReply
   ): Promise<{ message: string }> => {
     try {
-      const { id } = request.params as { id: string }
+      const { id } = request.params
       const result = this.service.deleteGenre(Number(id))
       if (!result) {
         return reply.status(404).send({ message: 'Genre not found' })

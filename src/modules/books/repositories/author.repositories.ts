@@ -7,12 +7,12 @@ import type { IAuthorRepository } from '../interface/authors.interface.ts'
 
 export class AuthorRepository implements IAuthorRepository {
   async create(data: NewAuthor): Promise<TAuthor> {
-    const author = await db.insert(authors).values(data).returning()
+    const author: TAuthor[] = await db.insert(authors).values(data).returning()
     return author[0]
   }
 
   async findAuthorById(id: number): Promise<TAuthor> {
-    const authorExists = await db
+    const authorExists: TAuthor[] = await db
       .select()
       .from(authors)
       .where(eq(authors.authorId, id))
@@ -24,7 +24,7 @@ export class AuthorRepository implements IAuthorRepository {
   }
 
   async getAllAuthors(): Promise<TAuthor[]> {
-    const autores = await db.select().from(authors)
+    const autores: TAuthor[] = await db.select().from(authors)
     const result = authorsSelectSchema.array().safeParse(autores)
     if (!result.success) {
       throw new Error(result.error.message)
@@ -32,7 +32,7 @@ export class AuthorRepository implements IAuthorRepository {
     return result.data
   }
   async findAuthorByName(name: string): Promise<TAuthor[]> {
-    const authorExists = await db
+    const authorExists: TAuthor[] = await db
       .select()
       .from(authors)
       .where(eq(authors.first_name, name))
@@ -44,7 +44,7 @@ export class AuthorRepository implements IAuthorRepository {
   }
 
   async updateAuthor(id: number, data: NewAuthor): Promise<TAuthor> {
-    const author = await db
+    const author: TAuthor[] = await db
       .update(authors)
       .set(data)
       .where(eq(authors.authorId, id))
@@ -53,7 +53,7 @@ export class AuthorRepository implements IAuthorRepository {
   }
 
   async deleteAuthor(id: number): Promise<TAuthor> {
-    const author = await db
+    const author: TAuthor[] = await db
       .delete(authors)
       .where(eq(authors.authorId, id))
       .returning()

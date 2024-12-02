@@ -1,6 +1,10 @@
 import type { NewCategoria, TCategoria } from '@/@types/cursos.ts'
 import type { FastifyReply, FastifyRequest } from 'fastify'
-import type { ICategoriaController } from '../interface/categoria.interface.ts'
+import type {
+  CategoryBodyRequest,
+  CategoryRequest,
+  ICategoriaController,
+} from '../interface/categoria.interface.ts'
 import { CategoryServices } from '../services/category.services.ts'
 
 export class CategoryController implements ICategoriaController {
@@ -22,11 +26,11 @@ export class CategoryController implements ICategoriaController {
   }
 
   getCategoryById = async (
-    request: FastifyRequest,
+    request: FastifyRequest<CategoryRequest>,
     reply: FastifyReply
   ): Promise<TCategoria> => {
     try {
-      const { id } = request.params as { id: string }
+      const { id } = request.params
       const category = await this.service.getCategoryById(Number(id))
       if (!category) {
         return reply.status(404).send({
@@ -42,11 +46,11 @@ export class CategoryController implements ICategoriaController {
   }
 
   createCategory = async (
-    request: FastifyRequest,
+    request: FastifyRequest<CategoryBodyRequest>,
     reply: FastifyReply
   ): Promise<TCategoria> => {
     try {
-      const category = request.body as NewCategoria
+      const category: NewCategoria = request.body
       const newCategory = await this.service.createCategory(category)
       return reply.status(201).send(newCategory)
     } catch (error) {
@@ -55,12 +59,12 @@ export class CategoryController implements ICategoriaController {
   }
 
   updateCategory = async (
-    request: FastifyRequest,
+    request: FastifyRequest<CategoryBodyRequest>,
     reply: FastifyReply
   ): Promise<TCategoria> => {
     try {
-      const { id } = request.params as { id: string }
-      const category = request.body as NewCategoria
+      const { id } = request.params
+      const category = request.body
       const updatedCategory = await this.service.updateCategory(
         Number(id),
         category
@@ -72,11 +76,11 @@ export class CategoryController implements ICategoriaController {
   }
 
   deleteCategory = async (
-    request: FastifyRequest,
+    request: FastifyRequest<CategoryRequest>,
     reply: FastifyReply
   ): Promise<{ message: string }> => {
     try {
-      const { id } = request.params as { id: string }
+      const { id } = request.params
       const result = await this.service.deleteCategory(Number(id))
       return reply.send(result).status(200)
     } catch (error) {

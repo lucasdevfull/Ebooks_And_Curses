@@ -26,7 +26,7 @@ export class ProfessorServices implements IProfessorServices {
   async updateProfessor(id: number, data: NewProfessor): Promise<TProfessor> {
     const professorExist: TProfessor = await this.repository.getById(id)
     if (!professorExist) throw new Error('Professor not found')
-    
+
     const professor: TProfessor = await this.repository.update(id, data)
     return professor
   }

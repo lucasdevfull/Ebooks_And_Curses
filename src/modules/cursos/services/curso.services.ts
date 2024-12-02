@@ -1,4 +1,10 @@
-import type { Curso, NewCurso, TCategoria, TCurso, TProfessor } from '@/@types/cursos.ts'
+import type {
+  Curso,
+  NewCurso,
+  TCategoria,
+  TCurso,
+  TProfessor,
+} from '@/@types/cursos.ts'
 import type { ICursoServices } from '../interface/curso.interface.ts'
 import { CategoryRepository } from '../repositories/categoria.repositories.ts'
 import { CursoRepository } from '../repositories/curso.repositories.ts'
@@ -42,7 +48,7 @@ export class CursoServices implements ICursoServices {
   }
 
   async deleteCursos(id: number): Promise<{ message: string }> {
-    const curseExists: Curso  = await this.curse.getById(id)
+    const curseExists: Curso = await this.curse.getById(id)
     if (!curseExists) throw new Error('Curse not found')
     const curse: TCurso = await this.curse.delete(id)
     return { message: 'Curse deleted successfully' }

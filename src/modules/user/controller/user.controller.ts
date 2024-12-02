@@ -1,11 +1,8 @@
 import type { NewUser, Users } from '@/@types/user.ts'
-import type {
-  FastifyReply,
-  FastifyRequest,
-  RouteGenericInterface,
-} from 'fastify'
+import type { FastifyReply, FastifyRequest } from 'fastify'
 import type {
   IUserController,
+  UserBodyRequest,
   UserRequest,
 } from '../interface/user.interface.ts'
 import { UserServices } from '../services/user.services.ts'
@@ -40,11 +37,11 @@ export class UserController implements IUserController {
   }
 
   createUser = async (
-    request: FastifyRequest,
+    request: FastifyRequest<UserBodyRequest>,
     reply: FastifyReply
   ): Promise<Users | never> => {
     try {
-      const user = request.body as NewUser
+      const user: NewUser = request.body
       const result: Users = await this.service.create(user)
       return reply.status(201).send(result)
     } catch (error) {

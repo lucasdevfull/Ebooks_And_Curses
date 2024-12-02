@@ -1,6 +1,10 @@
 import type { NewAuthor, TAuthor } from '@/@types/ebooks.ts'
 import type { FastifyReply, FastifyRequest } from 'fastify'
-import type { IAuthorController } from '../interface/authors.interface.ts'
+import type {
+  AuthorBodyRequest,
+  AuthorRequest,
+  IAuthorController,
+} from '../interface/authors.interface.ts'
 import { AuthorServices } from '../services/author.services.ts'
 
 export class AuthorController implements IAuthorController {
@@ -18,11 +22,11 @@ export class AuthorController implements IAuthorController {
   }
 
   createAuthor = async (
-    request: FastifyRequest,
+    request: FastifyRequest<AuthorBodyRequest>,
     reply: FastifyReply
   ): Promise<TAuthor> => {
     try {
-      const author = request.body as NewAuthor
+      const author: NewAuthor = request.body
       const result = await this.service.createAuthor(author)
       return reply.status(201).send(result)
     } catch (error) {
@@ -31,11 +35,11 @@ export class AuthorController implements IAuthorController {
   }
 
   getAuthor = async (
-    request: FastifyRequest,
+    request: FastifyRequest<AuthorRequest>,
     reply: FastifyReply
   ): Promise<TAuthor> => {
     try {
-      const { id } = request.params as { id: string }
+      const { id } = request.params
       const result = await this.service.getAuthorById(Number(id))
       if (!result) {
         return reply.status(404).send({
@@ -51,12 +55,12 @@ export class AuthorController implements IAuthorController {
   }
 
   updateAuthor = async (
-    request: FastifyRequest,
+    request: FastifyRequest<AuthorBodyRequest>,
     reply: FastifyReply
   ): Promise<TAuthor> => {
     try {
-      const { id } = request.params as { id: string }
-      const author = request.body as TAuthor
+      const { id } = request.params
+      const author: NewAuthor = request.body
       const result = await this.service.updateAuthor(Number(id), author)
       return reply.status(200).send(result)
     } catch (error) {
@@ -65,11 +69,11 @@ export class AuthorController implements IAuthorController {
   }
 
   deleteAuthor = async (
-    request: FastifyRequest,
+    request: FastifyRequest<AuthorRequest>,
     reply: FastifyReply
   ): Promise<{ message: string }> => {
     try {
-      const { id } = request.params as { id: string }
+      const { id } = request.params
       const result = await this.service.deleteAuthor(Number(id))
       return reply.status(204).send(result)
     } catch (error) {

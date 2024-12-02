@@ -1,6 +1,10 @@
 import type { Curso, NewCurso, TCurso } from '@/@types/cursos.ts'
 import type { FastifyReply, FastifyRequest } from 'fastify'
-import type { ICursoController } from '../interface/curso.interface.ts'
+import type {
+  CursoBodyRequest,
+  CursoRequest,
+  ICursoController,
+} from '../interface/curso.interface.ts'
 import { CursoServices } from '../services/curso.services.ts'
 
 export class CursoController implements ICursoController {
@@ -17,10 +21,10 @@ export class CursoController implements ICursoController {
   }
 
   getCursosById = async (
-    request: FastifyRequest,
+    request: FastifyRequest<CursoRequest>,
     reply: FastifyReply
   ): Promise<Curso> => {
-    const { id } = request.params as { id: string }
+    const { id } = request.params
     const curso = await this.service.getCursosById(Number(id))
     if (!curso) {
       return reply.status(404).send({
@@ -33,12 +37,11 @@ export class CursoController implements ICursoController {
   }
 
   createCursos = async (
-    request: FastifyRequest,
+    request: FastifyRequest<CursoBodyRequest>,
     reply: FastifyReply
   ): Promise<TCurso> => {
     try {
-      const curso = request.body as NewCurso
-      console.log(curso)
+      const curso: NewCurso = request.body
       const result = await this.service.createCursos(curso)
       return reply.status(201).send(result)
     } catch (error) {
@@ -47,12 +50,12 @@ export class CursoController implements ICursoController {
   }
 
   updateCursos = async (
-    request: FastifyRequest,
+    request: FastifyRequest<CursoBodyRequest>,
     reply: FastifyReply
   ): Promise<TCurso> => {
     try {
-      const { id } = request.params as { id: string }
-      const curso = request.body as NewCurso
+      const { id } = request.params
+      const curso: NewCurso = request.body
       const result = await this.service.updateCursos(Number(id), curso)
       return reply.status(200).send(result)
     } catch (error) {
@@ -61,11 +64,11 @@ export class CursoController implements ICursoController {
   }
 
   deleteCursos = async (
-    request: FastifyRequest,
+    request: FastifyRequest<CursoRequest>,
     reply: FastifyReply
   ): Promise<{ message: string }> => {
     try {
-      const { id } = request.params as { id: string }
+      const { id } = request.params
       const result = await this.service.deleteCursos(Number(id))
       return reply.status(200).send(result)
     } catch (error) {

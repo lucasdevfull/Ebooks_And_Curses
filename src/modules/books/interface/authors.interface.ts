@@ -1,16 +1,38 @@
 import type { NewAuthor, TAuthor } from '@/@types/ebooks.ts'
-import type { FastifyReply, FastifyRequest } from 'fastify'
+import type {
+  FastifyReply,
+  FastifyRequest,
+  RouteGenericInterface,
+} from 'fastify'
 
+export interface AuthorRequest extends RouteGenericInterface {
+  Params: {
+    id: string
+  }
+}
+
+export interface AuthorBodyRequest extends AuthorRequest {
+  Body: NewAuthor
+}
 export interface IAuthorController {
   getAllAuthors(
     request: FastifyRequest,
     reply: FastifyReply
   ): Promise<TAuthor[]>
-  createAuthor(request: FastifyRequest, reply: FastifyReply): Promise<TAuthor>
-  getAuthor(request: FastifyRequest, reply: FastifyReply): Promise<TAuthor>
-  updateAuthor(request: FastifyRequest, reply: FastifyReply): Promise<TAuthor>
+  createAuthor(
+    request: FastifyRequest<AuthorBodyRequest>,
+    reply: FastifyReply
+  ): Promise<TAuthor>
+  getAuthor(
+    request: FastifyRequest<AuthorRequest>,
+    reply: FastifyReply
+  ): Promise<TAuthor>
+  updateAuthor(
+    request: FastifyRequest<AuthorBodyRequest>,
+    reply: FastifyReply
+  ): Promise<TAuthor>
   deleteAuthor(
-    request: FastifyRequest,
+    request: FastifyRequest<AuthorRequest>,
     reply: FastifyReply
   ): Promise<{ message: string }>
 }

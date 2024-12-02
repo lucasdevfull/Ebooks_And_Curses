@@ -57,7 +57,10 @@ export class CursoRepository implements ICursoRepository {
   }
 
   async getByName(name: string): Promise<TCurso> {
-    const curse: TCurso[] = await db.select().from(curso).where(eq(curso.titulo, name))
+    const curse: TCurso[] = await db
+      .select()
+      .from(curso)
+      .where(eq(curso.titulo, name))
     return curse[0]
   }
   async create(data: NewCurso): Promise<TCurso> {

@@ -28,7 +28,10 @@ export class CategoryRepository implements ICategoriaRepository {
   }
 
   async create(data: NewCategoria): Promise<TCategoria> {
-    const category: TCategoria[] = await db.insert(categoria).values(data).returning()
+    const category: TCategoria[] = await db
+      .insert(categoria)
+      .values(data)
+      .returning()
     return category[0]
   }
 
