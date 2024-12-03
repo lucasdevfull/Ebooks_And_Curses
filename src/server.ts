@@ -17,6 +17,7 @@ import { cursoRouter } from './routes/curso/curso.router.ts'
 import { genreRoutes } from './routes/genre/genre.routes.ts'
 import { professorRoutes } from './routes/professor/professor.router.ts'
 import { userRoutes } from './routes/user/user.router.ts'
+
 class FastifyServer implements IServer {
   instance: FastifyInstance<Server, IncomingMessage, ServerResponse>
   constructor() {

@@ -1,7 +1,7 @@
 import { config } from 'dotenv'
 import { z } from 'zod'
 
-const envSchema = z.object({
+export const envSchema = z.object({
   DATABASE_URL: z.string(),
   PORT: z
     .string()
