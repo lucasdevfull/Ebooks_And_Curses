@@ -5,7 +5,7 @@ export function curseResponse(curse: Cursos[]): Curso[] {
     return {
       cursoId: curse.cursoId,
       titulo: curse.titulo,
-      valor: curse.valor,
+      valor: Number(curse.valor),
       categoria: {
         categoriaId: curse.categoriaId,
         name: curse.categoriaName,
