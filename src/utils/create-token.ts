@@ -1,5 +1,5 @@
-import type { Users } from '@/@types/user.ts'
 import { server } from '@/server.ts'
+import type { Users } from '@/types/user.types.ts'
 
 export function createToken(user: Users) {
   return {

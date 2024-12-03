@@ -1,11 +1,11 @@
-import type { NewAuthor, TAuthor } from '@/@types/ebooks.ts'
-import type { FastifyReply, FastifyRequest } from 'fastify'
+import type { NewAuthor, TAuthor } from '@/types/ebooks.types.ts'
 import type {
   AuthorBodyRequest,
   AuthorRequest,
   IAuthorController,
-} from '../interface/authors.interface.ts'
-import { AuthorServices } from '../services/author.services.ts'
+} from '@interface/authors.interface.ts'
+import { AuthorServices } from '@services/author.services.ts'
+import type { FastifyReply, FastifyRequest } from 'fastify'
 
 export class AuthorController implements IAuthorController {
   private service: AuthorServices

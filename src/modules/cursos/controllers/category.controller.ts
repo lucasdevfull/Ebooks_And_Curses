@@ -1,11 +1,11 @@
-import type { NewCategoria, TCategoria } from '@/@types/cursos.ts'
-import type { FastifyReply, FastifyRequest } from 'fastify'
+import type { NewCategoria, TCategoria } from '@/types/cursos.types.ts'
 import type {
   CategoryBodyRequest,
   CategoryRequest,
   ICategoriaController,
-} from '../interface/categoria.interface.ts'
-import { CategoryServices } from '../services/category.services.ts'
+} from '@interface/categoria.interface.ts'
+import { CategoryServices } from '@services/category.services.ts'
+import type { FastifyReply, FastifyRequest } from 'fastify'
 
 export class CategoryController implements ICategoriaController {
   private service: CategoryServices

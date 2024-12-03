@@ -1,9 +1,9 @@
-import type { NewProfessor, TProfessor } from '@/@types/cursos.ts'
 import { db } from '@/db/index.ts'
 import { professor } from '@/db/schema/cursos.ts'
-import { professorSelectSchema } from '@/schema/professor.schema.ts'
+import type { NewProfessor, TProfessor } from '@/types/cursos.types.ts'
+import type { IProfessorRepository } from '@interface/professor.interface.ts'
+import { professorSelectSchema } from '@schema/professor.schema.ts'
 import { eq } from 'drizzle-orm'
-import type { IProfessorRepository } from '../interface/professor.interface.ts'
 
 export class ProfessorRepository implements IProfessorRepository {
   async getAll(): Promise<TProfessor[]> {

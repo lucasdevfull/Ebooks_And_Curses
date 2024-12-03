@@ -1,5 +1,4 @@
-import type { NewCategoria } from '@/@types/cursos.ts'
-import { CategoryController } from '@/modules/cursos/controllers/category.controller.ts'
+import { CategoryController } from '@controllers/category.controller.ts'
 import type { FastifyInstance, FastifyPluginOptions } from 'fastify'
 import {
   createCategoryRouterOptions,
@@ -24,7 +23,7 @@ export function categoryRoutes(
     getCategoryByIdRouterOptions,
     categoryController.getCategoryById
   )
-  fastify.post<{ Body: NewCategoria }>(
+  fastify.post(
     '/categories',
     createCategoryRouterOptions,
     categoryController.createCategory

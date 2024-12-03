@@ -1,5 +1,4 @@
-import type { NewGenre } from '@/@types/ebooks.ts'
-import { GenreController } from '@/modules/books/controller/genre.controller.ts'
+import { GenreController } from '@controllers/genre.controller.ts'
 import type { FastifyInstance, FastifyPluginOptions } from 'fastify'
 import {
   createGenreRouterOptions,
@@ -24,11 +23,7 @@ export function genreRoutes(
     getGenreByIdRouterOptions,
     genreController.getGenre
   )
-  fastify.post<{ Body: NewGenre }>(
-    '/genres',
-    createGenreRouterOptions,
-    genreController.createGenre
-  )
+  fastify.post('/genres', createGenreRouterOptions, genreController.createGenre)
   fastify.put(
     '/genres/:id',
     updateGenreRouterOptions,

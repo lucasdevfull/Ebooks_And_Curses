@@ -1,4 +1,4 @@
-import { UserController } from '@/modules/user/controller/user.controller.ts'
+import { UserController } from '@controllers/user.controller.ts'
 import type { FastifyInstance, FastifyPluginOptions } from 'fastify'
 import {
   createUserRouterOptions,

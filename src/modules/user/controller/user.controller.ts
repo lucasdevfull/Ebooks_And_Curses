@@ -1,11 +1,11 @@
-import type { NewUser, Users } from '@/@types/user.ts'
-import type { FastifyReply, FastifyRequest } from 'fastify'
+import type { NewUser, Users } from '@/types/user.types.ts'
 import type {
   IUserController,
   UserBodyRequest,
   UserRequest,
-} from '../interface/user.interface.ts'
-import { UserServices } from '../services/user.services.ts'
+} from '@interface/user.interface.ts'
+import { UserServices } from '@services/user.services.ts'
+import type { FastifyReply, FastifyRequest } from 'fastify'
 
 export class UserController implements IUserController {
   private service: UserServices

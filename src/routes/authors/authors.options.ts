@@ -1,10 +1,10 @@
-import { verifyToken } from '@/hooks/verifyToken.ts'
+import { verifyToken } from '@hooks/verifyToken.ts'
 import {
   authorsInsertSchema,
   authorsSelectSchema,
-} from '@/schema/authors.schema.ts'
-import { categorySelectSchema } from '@/schema/categories.schema.ts'
-import { httpSchema } from '@/schema/http.schema.ts'
+  categorySelectSchema,
+  httpSchema,
+} from '@schema/index.schema.ts'
 import type { RouteShorthandOptions } from 'fastify'
 import { z } from 'zod'
 

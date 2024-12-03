@@ -1,4 +1,4 @@
-import type { NewUser, Users } from '@/@types/user.ts'
+import type { NewUser, Users } from '@/types/user.types.ts'
 import type {
   FastifyReply,
   FastifyRequest,

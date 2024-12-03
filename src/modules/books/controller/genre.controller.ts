@@ -1,11 +1,11 @@
-import type { NewGenre, TGenre } from '@/@types/ebooks.ts'
-import type { FastifyReply, FastifyRequest } from 'fastify'
+import type { NewGenre, TGenre } from '@/types/ebooks.types.ts'
 import type {
   GerneBodyRequest,
   GerneRequest,
   IGenreController,
-} from '../interface/genre.interface.ts'
-import { GenreServices } from '../services/genre.services.ts'
+} from '@interface/genre.interface.ts'
+import { GenreServices } from '@services/genre.services.ts'
+import type { FastifyReply, FastifyRequest } from 'fastify'
 
 export class GenreController implements IGenreController {
   private service: GenreServices

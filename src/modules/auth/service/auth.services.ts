@@ -1,8 +1,8 @@
-import type { Login, Token, Users } from '@/@types/user.ts'
-import { UserRepository } from '@/modules/user/repositories/user.repositories.ts'
+import type { Login, Token, Users } from '@/types/user.types.ts'
 import { createToken } from '@/utils/create-token.ts'
+import type { IAuthServices } from '@interface/auth.interface.ts'
+import { UserRepository } from '@repositories/user.repositories.ts'
 import { compare } from 'bcrypt'
-import type { IAuthServices } from '../interface/auth.interface.ts'
 
 export class AuthServices implements IAuthServices {
   private repository: UserRepository

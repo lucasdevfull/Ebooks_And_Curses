@@ -1,4 +1,4 @@
-import type { Curso, Cursos } from '@/@types/cursos.ts'
+import type { Curso, Cursos } from '@/types/cursos.types.ts'
 
 export function curseResponse(curse: Cursos[]): Curso[] {
   return curse.map(curse => {

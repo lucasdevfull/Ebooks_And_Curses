@@ -1,4 +1,3 @@
-import type { Curso, NewCurso, TCurso } from '@/@types/cursos.ts'
 import { db } from '@/db/index.ts'
 import {
   categoria,
@@ -6,9 +5,10 @@ import {
   curso,
   professor,
 } from '@/db/schema/cursos.ts'
+import type { Curso, NewCurso, TCurso } from '@/types/cursos.types.ts'
 import { curseResponse } from '@/utils/curso-response.ts'
+import type { ICursoRepository } from '@interface/curso.interface.ts'
 import { eq } from 'drizzle-orm'
-import type { ICursoRepository } from '../interface/curso.interface.ts'
 
 export class CursoRepository implements ICursoRepository {
   async getAll(): Promise<Curso[]> {

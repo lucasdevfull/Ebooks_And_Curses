@@ -1,11 +1,11 @@
-import type { NewProfessor, TProfessor } from '@/@types/cursos.ts'
-import type { FastifyReply, FastifyRequest } from 'fastify'
+import type { NewProfessor, TProfessor } from '@/types/cursos.types.ts'
 import type {
   IProfessorController,
   ProfessorBodyRequest,
   ProfessorRequest,
-} from '../interface/professor.interface.ts'
-import { ProfessorServices } from '../services/professor.services.ts'
+} from '@interface/professor.interface.ts'
+import { ProfessorServices } from '@services/professor.services.ts'
+import type { FastifyReply, FastifyRequest } from 'fastify'
 
 export class ProfessorController implements IProfessorController {
   private service: ProfessorServices

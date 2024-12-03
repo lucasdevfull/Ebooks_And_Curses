@@ -1,4 +1,4 @@
-import { AuthController } from '@/modules/auth/controller/auth.controller.ts'
+import { AuthController } from '@controllers/auth.controller.ts'
 import type { FastifyInstance, FastifyPluginOptions } from 'fastify'
 import { loginAuthRouterOptions } from './auth.options.ts'
 

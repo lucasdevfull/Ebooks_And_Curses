@@ -1,6 +1,6 @@
-import type { NewGenre, TGenre } from '@/@types/ebooks.ts'
-import type { IGenreServices } from '../interface/genre.interface.ts'
-import { GenreRepository } from '../repositories/genre.repositories.ts'
+import type { NewGenre, TGenre } from '@/types/ebooks.types.ts'
+import type { IGenreServices } from '@interface/genre.interface.ts'
+import { GenreRepository } from '@repositories/genre.repositories.ts'
 
 export class GenreServices implements IGenreServices {
   private repository: GenreRepository

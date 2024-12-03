@@ -1,9 +1,9 @@
-import type { NewCategoria, TCategoria } from '@/@types/cursos.ts'
 import { db } from '@/db/index.ts'
 import { categoria } from '@/db/schema/cursos.ts'
 import { categorySelectSchema } from '@/schema/categories.schema.ts'
+import type { NewCategoria, TCategoria } from '@/types/cursos.types.ts'
+import type { ICategoriaRepository } from '@interface/categoria.interface.ts'
 import { eq } from 'drizzle-orm'
-import type { ICategoriaRepository } from '../interface/categoria.interface.ts'
 
 export class CategoryRepository implements ICategoriaRepository {
   async getAll(): Promise<TCategoria[]> {

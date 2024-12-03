@@ -10,11 +10,44 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "moduleResolution":"nodenext",
+    "moduleResolution": "nodenext",
     "allowImportingTsExtensions": true,
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "@router/*": [
+        "./src/routes/*"
+      ],
+      "@hooks/*": [
+        "./src/hooks/*"
+      ],
+      "@schema/*": [
+        "./src/schema/*"
+      ],
+      "@controllers/*": [
+        "./src/modules/auth/controller/*",
+        "./src/modules/books/controller/*",
+        "./src/modules/cursos/controllers/*",
+        "./src/modules/user/controller/*",
+      ],
+      "@services/*": [
+        "./src/modules/auth/service/*",
+        "./src/modules/books/services/*",
+        "./src/modules/cursos/services/*",
+        "./src/modules/user/services/*",
+      ],
+      "@interface/*": [
+        "./src/modules/auth/interface/*",
+        "./src/modules/books/interface/*",
+        "./src/modules/cursos/interface/*",
+        "./src/modules/user/interface/*",
+      ],
+      "@repositories/*": [
+        "./src/modules/auth/repositories/*",
+        "./src/modules/books/repositories/*",
+        "./src/modules/cursos/repositories/*",
+        "./src/modules/user/repositories/*",
       ]
     }
   }

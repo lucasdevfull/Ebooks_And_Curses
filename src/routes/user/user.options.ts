@@ -1,5 +1,8 @@
-import { httpSchema } from '@/schema/http.schema.ts'
-import { userInsertSchema, userSelectSchema } from '@/schema/user.schema.ts'
+import {
+  httpSchema,
+  userInsertSchema,
+  userSelectSchema,
+} from '@schema/index.schema.ts'
 import type { RouteShorthandOptions } from 'fastify'
 import { z } from 'zod'
 

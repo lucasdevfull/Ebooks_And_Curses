@@ -9,22 +9,17 @@ import {
   serializerCompiler,
   validatorCompiler,
 } from 'fastify-type-provider-zod'
-import type { IServer } from './@types/server.ts'
-import { authRoutes } from './routes/auth/auth.router.ts'
-import { authorsRoutes } from './routes/authors/authors.router.ts'
-import { categoryRoutes } from './routes/category/category.router.ts'
-import { cursoRouter } from './routes/curso/curso.router.ts'
-import { genreRoutes } from './routes/genre/genre.routes.ts'
-import { professorRoutes } from './routes/professor/professor.router.ts'
-import { userRoutes } from './routes/user/user.router.ts'
+import { routes } from '@/router.ts'
+import type { IServer, Routes } from '@/types/server.types.ts'
 
 class FastifyServer implements IServer {
   instance: FastifyInstance<Server, IncomingMessage, ServerResponse>
-  constructor() {
+  constructor(routes: Routes[]) {
     this.instance = fastify({ logger: true })
     this.plugins()
-    this.routes()
+    this.routes(routes)
   }
+
   plugins(): void {
     this.instance.setValidatorCompiler(validatorCompiler)
     this.instance.setSerializerCompiler(serializerCompiler)
@@ -37,14 +32,10 @@ class FastifyServer implements IServer {
       origin: '*',
     })
   }
-  routes(): void {
-    this.instance.register(userRoutes)
-    this.instance.register(authRoutes)
-    this.instance.register(genreRoutes)
-    this.instance.register(authorsRoutes)
-    this.instance.register(categoryRoutes)
-    this.instance.register(professorRoutes)
-    this.instance.register(cursoRouter)
+  routes(routers: Routes[]): void {
+    for (const { router } of routers) {
+      this.instance.register(router, { prefix: '/api' })
+    }
   }
 
   run(): void {
@@ -58,5 +49,5 @@ class FastifyServer implements IServer {
   }
 }
 
-export const server = new FastifyServer()
+export const server = new FastifyServer(routes)
 server.run()

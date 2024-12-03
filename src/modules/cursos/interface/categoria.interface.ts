@@ -1,4 +1,4 @@
-import type { NewCategoria, TCategoria } from '@/@types/cursos.ts'
+import type { NewCategoria, TCategoria } from '@/types/cursos.types.ts'
 import type {
   FastifyReply,
   FastifyRequest,

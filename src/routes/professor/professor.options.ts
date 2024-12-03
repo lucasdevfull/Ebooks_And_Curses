@@ -1,9 +1,9 @@
-import { verifyToken } from '@/hooks/verifyToken.ts'
-import { httpSchema } from '@/schema/http.schema.ts'
+import { verifyToken } from '@hooks/verifyToken.ts'
 import {
+  httpSchema,
   professorInsertSchema,
   professorSelectSchema,
-} from '@/schema/professor.schema.ts'
+} from '@schema/index.schema.ts'
 import type { RouteShorthandOptions } from 'fastify'
 import { z } from 'zod'
 

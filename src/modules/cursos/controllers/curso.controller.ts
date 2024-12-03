@@ -1,11 +1,11 @@
-import type { Curso, NewCurso, TCurso } from '@/@types/cursos.ts'
-import type { FastifyReply, FastifyRequest } from 'fastify'
+import type { Curso, NewCurso, TCurso } from '@/types/cursos.types.ts'
 import type {
   CursoBodyRequest,
   CursoRequest,
   ICursoController,
-} from '../interface/curso.interface.ts'
-import { CursoServices } from '../services/curso.services.ts'
+} from '@interface/curso.interface.ts'
+import { CursoServices } from '@services/curso.services.ts'
+import type { FastifyReply, FastifyRequest } from 'fastify'
 
 export class CursoController implements ICursoController {
   private service: CursoServices

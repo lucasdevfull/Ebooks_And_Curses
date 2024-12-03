@@ -1,4 +1,4 @@
-import type { NewGenre, TGenre } from '@/@types/ebooks.ts'
+import type { NewGenre, TGenre } from '@/types/ebooks.types.ts'
 import type {
   FastifyReply,
   FastifyRequest,

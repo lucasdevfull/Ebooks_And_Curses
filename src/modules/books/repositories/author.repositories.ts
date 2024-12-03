@@ -1,9 +1,9 @@
-import type { NewAuthor, TAuthor } from '@/@types/ebooks.ts'
 import { db } from '@/db/index.ts'
 import { authors } from '@/db/schema/books.ts'
-import { authorsSelectSchema } from '@/schema/authors.schema.ts'
+import type { NewAuthor, TAuthor } from '@/types/ebooks.types.ts'
+import type { IAuthorRepository } from '@interface/authors.interface.ts'
+import { authorsSelectSchema } from '@schema/authors.schema.ts'
 import { eq } from 'drizzle-orm'
-import type { IAuthorRepository } from '../interface/authors.interface.ts'
 
 export class AuthorRepository implements IAuthorRepository {
   async create(data: NewAuthor): Promise<TAuthor> {

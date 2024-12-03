@@ -1,5 +1,4 @@
-import type { NewProfessor } from '@/@types/cursos.ts'
-import { ProfessorController } from '@/modules/cursos/controllers/professor.controller.ts'
+import { ProfessorController } from '@controllers/professor.controller.ts'
 import type { FastifyInstance, FastifyPluginOptions } from 'fastify'
 import {
   createProfessorRouterOptions,
@@ -24,7 +23,7 @@ export function professorRoutes(
     getProfessorByIdRouterOptions,
     professorController.getProfessorById
   )
-  fastify.post<{ Body: NewProfessor }>(
+  fastify.post(
     '/professor',
     createProfessorRouterOptions,
     professorController.createProfessor

@@ -1,6 +1,6 @@
-import type { NewAuthor, TAuthor } from '@/@types/ebooks.ts'
-import type { IAuthorServices } from '../interface/authors.interface.ts'
-import { AuthorRepository } from '../repositories/author.repositories.ts'
+import type { NewAuthor, TAuthor } from '@/types/ebooks.types.ts'
+import type { IAuthorServices } from '@interface/authors.interface.ts'
+import { AuthorRepository } from '@repositories/author.repositories.ts'
 
 export class AuthorServices implements IAuthorServices {
   private repository: AuthorRepository

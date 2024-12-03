@@ -1,6 +1,6 @@
-import type { NewProfessor, TProfessor } from '@/@types/cursos.ts'
-import type { IProfessorServices } from '../interface/professor.interface.ts'
-import { ProfessorRepository } from '../repositories/professor.repositories.ts'
+import type { NewProfessor, TProfessor } from '@/types/cursos.types.ts'
+import type { IProfessorServices } from '@interface/professor.interface.ts'
+import { ProfessorRepository } from '@repositories/professor.repositories.ts'
 
 export class ProfessorServices implements IProfessorServices {
   private repository: ProfessorRepository

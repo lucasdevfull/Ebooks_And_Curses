@@ -4,11 +4,11 @@ import type {
   TCategoria,
   TCurso,
   TProfessor,
-} from '@/@types/cursos.ts'
-import type { ICursoServices } from '../interface/curso.interface.ts'
-import { CategoryRepository } from '../repositories/categoria.repositories.ts'
-import { CursoRepository } from '../repositories/curso.repositories.ts'
-import { ProfessorRepository } from '../repositories/professor.repositories.ts'
+} from '@/types/cursos.types.ts'
+import type { ICursoServices } from '@interface/curso.interface.ts'
+import { CategoryRepository } from '@repositories/categoria.repositories.ts'
+import { CursoRepository } from '@repositories/curso.repositories.ts'
+import { ProfessorRepository } from '@repositories/professor.repositories.ts'
 
 export class CursoServices implements ICursoServices {
   private category: CategoryRepository

@@ -1,4 +1,4 @@
-import type { NewAuthor, TAuthor } from '@/@types/ebooks.ts'
+import type { NewAuthor, TAuthor } from '@/types/ebooks.types.ts'
 import type {
   FastifyReply,
   FastifyRequest,

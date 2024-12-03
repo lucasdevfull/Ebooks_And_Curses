@@ -1,4 +1,4 @@
-import { CursoController } from '@/modules/cursos/controllers/curso.controller.ts'
+import { CursoController } from '@controllers/curso.controller.ts'
 import type { FastifyInstance, FastifyPluginOptions } from 'fastify'
 import {
   createCursosRouterOptions,
@@ -8,7 +8,7 @@ import {
   updateCursosRouterOptions,
 } from './curso.options.ts'
 
-export function cursoRouter(
+export function cursoRoutes(
   fastify: FastifyInstance,
   opts: FastifyPluginOptions
 ) {

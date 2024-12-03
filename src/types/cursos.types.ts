@@ -19,7 +19,7 @@ export type Curso = z.infer<typeof cursoSchema>
 export interface Cursos {
   cursoId: number
   titulo: string
-  valor: string
+  valor: number
   categoriaId: number
   categoriaName: string
   professorId: number

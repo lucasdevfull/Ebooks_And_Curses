@@ -1,4 +1,4 @@
-import type { Login, Token } from '@/@types/user.ts'
+import type { Login, Token } from '@/types/user.types.ts'
 import type { FastifyReply, FastifyRequest } from 'fastify'
 
 export interface IAuthController {

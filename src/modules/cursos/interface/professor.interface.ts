@@ -1,4 +1,4 @@
-import type { NewProfessor, TProfessor } from '@/@types/cursos.ts'
+import type { NewProfessor, TProfessor } from '@/types/cursos.types.ts'
 import type {
   FastifyReply,
   FastifyRequest,

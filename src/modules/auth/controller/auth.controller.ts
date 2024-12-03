@@ -1,7 +1,7 @@
-import type { Login } from '@/@types/user.ts'
+import type { Login } from '@/types/user.types.ts'
+import type { IAuthController } from '@interface/auth.interface.ts'
+import { AuthServices } from '@services/auth.services.ts'
 import type { FastifyReply, FastifyRequest } from 'fastify'
-import type { IAuthController } from '../interface/auth.interface.ts'
-import { AuthServices } from '../service/auth.services.ts'
 
 export class AuthController implements IAuthController {
   private service: AuthServices

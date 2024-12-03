@@ -1,4 +1,4 @@
-import type { Curso, NewCurso, TCurso } from '@/@types/cursos.ts'
+import type { Curso, NewCurso, TCurso } from '@/types/cursos.types.ts'
 import type {
   FastifyReply,
   FastifyRequest,

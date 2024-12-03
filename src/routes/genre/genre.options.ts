@@ -1,6 +1,9 @@
-import { verifyToken } from '@/hooks/verifyToken.ts'
-import { genreIsertSchema, genreSelectSchema } from '@/schema/genre.schema.ts'
-import { httpSchema } from '@/schema/http.schema.ts'
+import { verifyToken } from '@hooks/verifyToken.ts'
+import {
+  genreIsertSchema,
+  genreSelectSchema,
+  httpSchema,
+} from '@schema/index.schema.ts'
 import type { RouteShorthandOptions } from 'fastify'
 import { z } from 'zod'
 

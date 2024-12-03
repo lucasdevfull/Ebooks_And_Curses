@@ -1,5 +1,4 @@
-import type { NewAuthor } from '@/@types/ebooks.ts'
-import { AuthorController } from '@/modules/books/controller/author.controller.ts'
+import { AuthorController } from '@controllers/author.controller.ts'
 import type { FastifyInstance, FastifyPluginOptions } from 'fastify'
 import {
   createAuthorsRouterOptions,
@@ -24,7 +23,7 @@ export function authorsRoutes(
     getAuthorsByIdRouterOptions,
     authorsController.getAuthor
   )
-  fastify.post<{ Body: NewAuthor }>(
+  fastify.post(
     '/authors',
     createAuthorsRouterOptions,
     authorsController.getAllAuthors
