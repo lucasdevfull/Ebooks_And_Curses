@@ -1,8 +1,8 @@
-import type { categoria, curso, professor } from '@/db/schema/cursos.ts'
-import type { cursoSchema } from '@/schema/curso.schema.ts'
+import type { categoria, categoriaCursos, curso, professor } from '@/db/schema/cursos.ts'
+import type { cursoInsertSchema, cursoSchema } from '@/schema/curso.schema.ts'
 import type { z } from 'zod'
 
-export type NewCurso = typeof curso.$inferInsert
+export type NewCurso = z.infer<typeof cursoInsertSchema>
 
 export type TCurso = typeof curso.$inferSelect
 
@@ -20,8 +20,8 @@ export interface Cursos {
   cursoId: number
   titulo: string
   valor: string
-  categoriaId: number
-  categoriaName: string
   professorId: number
   professorName: string
 }
+
+export type TCategoriaCurso = typeof categoriaCursos.$inferSelect

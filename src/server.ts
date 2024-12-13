@@ -11,7 +11,6 @@ import {
 } from 'fastify-type-provider-zod'
 import { routes } from '@/router.ts'
 import type { IServer, Routes } from '@/types/server.types.ts'
-
 class FastifyServer implements IServer {
   instance: FastifyInstance<Server, IncomingMessage, ServerResponse>
   constructor(routes: Routes[]) {

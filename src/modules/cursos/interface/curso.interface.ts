@@ -1,4 +1,4 @@
-import type { Curso, NewCurso, TCurso } from '@/types/cursos.types.ts'
+import type { Curso, NewCurso, TCategoriaCurso, TCurso } from '@/types/cursos.types.ts'
 import type {
   FastifyReply,
   FastifyRequest,
@@ -48,5 +48,5 @@ export interface ICursoRepository {
   getByName(nome: string): Promise<TCurso>
   create(data: NewCurso): Promise<TCurso>
   update(id: number, data: NewCurso): Promise<TCurso>
-  delete(id: number): Promise<TCurso>
+  delete(id: number): Promise<TCategoriaCurso>
 }

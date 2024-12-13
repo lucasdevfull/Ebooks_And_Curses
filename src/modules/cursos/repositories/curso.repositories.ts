@@ -5,10 +5,11 @@ import {
   curso,
   professor,
 } from '@/db/schema/cursos.ts'
-import type { Curso, NewCurso, TCurso } from '@/types/cursos.types.ts'
+import type { Curso, NewCurso, TCategoriaCurso, TCurso } from '@/types/cursos.types.ts'
 import { curseResponse } from '@/utils/curso-response.ts'
 import type { ICursoRepository } from '@interface/curso.interface.ts'
 import { eq } from 'drizzle-orm'
+import { log } from 'node:console'
 
 export class CursoRepository implements ICursoRepository {
   async getAll(): Promise<Curso[]> {
@@ -17,19 +18,21 @@ export class CursoRepository implements ICursoRepository {
         cursoId: curso.cursoId,
         titulo: curso.titulo,
         valor: curso.valor,
-        categoriaId: categoriaCursos.categoriaId,
-        categoriaName: categoria.name,
         professorId: curso.professorId,
         professorName: professor.name,
       })
-      .from(categoriaCursos)
-      .innerJoin(curso, eq(categoriaCursos.cursoId, curso.cursoId))
+      .from(curso)
       .innerJoin(professor, eq(curso.professorId, professor.professorId))
-      .innerJoin(
-        categoria,
-        eq(categoriaCursos.categoriaId, categoria.categoriaId)
-      )
-    const response: Curso[] = curseResponse(cursos)
+    
+    const categories = await Promise.all(cursos.map(async(curse) => { 
+        return await db.select({
+            categoriaId: categoriaCursos.categoriaId,
+            categoriaName: categoria.name
+        }).from(categoriaCursos).where(eq(categoriaCursos.cursoId, curse.cursoId))
+        .innerJoin(categoria, eq(categoriaCursos.categoriaId, categoria.categoriaId))
+    }))
+    log(categories.flat())
+    const response: Curso[] = curseResponse(cursos, categories.flat())
     return response
   }
 
@@ -39,20 +42,21 @@ export class CursoRepository implements ICursoRepository {
         cursoId: curso.cursoId,
         titulo: curso.titulo,
         valor: curso.valor,
-        categoriaId: categoriaCursos.categoriaId,
-        categoriaName: categoria.name,
         professorId: curso.professorId,
         professorName: professor.name,
       })
-      .from(categoriaCursos)
-      .where(eq(categoriaCursos.cursoId, id))
-      .innerJoin(curso, eq(categoriaCursos.cursoId, curso.cursoId))
+      .from(curso).where(eq(curso.cursoId, id))
       .innerJoin(professor, eq(curso.professorId, professor.professorId))
-      .innerJoin(
-        categoria,
-        eq(categoriaCursos.categoriaId, categoria.categoriaId)
-      )
-    const response: Curso[] = curseResponse(curse)
+
+
+      const categories = await Promise.all(curse.map(async(curse) => { 
+        return await db.select({
+            categoriaId: categoriaCursos.categoriaId,
+            categoriaName: categoria.name
+        }).from(categoriaCursos).where(eq(categoriaCursos.cursoId, curse.cursoId))
+        .innerJoin(categoria, eq(categoriaCursos.categoriaId, categoria.categoriaId))
+    }))
+    const response: Curso[] = curseResponse(curse, categories.flat())
     return response[0]
   }
 
@@ -65,13 +69,18 @@ export class CursoRepository implements ICursoRepository {
   }
   async create(data: NewCurso): Promise<TCurso> {
     const curse: TCurso[] = await db.insert(curso).values(data).returning()
-    const categoryCurses = await db
-      .insert(categoriaCursos)
-      .values({
-        categoriaId: curse[0].categoriaid,
+    if (Array.isArray(data.categoria)) {
+      await db.insert(categoriaCursos).values(data.categoria.map((id) => ({
+        categoriaId: id,
         cursoId: curse[0].cursoId,
-      })
-      .returning()
+      }))
+    )}
+
+    await db.insert(categoriaCursos).values({
+       categoriaId: Number(data.categoria), 
+       cursoId: curse[0].cursoId 
+    })
+    
     return curse[0]
   }
 
@@ -84,11 +93,12 @@ export class CursoRepository implements ICursoRepository {
     return curse[0]
   }
 
-  async delete(id: number): Promise<TCurso> {
-    const curse: TCurso[] = await db
-      .delete(curso)
-      .where(eq(curso.cursoId, id))
+  async delete(id: number): Promise<TCategoriaCurso> {
+    let curse = await db
+      .delete(categoriaCursos)
+      .where(eq(categoriaCursos.cursoId, id))
       .returning()
+    curse =await db.delete(curso).where(eq(curso.cursoId, id))     
     return curse[0]
   }
 }

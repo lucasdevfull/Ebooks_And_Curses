@@ -1,4 +1,4 @@
-import { curso } from '@/db/schema/cursos.ts'
+import { categoria, curso } from '@/db/schema/cursos.ts'
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
 import { z } from 'zod'
 
@@ -14,11 +14,19 @@ const professorSchema = z.object({
 export const cursoSchema = z.object({
   cursoId: z.number(),
   titulo: z.string(),
-  valor: z.string().transform(val => Number(val)),
-  categoria: categoriaSchema,
-  professor: professorSchema,
+  valor: z.number().transform(val => val.toFixed(2)),
+  categoria: z.array(z.object({
+    categoriaId: z.number(),
+    name: z.string(),
+  })),
+  professor: z.object({
+    professorId: z.number(),
+    name: z.string(),
+  }),
 })
 
-export const cursoInsertSchema = createInsertSchema(curso)
+export const cursoInsertSchema = createInsertSchema(curso).extend({
+  categoria:z.union([z.number().positive(), z.number().positive().array()])
+})
 
 export const cursoSelectSchema = createSelectSchema(curso)

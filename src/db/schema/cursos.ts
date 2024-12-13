@@ -22,9 +22,6 @@ export const curso = pgTable('curso', {
   professorId: integer('professor_id')
     .notNull()
     .references(() => professor.professorId, { onDelete: 'cascade' }),
-  categoriaid: integer('categoria_id')
-    .notNull()
-    .references(() => categoria.categoriaId),
   valor: decimal('valor', { precision: 10, scale: 2 }).notNull(),
 })
 
@@ -35,8 +32,9 @@ export const cursosRelations = relations(curso, ({ many }) => ({
 export const categoriaCursos = pgTable('categoria_cursos', {
   categoriaId: integer('categoria_id')
     .notNull()
+    .unique()
     .references(() => categoria.categoriaId),
   cursoId: integer('curso_id')
     .notNull()
-    .references(() => curso.cursoId),
+    .references(() => curso.cursoId, { onDelete: 'cascade' }),
 })

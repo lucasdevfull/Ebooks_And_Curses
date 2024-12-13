@@ -4,12 +4,12 @@ import { z } from 'zod'
 
 export const userInsertSchema = createInsertSchema(users, {
   username: schema =>
-    schema.username.min(1, {
+    schema.min(1, {
       message: 'O username deve ter pelo menos 1 caracteres',
     }),
-  email: schema => schema.email.email({ message: 'O email deve ser valido' }),
+  email: schema => schema.email({ message: 'O email deve ser valido' }),
   password: schema =>
-    schema.password.min(8, {
+    schema.min(8, {
       message: 'A senha deve ter pelo menos 8 caracteres',
     }),
 })
@@ -24,17 +24,17 @@ export const userInsertSchema = createInsertSchema(users, {
   })
 
 export const userSelectSchema = createSelectSchema(users, {
-  userId: schema => schema.userId.positive(),
+  userId: schema => schema.positive(),
   username: schema =>
-    schema.username.min(1, {
+    schema.min(1, {
       message: 'O username deve ter pelo menos 1 caracteres',
     }),
   email: schema =>
-    schema.email.email({
+    schema.email({
       message: 'O email deve ser valido',
     }),
   password: schema =>
-    schema.password.min(8, {
+    schema.min(8, {
       message: 'A senha deve ter pelo menos 8 caracteres',
     }),
 })

@@ -1,7 +1,6 @@
 import type {
   Curso,
   NewCurso,
-  TCategoria,
   TCurso,
   TProfessor,
 } from '@/types/cursos.types.ts'
@@ -31,7 +30,10 @@ export class CursoServices implements ICursoServices {
   }
   async createCursos(data: NewCurso): Promise<TCurso> {
     const professor: TProfessor = await this.professor.getById(data.professorId)
-    const category: TCategoria = await this.category.getById(data.categoriaid)
+    const category = Array.isArray(data.categoria) ? data.categoria.map(async id => {
+      return await this.category.getById(id)
+    }): await this.category.getById(data.categoria)
+    
     const curseExists: TCurso = await this.curse.getByName(data.titulo)
     if (!professor) throw new Error('Professor not found')
     if (!category) throw new Error('Category not found')
@@ -50,7 +52,10 @@ export class CursoServices implements ICursoServices {
   async deleteCursos(id: number): Promise<{ message: string }> {
     const curseExists: Curso = await this.curse.getById(id)
     if (!curseExists) throw new Error('Curse not found')
-    const curse: TCurso = await this.curse.delete(id)
+    const curse = await this.curse.delete(id)
     return { message: 'Curse deleted successfully' }
   }
+  
 }
+
+
