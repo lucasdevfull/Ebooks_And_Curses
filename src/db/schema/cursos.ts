@@ -12,10 +12,6 @@ export const categoria = pgTable('categoria', {
   name: varchar({ length: 255 }).notNull(),
 })
 
-export const categoriasRelations = relations(categoria, ({ many }) => ({
-  curso: many(categoriaCursos),
-}))
-
 export const curso = pgTable('curso', {
   cursoId: integer().primaryKey().generatedAlwaysAsIdentity(),
   titulo: varchar('titulo', { length: 255 }).notNull(),
@@ -25,10 +21,7 @@ export const curso = pgTable('curso', {
   valor: decimal('valor', { precision: 10, scale: 2 }).notNull(),
 })
 
-export const cursosRelations = relations(curso, ({ many }) => ({
-  categoria: many(categoriaCursos),
-}))
-
+// tabela intermediaria
 export const categoriaCursos = pgTable('categoria_cursos', {
   categoriaId: integer('categoria_id')
     .notNull()
@@ -38,3 +31,12 @@ export const categoriaCursos = pgTable('categoria_cursos', {
     .notNull()
     .references(() => curso.cursoId, { onDelete: 'cascade' }),
 })
+
+//relations
+export const categoriasRelations = relations(categoria, ({ many }) => ({
+  curso: many(categoriaCursos),
+}))
+
+export const cursosRelations = relations(curso, ({ many }) => ({
+  categoria: many(categoriaCursos),
+}))

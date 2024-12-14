@@ -1,5 +1,6 @@
 import type { Curso, NewCurso, TCurso } from '@/types/cursos.types.ts'
 import type {
+  CategoriaCursoRequest,
   CursoBodyRequest,
   CursoRequest,
   ICursoController,
@@ -75,4 +76,18 @@ export class CursoController implements ICursoController {
       return reply.status(500).send(error)
     }
   }
+
+  deleteCategory = async (
+    request: FastifyRequest<CategoriaCursoRequest>,
+    reply: FastifyReply
+  ) => {
+    try {
+      const { cursoId, categoriaId } = request.params
+      const result = await this.service.deleteCategoryInCurse(Number(cursoId), Number(categoriaId))
+      return reply.status(404).send(result)
+    } catch (error) {
+      return reply.status(500).send(error)
+    }
+  }
+
 }

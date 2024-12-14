@@ -7,11 +7,12 @@ export const authors = pgTable('authors', {
   authorId: integer('id').primaryKey().notNull().generatedAlwaysAsIdentity(),
   first_name: text('first_name').notNull(),
   last_name: text('last_name').notNull(),
-})
+});
 
 export const authorsRelations = relations(authors, ({ many }) => ({
   ebooks: many(ebooksAuthors),
-}))
+}));
+
 
 // Tabela de gêneros
 export const genres = pgTable('genres', {

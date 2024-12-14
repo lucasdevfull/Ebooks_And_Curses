@@ -1,4 +1,9 @@
-import type { categoria, categoriaCursos, curso, professor } from '@/db/schema/cursos.ts'
+import type {
+  categoria,
+  categoriaCursos,
+  curso,
+  professor,
+} from '@/db/schema/cursos.ts'
 import type { cursoInsertSchema, cursoSchema } from '@/schema/curso.schema.ts'
 import type { z } from 'zod'
 

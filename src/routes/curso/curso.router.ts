@@ -2,6 +2,7 @@ import { CursoController } from '@controllers/curso.controller.ts'
 import type { FastifyInstance, FastifyPluginOptions } from 'fastify'
 import {
   createCursosRouterOptions,
+  deleteCategoryInCurseRouterOptions,
   deleteCursosRouterOptions,
   getAllCursosRouterOptions,
   getCursoByIdRouterOptions,
@@ -38,5 +39,10 @@ export function cursoRoutes(
     '/cursos/:id',
     deleteCursosRouterOptions,
     cursoController.deleteCursos
+  )
+  fastify.get(
+    '/cursos/:curso-id/categoria/:categoria-id',
+    deleteCategoryInCurseRouterOptions,
+    cursoController.deleteCategory
   )
 }

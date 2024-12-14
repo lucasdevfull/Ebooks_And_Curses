@@ -1,5 +1,7 @@
 import type { IncomingMessage, Server, ServerResponse } from 'node:http'
 import { env } from '@/env.ts'
+import { routes } from '@/router.ts'
+import type { IServer, Routes } from '@/types/server.types.ts'
 import fastifyCors from '@fastify/cors'
 import fastifyHelmet from '@fastify/helmet'
 import fastifyJwt from '@fastify/jwt'
@@ -9,8 +11,6 @@ import {
   serializerCompiler,
   validatorCompiler,
 } from 'fastify-type-provider-zod'
-import { routes } from '@/router.ts'
-import type { IServer, Routes } from '@/types/server.types.ts'
 class FastifyServer implements IServer {
   instance: FastifyInstance<Server, IncomingMessage, ServerResponse>
   constructor(routes: Routes[]) {

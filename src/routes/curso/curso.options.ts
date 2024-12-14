@@ -76,3 +76,21 @@ export const deleteCursosRouterOptions: RouteShorthandOptions = {
   },
   onRequest: verifyToken,
 }
+
+export const deleteCategoryInCurseRouterOptions: RouteShorthandOptions = {
+  schema: {
+    params: z.object({
+      cursoId: z.string(),
+      categoriaId: z.string()
+    }),
+    response: {
+      200: z.object({
+        message: z.string(),
+      }),
+      401: httpSchema,
+      404: httpSchema,
+      500: httpSchema,
+    },
+  },
+  onRequest: verifyToken,
+}
