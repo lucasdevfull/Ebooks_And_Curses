@@ -1,5 +1,5 @@
 import { relations } from 'drizzle-orm'
-import { decimal, integer, pgTable, varchar } from 'drizzle-orm/pg-core'
+import { decimal, integer, pgTable, primaryKey, varchar } from 'drizzle-orm/pg-core'
 
 export const professor = pgTable('professor', {
   professorId: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -25,12 +25,15 @@ export const curso = pgTable('curso', {
 export const categoriaCursos = pgTable('categoria_cursos', {
   categoriaId: integer('categoria_id')
     .notNull()
-    .unique()
     .references(() => categoria.categoriaId),
   cursoId: integer('curso_id')
     .notNull()
     .references(() => curso.cursoId, { onDelete: 'cascade' }),
-})
+}, table => [
+  primaryKey({
+    columns: [table.categoriaId, table.cursoId],
+  }),
+])
 
 //relations
 export const categoriasRelations = relations(categoria, ({ many }) => ({
