@@ -11,10 +11,12 @@ import {
   serializerCompiler,
   validatorCompiler,
 } from 'fastify-type-provider-zod'
+import { errorHandler } from './error-handler.ts'
 class FastifyServer implements IServer {
   instance: FastifyInstance<Server, IncomingMessage, ServerResponse>
   constructor(routes: Routes[]) {
     this.instance = fastify({ logger: true })
+    this.errors()
     this.plugins()
     this.routes(routes)
   }
@@ -30,6 +32,10 @@ class FastifyServer implements IServer {
     this.instance.register(fastifyCors, {
       origin: '*',
     })
+  }
+
+  errors():void {
+    this.instance.setErrorHandler(errorHandler)
   }
   routes(routers: Routes[]): void {
     for (const { router } of routers) {
