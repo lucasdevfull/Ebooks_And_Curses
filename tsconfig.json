@@ -48,6 +48,9 @@
         "./src/modules/books/repositories/*",
         "./src/modules/cursos/repositories/*",
         "./src/modules/user/repositories/*",
+      ],
+      "@errors/*": [
+        "./src/errors/*"
       ]
     }
   }
