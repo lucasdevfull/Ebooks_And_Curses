@@ -113,22 +113,27 @@ export class CursoRepository implements ICursoRepository {
 
   async update(id: number, data: NewCurso): Promise<TCurso> {
     const { categoria, titulo, valor } = data
-    const curse: TCurso[] = await db
-      .update(curso)
-      .set({ titulo, valor })
-      .where(eq(curso.cursoId, id))
-      .returning()
-    const { cursoId } = curse[0]
-    if (Array.isArray(categoria)) {
-      for (const categoriaId of categoria) {
-        await db.insert(categoriaCursos).values({ categoriaId, cursoId })
+    const { curse } = await db.transaction(async tx => {
+      const curse: TCurso[] = await db
+        .update(curso)
+        .set({ titulo, valor })
+        .where(eq(curso.cursoId, id))
+        .returning()
+      
+      const { cursoId } = curse[0]
+      let category: TCategoriaCurso[] = []
+      if (Array.isArray(categoria)) {
+        for (const categoriaId of categoria) {
+          category = await db.insert(categoriaCursos).values({ categoriaId, cursoId }).returning()
+        }
+      } else {
+        category = await db.insert(categoriaCursos).values({
+          categoriaId: categoria,
+          cursoId,
+        }).returning()
       }
-    } else {
-      await db.insert(categoriaCursos).values({
-        categoriaId: categoria,
-        cursoId,
-      })
-    }
+      return { curse, category }
+    })
     return curse[0]
   }
 
@@ -142,7 +147,7 @@ export class CursoRepository implements ICursoRepository {
       .select()
       .from(categoriaCursos)
       .where(and(eq(categoriaCursos.cursoId, cursoId), eq(categoriaCursos.categoriaId, categoryId)))
-    return categories
+    return categories[0]
   }
 
   async removeCategoryInCurse(categoriaId: number, cursoId: number) {

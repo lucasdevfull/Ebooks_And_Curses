@@ -2,18 +2,18 @@ import { relations } from 'drizzle-orm'
 import { decimal, integer, pgTable, primaryKey, varchar } from 'drizzle-orm/pg-core'
 
 export const professor = pgTable('professor', {
-  professorId: integer().primaryKey().generatedAlwaysAsIdentity(),
-  name: varchar({ length: 40 }).notNull(),
-  email: varchar('email', { length: 255 }).notNull().unique(),
+  professorId: integer('professor_id').primaryKey().generatedAlwaysAsIdentity(),
+  name: varchar('professor_name',{ length: 40 }).notNull(),
+  email: varchar('professor_email', { length: 255 }).notNull().unique(),
 })
 
 export const categoria = pgTable('categoria', {
-  categoriaId: integer().primaryKey().generatedAlwaysAsIdentity(),
-  name: varchar({ length: 255 }).notNull(),
+  categoriaId: integer('categoria_id').primaryKey().generatedAlwaysAsIdentity(),
+  name: varchar('categoria_name',{ length: 255 }).notNull(),
 })
 
 export const curso = pgTable('curso', {
-  cursoId: integer().primaryKey().generatedAlwaysAsIdentity(),
+  cursoId: integer('curso_id').primaryKey().generatedAlwaysAsIdentity(),
   titulo: varchar('titulo', { length: 255 }).notNull(),
   professorId: integer('professor_id')
     .notNull()
@@ -42,4 +42,15 @@ export const categoriasRelations = relations(categoria, ({ many }) => ({
 
 export const cursosRelations = relations(curso, ({ many }) => ({
   categoria: many(categoriaCursos),
+}))
+
+export const categoriaCursosRelations = relations(categoriaCursos, ({ one }) =>({
+  curso: one(curso, {
+    fields: [categoriaCursos.cursoId],
+    references: [curso.cursoId]
+  }),
+  categoria: one(categoria, {
+    fields: [categoriaCursos.categoriaId],
+    references: [categoria.categoriaId]
+  })
 }))

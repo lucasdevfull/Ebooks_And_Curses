@@ -21,7 +21,7 @@ export interface ICategoriaController {
   getCategoryById(
     request: FastifyRequest<CategoryRequest>,
     reply: FastifyReply
-  ): Promise<TCategoria>
+  ): Promise<TCategoria | Error>
   createCategory(
     request: FastifyRequest<CategoryRequest>,
     reply: FastifyReply

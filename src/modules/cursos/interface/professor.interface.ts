@@ -23,7 +23,7 @@ export interface IProfessorController {
   getProfessorById(
     request: FastifyRequest<ProfessorRequest>,
     reply: FastifyReply
-  ): Promise<TProfessor>
+  ): Promise<TProfessor | Error>
   createProfessor(
     request: FastifyRequest<ProfessorBodyRequest>,
     reply: FastifyReply

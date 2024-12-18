@@ -31,7 +31,7 @@ export interface ICursoController {
   getCursosById(
     request: FastifyRequest<CursoRequest>,
     reply: FastifyReply
-  ): Promise<Curso>
+  ): Promise<Curso | Error>
   createCursos(
     request: FastifyRequest<CursoBodyRequest>,
     reply: FastifyReply

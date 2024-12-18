@@ -1,3 +1,4 @@
+import { NotFoundError } from '@/errors/not-found.ts'
 import type { NewCategoria, TCategoria } from '@/types/cursos.types.ts'
 import type {
   CategoryBodyRequest,
@@ -21,27 +22,23 @@ export class CategoryController implements ICategoriaController {
       const categories = await this.service.getAllCategories()
       return reply.status(200).send(categories)
     } catch (error) {
-      return reply.status(500).send(error)
+      return reply.send(error)
     }
   }
 
   getCategoryById = async (
     request: FastifyRequest<CategoryRequest>,
     reply: FastifyReply
-  ): Promise<TCategoria> => {
+  ): Promise<TCategoria | Error> => {
     try {
       const { id } = request.params
       const category = await this.service.getCategoryById(Number(id))
       if (!category) {
-        return reply.status(404).send({
-          statusCode: 404,
-          error: 'Not Found',
-          message: 'Category not found',
-        })
+        return new NotFoundError('Category not found')
       }
       return reply.status(200).send(category)
     } catch (error) {
-      return reply.status(500).send(error)
+      return reply.send(error)
     }
   }
 
@@ -54,7 +51,7 @@ export class CategoryController implements ICategoriaController {
       const newCategory = await this.service.createCategory(category)
       return reply.status(201).send(newCategory)
     } catch (error) {
-      return reply.status(500).send(error)
+      return reply.send(error)
     }
   }
 
@@ -71,7 +68,7 @@ export class CategoryController implements ICategoriaController {
       )
       return reply.status(200).send(updatedCategory)
     } catch (error) {
-      return reply.status(500).send(error)
+      return reply.send(error)
     }
   }
 
@@ -84,7 +81,7 @@ export class CategoryController implements ICategoriaController {
       const result = await this.service.deleteCategory(Number(id))
       return reply.send(result).status(200)
     } catch (error) {
-      return reply.status(500).send(error)
+      return reply.send(error)
     }
   }
 }

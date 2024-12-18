@@ -1,3 +1,4 @@
+import { NotFoundError } from '@/errors/not-found.ts'
 import type { NewProfessor, TProfessor } from '@/types/cursos.types.ts'
 import type {
   IProfessorController,
@@ -24,15 +25,11 @@ export class ProfessorController implements IProfessorController {
   getProfessorById = async (
     request: FastifyRequest<ProfessorRequest>,
     reply: FastifyReply
-  ): Promise<TProfessor> => {
+  ): Promise<TProfessor|Error> => {
     const { id } = request.params
     const professor = await this.service.getProfessorById(Number(id))
     if (!professor) {
-      return reply.status(404).send({
-        statusCode: 404,
-        error: 'Not Found',
-        message: 'Professor not found',
-      })
+      return new NotFoundError('Professor not found')
     }
     return reply.status(200).send(professor)
   }
@@ -46,7 +43,7 @@ export class ProfessorController implements IProfessorController {
       const result = await this.service.createProfessor(professor)
       return reply.status(201).send(result)
     } catch (error) {
-      return reply.status(500).send(error)
+      return reply.send(error)
     }
   }
 
@@ -60,7 +57,7 @@ export class ProfessorController implements IProfessorController {
       const result = await this.service.updateProfessor(Number(id), professor)
       return reply.status(200).send(result)
     } catch (error) {
-      return reply.status(500).send(error)
+      return reply.send(error)
     }
   }
 
@@ -73,7 +70,7 @@ export class ProfessorController implements IProfessorController {
       const result = await this.service.deleteProfessor(Number(id))
       return reply.status(204).send(result)
     } catch (error) {
-      return reply.status(500).send(error)
+      return reply.send(error)
     }
   }
 }

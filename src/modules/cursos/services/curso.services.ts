@@ -1,7 +1,10 @@
+import { ConflitError } from '@/errors/conflit.ts'
+import { NotFoundError } from '@/errors/not-found.ts'
 import type {
   Curso,
   NewCurso,
   TCategoria,
+  TCategoriaCurso,
   TCurso,
   TProfessor,
 } from '@/types/cursos.types.ts'
@@ -31,16 +34,20 @@ export class CursoServices implements ICursoServices {
   }
   async createCursos(data: NewCurso): Promise<TCurso> {
     const professor: TProfessor = await this.professor.getById(data.professorId)
-    const category = Array.isArray(data.categoria)
-      ? data.categoria.map(async id => {
-          return await this.category.getById(id)
-        })
-      : await this.category.getById(data.categoria)
+    let category: Promise<TCategoria>[] | TCategoria
 
+    if (Array.isArray(data.categoria)) {
+      category = data.categoria.map(async id => {
+        return await this.category.getById(id)
+      })
+    } else {
+      category = await this.category.getById(data.categoria)
+    }
+    
     const curseExists: TCurso = await this.curse.getByName(data.titulo)
-    if (!professor) throw new Error('Professor not found')
-    if (!category) throw new Error('Category not found')
-    if (curseExists) throw new Error('Curse already exists')
+    if (!professor) throw new NotFoundError('Professor not found')
+    if (!category) throw new NotFoundError('Category not found')
+    if (curseExists) throw new ConflitError('Curse already exists')
     const curse: TCurso = await this.curse.create(data)
     return curse
   }
@@ -48,37 +55,53 @@ export class CursoServices implements ICursoServices {
   async updateCursos(id: number, data: NewCurso): Promise<TCurso> {
     const curseExists: Curso = await this.curse.getById(id)
     if (!curseExists) throw new Error('Curse not found')
+    let category: TCategoria | TCategoria[]  
+    
+    if (Array.isArray(data.categoria)) {
+      category = await Promise.all(data.categoria.map(async id => {
+        return await this.category.getById(id)
+      }))
+    } else {
+      category = await this.category.getById(data.categoria)
+    }
+       
+    if (!category) {
+      throw new Error('Category not found')
+    }
 
-    const category = !Array.isArray(data.categoria)
-      ? await this.category.getById(data.categoria)
-      : data.categoria.map(async id => {
-          return await this.category.getById(id)
-        })
+    let categoryInCurse: TCategoriaCurso | TCategoriaCurso[]
 
-    if (!category) throw new Error('Category not found')
+    if (Array.isArray(data.categoria)) {
+      categoryInCurse = await Promise.all(data.categoria.map(async id => {
+        return await this.curse.findCategoryInCurse(id, curseExists.cursoId)
+      }))
+    } else {
+      categoryInCurse = await this.curse.findCategoryInCurse(data.categoria, curseExists.cursoId)
+    }
+      
 
-    const categoryInCurse = !Array.isArray(data.categoria)
-      ? await this.curse.findCategoryInCurse(data.categoria, curseExists.cursoId)
-      : data.categoria.map(async id => {
-          return await this.curse.findCategoryInCurse(id, curseExists.cursoId)
-        })
-
-    if (categoryInCurse) throw new Error('Category já existente no curso')
-
+    if (categoryInCurse) {
+      throw new ConflitError('Category já existente no curso')
+    }
     const curse: TCurso = await this.curse.update(id, data)
     return curse
   }
 
   async deleteCursos(id: number): Promise<{ message: string }> {
     const curseExists: Curso = await this.curse.getById(id)
-    if (!curseExists) throw new Error('Curse not found')
+    if (!curseExists) {
+      throw new NotFoundError('Curse not found')
+    }
+
     const curse = await this.curse.delete(id)
     return { message: 'Curse deleted successfully' }
   }
 
   async deleteCategoryInCurse(curseId: number,categoryId: number): Promise<{ message: string }> {
     const categoryExists = await this.curse.findCategoryInCurse(categoryId, curseId)
-    if (!categoryExists) throw new Error('Category not found in this curse')
+    if (!categoryExists) {
+      throw new Error('Category not found in this curse')
+    }
 
     const category = await this.curse.removeCategoryInCurse(categoryId, curseId)
     return { message: 'Category removed successfully' }

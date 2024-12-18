@@ -1,3 +1,4 @@
+import { NotFoundError } from '@errors/not-found.ts'
 import type { Curso, NewCurso, TCurso } from '@/types/cursos.types.ts'
 import type {
   CategoriaCursoRequest,
@@ -24,15 +25,11 @@ export class CursoController implements ICursoController {
   getCursosById = async (
     request: FastifyRequest<CursoRequest>,
     reply: FastifyReply
-  ): Promise<Curso> => {
+  ): Promise<Curso | Error> => {
     const { id } = request.params
     const curso = await this.service.getCursosById(Number(id))
     if (!curso) {
-      return reply.status(404).send({
-        statusCode: 404,
-        error: 'Not Found',
-        message: 'Curso not found',
-      })
+      return new NotFoundError('Curso not found')
     }
     return reply.status(200).send(curso)
   }
@@ -46,7 +43,7 @@ export class CursoController implements ICursoController {
       const result = await this.service.createCursos(curso)
       return reply.status(201).send(result)
     } catch (error) {
-      return reply.status(500).send(error)
+      return reply.send(error)
     }
   }
 
@@ -60,7 +57,7 @@ export class CursoController implements ICursoController {
       const result = await this.service.updateCursos(Number(id), curso)
       return reply.status(200).send(result)
     } catch (error) {
-      return reply.status(500).send(error)
+      return reply.send(error)
     }
   }
 
@@ -73,7 +70,7 @@ export class CursoController implements ICursoController {
       const result = await this.service.deleteCursos(Number(id))
       return reply.status(200).send(result)
     } catch (error) {
-      return reply.status(500).send(error)
+      return reply.send(error)
     }
   }
 
@@ -86,7 +83,7 @@ export class CursoController implements ICursoController {
       const result = await this.service.deleteCategoryInCurse(Number(cursoId), Number(categoriaId))
       return reply.status(404).send(result)
     } catch (error) {
-      return reply.status(500).send(error)
+      return reply.send(error)
     }
   }
 
