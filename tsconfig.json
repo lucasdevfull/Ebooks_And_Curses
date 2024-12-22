@@ -26,6 +26,9 @@
       "@schema/*": [
         "./src/schema/*"
       ],
+      "@db/*": [
+        "./src/db/schema/*"
+      ],
       "@controllers/*": [
         "./src/modules/auth/controller/*",
         "./src/modules/books/controller/*",
@@ -52,6 +55,9 @@
       ],
       "@errors/*": [
         "./src/errors/*"
+      ],
+      "@utils/*": [
+        "./src/utils/*"
       ]
     }
   }
