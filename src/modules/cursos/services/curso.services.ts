@@ -37,13 +37,13 @@ export class CursoServices implements ICursoServices {
     let category: Promise<TCategoria>[] | TCategoria
 
     if (Array.isArray(data.categoria)) {
-      category = data.categoria.map(async id => {
+      category = data.categoria.map(async (id: number) => {
         return await this.category.getById(id)
       })
     } else {
       category = await this.category.getById(data.categoria)
     }
-    
+
     const curseExists: TCurso = await this.curse.getByName(data.titulo)
     if (!professor) throw new NotFoundError('Professor not found')
     if (!category) throw new NotFoundError('Category not found')
@@ -55,16 +55,18 @@ export class CursoServices implements ICursoServices {
   async updateCursos(id: number, data: NewCurso): Promise<TCurso> {
     const curseExists: Curso = await this.curse.getById(id)
     if (!curseExists) throw new Error('Curse not found')
-    let category: TCategoria | TCategoria[]  
-    
+    let category: TCategoria | TCategoria[]
+
     if (Array.isArray(data.categoria)) {
-      category = await Promise.all(data.categoria.map(async id => {
-        return await this.category.getById(id)
-      }))
+      category = await Promise.all(
+        data.categoria.map(async (id: number) => {
+          return await this.category.getById(id)
+        })
+      )
     } else {
       category = await this.category.getById(data.categoria)
     }
-       
+
     if (!category) {
       throw new Error('Category not found')
     }
@@ -72,13 +74,17 @@ export class CursoServices implements ICursoServices {
     let categoryInCurse: TCategoriaCurso | TCategoriaCurso[]
 
     if (Array.isArray(data.categoria)) {
-      categoryInCurse = await Promise.all(data.categoria.map(async id => {
-        return await this.curse.findCategoryInCurse(id, curseExists.cursoId)
-      }))
+      categoryInCurse = await Promise.all(
+        data.categoria.map(async (id: number) => {
+          return await this.curse.findCategoryInCurse(id, curseExists.cursoId)
+        })
+      )
     } else {
-      categoryInCurse = await this.curse.findCategoryInCurse(data.categoria, curseExists.cursoId)
+      categoryInCurse = await this.curse.findCategoryInCurse(
+        data.categoria,
+        curseExists.cursoId
+      )
     }
-      
 
     if (categoryInCurse) {
       throw new ConflitError('Category já existente no curso')
@@ -97,8 +103,14 @@ export class CursoServices implements ICursoServices {
     return { message: 'Curse deleted successfully' }
   }
 
-  async deleteCategoryInCurse(curseId: number,categoryId: number): Promise<{ message: string }> {
-    const categoryExists = await this.curse.findCategoryInCurse(categoryId, curseId)
+  async deleteCategoryInCurse(
+    curseId: number,
+    categoryId: number
+  ): Promise<{ message: string }> {
+    const categoryExists = await this.curse.findCategoryInCurse(
+      categoryId,
+      curseId
+    )
     if (!categoryExists) {
       throw new Error('Category not found in this curse')
     }

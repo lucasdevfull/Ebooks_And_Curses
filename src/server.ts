@@ -1,5 +1,5 @@
-import type { IncomingMessage, Server, ServerResponse } from 'node:http'
 import { env } from '@/env.ts'
+import { errorHandler } from '@/error-handler.ts'
 import { routes } from '@/router.ts'
 import type { IServer, Routes } from '@/types/server.types.ts'
 import fastifyCors from '@fastify/cors'
@@ -11,11 +11,13 @@ import {
   serializerCompiler,
   validatorCompiler,
 } from 'fastify-type-provider-zod'
-import { errorHandler } from './error-handler.ts'
+
 class FastifyServer implements IServer {
-  instance: FastifyInstance<Server, IncomingMessage, ServerResponse>
+  instance: FastifyInstance
   constructor(routes: Routes[]) {
-    this.instance = fastify({ logger: true })
+    this.instance = fastify({
+      logger: true,
+    }).withTypeProvider<ZodTypeProvider>()
     this.errors()
     this.plugins()
     this.routes(routes)
@@ -24,7 +26,6 @@ class FastifyServer implements IServer {
   plugins(): void {
     this.instance.setValidatorCompiler(validatorCompiler)
     this.instance.setSerializerCompiler(serializerCompiler)
-    this.instance.withTypeProvider<ZodTypeProvider>()
     this.instance.register(fastifyJwt, {
       secret: env.JWT_SECRET,
     })
@@ -34,7 +35,7 @@ class FastifyServer implements IServer {
     })
   }
 
-  errors():void {
+  errors(): void {
     this.instance.setErrorHandler(errorHandler)
   }
   routes(routers: Routes[]): void {

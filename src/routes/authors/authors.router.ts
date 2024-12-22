@@ -1,5 +1,6 @@
+import type { FastifyInstanceZod } from '@/types/server.types.ts'
 import { AuthorController } from '@controllers/author.controller.ts'
-import type { FastifyInstance, FastifyPluginOptions } from 'fastify'
+import type { FastifyPluginOptions } from 'fastify'
 import {
   createAuthorsRouterOptions,
   deleteAuthorsRouterOptions,
@@ -9,7 +10,7 @@ import {
 } from './authors.options.ts'
 
 export function authorsRoutes(
-  fastify: FastifyInstance,
+  fastify: FastifyInstanceZod,
   opts: FastifyPluginOptions
 ) {
   const authorsController = new AuthorController()

@@ -1,5 +1,6 @@
+import type { FastifyInstanceZod } from '@/types/server.types.ts'
 import { UserController } from '@controllers/user.controller.ts'
-import type { FastifyInstance, FastifyPluginOptions } from 'fastify'
+import type { FastifyPluginOptions } from 'fastify'
 import {
   createUserRouterOptions,
   getUserRouterOptions,
@@ -7,7 +8,7 @@ import {
 } from './user.options.ts'
 
 export function userRoutes(
-  fastify: FastifyInstance,
+  fastify: FastifyInstanceZod,
   opts: FastifyPluginOptions
 ) {
   const userController = new UserController()

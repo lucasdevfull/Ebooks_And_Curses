@@ -4,7 +4,8 @@ import {
   categoriaCursos,
   curso,
   professor,
-} from '@/db/schema/cursos.ts'
+} from '@/db/schema/index.ts'
+
 import type {
   Curso,
   NewCurso,
@@ -119,18 +120,24 @@ export class CursoRepository implements ICursoRepository {
         .set({ titulo, valor })
         .where(eq(curso.cursoId, id))
         .returning()
-      
+
       const { cursoId } = curse[0]
       let category: TCategoriaCurso[] = []
       if (Array.isArray(categoria)) {
         for (const categoriaId of categoria) {
-          category = await db.insert(categoriaCursos).values({ categoriaId, cursoId }).returning()
+          category = await db
+            .insert(categoriaCursos)
+            .values({ categoriaId, cursoId })
+            .returning()
         }
       } else {
-        category = await db.insert(categoriaCursos).values({
-          categoriaId: categoria,
-          cursoId,
-        }).returning()
+        category = await db
+          .insert(categoriaCursos)
+          .values({
+            categoriaId: categoria,
+            cursoId,
+          })
+          .returning()
       }
       return { curse, category }
     })
@@ -146,14 +153,24 @@ export class CursoRepository implements ICursoRepository {
     const categories = await db
       .select()
       .from(categoriaCursos)
-      .where(and(eq(categoriaCursos.cursoId, cursoId), eq(categoriaCursos.categoriaId, categoryId)))
+      .where(
+        and(
+          eq(categoriaCursos.cursoId, cursoId),
+          eq(categoriaCursos.categoriaId, categoryId)
+        )
+      )
     return categories[0]
   }
 
   async removeCategoryInCurse(categoriaId: number, cursoId: number) {
-    const categories = await db.delete(categoriaCursos).where(
-      and(eq(categoriaCursos.categoriaId, categoriaId), eq(categoriaCursos.cursoId, cursoId))
-    )
+    const categories = await db
+      .delete(categoriaCursos)
+      .where(
+        and(
+          eq(categoriaCursos.categoriaId, categoriaId),
+          eq(categoriaCursos.cursoId, cursoId)
+        )
+      )
     return categories
   }
 }

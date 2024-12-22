@@ -81,7 +81,7 @@ export const deleteCategoryInCurseRouterOptions: RouteShorthandOptions = {
   schema: {
     params: z.object({
       cursoId: z.string(),
-      categoriaId: z.string()
+      categoriaId: z.string(),
     }),
     response: {
       200: z.object({

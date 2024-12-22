@@ -1,5 +1,5 @@
 import { db } from '@/db/index.ts'
-import { professor } from '@/db/schema/cursos.ts'
+import { professor } from '@/db/schema/index.ts'
 import type { NewProfessor, TProfessor } from '@/types/cursos.types.ts'
 import type { IProfessorRepository } from '@interface/professor.interface.ts'
 import { professorSelectSchema } from '@schema/professor.schema.ts'

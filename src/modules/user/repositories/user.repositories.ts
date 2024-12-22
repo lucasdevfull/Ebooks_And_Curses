@@ -1,5 +1,5 @@
 import { db } from '@/db/index.ts'
-import { users } from '@/db/schema/user.ts'
+import { users } from '@/db/schema/tables/user.ts'
 import { userSelectSchema } from '@/schema/user.schema.ts'
 import type { NewUser, Users } from '@/types/user.types.ts'
 import type { IUserRepository } from '@interface/user.interface.ts'

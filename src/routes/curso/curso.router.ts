@@ -1,5 +1,6 @@
+import type { FastifyInstanceZod } from '@/types/server.types.ts'
 import { CursoController } from '@controllers/curso.controller.ts'
-import type { FastifyInstance, FastifyPluginOptions } from 'fastify'
+import type { FastifyPluginOptions } from 'fastify'
 import {
   createCursosRouterOptions,
   deleteCategoryInCurseRouterOptions,
@@ -10,7 +11,7 @@ import {
 } from './curso.options.ts'
 
 export function cursoRoutes(
-  fastify: FastifyInstance,
+  fastify: FastifyInstanceZod,
   opts: FastifyPluginOptions
 ) {
   const cursoController = new CursoController()

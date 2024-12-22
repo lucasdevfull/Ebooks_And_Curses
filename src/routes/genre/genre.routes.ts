@@ -1,5 +1,6 @@
+import type { FastifyInstanceZod } from '@/types/server.types.ts'
 import { GenreController } from '@controllers/genre.controller.ts'
-import type { FastifyInstance, FastifyPluginOptions } from 'fastify'
+import type { FastifyPluginOptions } from 'fastify'
 import {
   createGenreRouterOptions,
   deleteGenreRouterOptions,
@@ -9,7 +10,7 @@ import {
 } from './genre.options.ts'
 
 export function genreRoutes(
-  fastify: FastifyInstance,
+  fastify: FastifyInstanceZod,
   opts: FastifyPluginOptions
 ) {
   const genreController = new GenreController()

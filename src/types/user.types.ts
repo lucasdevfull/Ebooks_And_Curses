@@ -1,4 +1,4 @@
-import type { users } from '@/db/schema/user.ts'
+import type { users } from '@/db/schema/tables/user.ts'
 import type { tokenSchema } from '@/schema/auth.schema.ts'
 import type { loginSchema } from '@/schema/user.schema.ts'
 import type { z } from 'zod'

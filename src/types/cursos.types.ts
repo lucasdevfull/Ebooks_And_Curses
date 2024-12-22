@@ -3,7 +3,7 @@ import type {
   categoriaCursos,
   curso,
   professor,
-} from '@/db/schema/cursos.ts'
+} from '@/db/schema/index.ts'
 import type { cursoInsertSchema, cursoSchema } from '@/schema/curso.schema.ts'
 import type { z } from 'zod'
 

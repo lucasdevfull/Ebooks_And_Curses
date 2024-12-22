@@ -8,7 +8,7 @@ export function curseResponse(
     return {
       cursoId: curse.cursoId,
       titulo: curse.titulo,
-      valor: Number(curse.valor),
+      valor: curse.valor,
       categoria: category.map(category => ({
         categoriaId: category.categoriaId,
         name: category.categoriaName,

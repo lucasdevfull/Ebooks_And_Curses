@@ -1,5 +1,5 @@
-import { NotFoundError } from '@errors/not-found.ts'
 import type { Curso, NewCurso, TCurso } from '@/types/cursos.types.ts'
+import { NotFoundError } from '@errors/not-found.ts'
 import type {
   CategoriaCursoRequest,
   CursoBodyRequest,
@@ -80,11 +80,13 @@ export class CursoController implements ICursoController {
   ) => {
     try {
       const { cursoId, categoriaId } = request.params
-      const result = await this.service.deleteCategoryInCurse(Number(cursoId), Number(categoriaId))
+      const result = await this.service.deleteCategoryInCurse(
+        Number(cursoId),
+        Number(categoriaId)
+      )
       return reply.status(404).send(result)
     } catch (error) {
       return reply.send(error)
     }
   }
-
 }
