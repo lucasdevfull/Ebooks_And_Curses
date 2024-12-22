@@ -1,5 +1,5 @@
-import { ConflitError } from '@/errors/conflit.ts'
-import { NotFoundError } from '@/errors/not-found.ts'
+import { ConflitError } from '@errors/conflit.ts'
+import { NotFoundError } from '@errors/not-found.ts'
 import type { NewCategoria, TCategoria } from '@/types/cursos.types.ts'
 import type { ICategoriaServices } from '@interface/categoria.interface.ts'
 import { CategoryRepository } from '@repositories/categoria.repositories.ts'

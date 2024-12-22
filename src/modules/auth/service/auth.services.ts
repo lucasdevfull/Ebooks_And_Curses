@@ -1,5 +1,5 @@
 import type { Login, Token, Users } from '@/types/user.types.ts'
-import { createToken } from '@/utils/create-token.ts'
+import { createToken } from '@utils/create-token.ts'
 import type { IAuthServices } from '@interface/auth.interface.ts'
 import { UserRepository } from '@repositories/user.repositories.ts'
 import { compare } from 'bcrypt'

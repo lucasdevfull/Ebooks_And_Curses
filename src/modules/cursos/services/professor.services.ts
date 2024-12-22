@@ -1,4 +1,4 @@
-import { NotFoundError } from '@/errors/not-found.ts'
+import { NotFoundError } from '@errors/not-found.ts'
 import type { NewProfessor, TProfessor } from '@/types/cursos.types.ts'
 import type { IProfessorServices } from '@interface/professor.interface.ts'
 import { ProfessorRepository } from '@repositories/professor.repositories.ts'

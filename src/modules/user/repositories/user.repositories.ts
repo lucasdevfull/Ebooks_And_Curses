@@ -1,6 +1,6 @@
 import { db } from '@/db/index.ts'
-import { users } from '@/db/schema/tables/user.ts'
-import { userSelectSchema } from '@/schema/user.schema.ts'
+import { users } from '@db/index.ts'
+import { userSelectSchema } from '@schema/user.schema.ts'
 import type { NewUser, Users } from '@/types/user.types.ts'
 import type { IUserRepository } from '@interface/user.interface.ts'
 import { eq } from 'drizzle-orm'

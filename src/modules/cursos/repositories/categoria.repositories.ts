@@ -1,5 +1,5 @@
 import { db } from '@/db/index.ts'
-import { categoria } from '@/db/schema/index.ts'
+import { categoria } from '@db/index.ts'
 import { categorySelectSchema } from '@/schema/categories.schema.ts'
 import type { NewCategoria, TCategoria } from '@/types/cursos.types.ts'
 import type { ICategoriaRepository } from '@interface/categoria.interface.ts'

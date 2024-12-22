@@ -1,6 +1,6 @@
 import { randomInt } from 'node:crypto'
 import type { NewUser, Users } from '@/types/user.types.ts'
-import { passwordHash } from '@/utils/hash.ts'
+import { passwordHash } from '@utils/hash.ts'
 import type { IUserServices } from '@interface/user.interface.ts'
 import { UserRepository } from '@repositories/user.repositories.ts'
 

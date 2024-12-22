@@ -1,5 +1,5 @@
-import { ConflitError } from '@/errors/conflit.ts'
-import { NotFoundError } from '@/errors/not-found.ts'
+import { ConflitError } from '@errors/conflit.ts'
+import { NotFoundError } from '@errors/not-found.ts'
 import type {
   Curso,
   NewCurso,

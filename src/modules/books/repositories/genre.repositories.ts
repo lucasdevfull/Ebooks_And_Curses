@@ -1,5 +1,5 @@
 import { db } from '@/db/index.ts'
-import { genres } from '@/db/schema/books.ts'
+import { genres } from '@db/index.ts'
 import type { NewGenre, TGenre } from '@/types/ebooks.types.ts'
 import type { IGenreRepository } from '@interface/genre.interface.ts'
 import { genreSelectSchema } from '@schema/genre.schema.ts'

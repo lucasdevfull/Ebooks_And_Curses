@@ -1,5 +1,5 @@
 import { db } from '@/db/index.ts'
-import { authors } from '@/db/schema/books.ts'
+import { authors } from '@db/index.ts'
 import type { NewAuthor, TAuthor } from '@/types/ebooks.types.ts'
 import type { IAuthorRepository } from '@interface/authors.interface.ts'
 import { authorsSelectSchema } from '@schema/authors.schema.ts'

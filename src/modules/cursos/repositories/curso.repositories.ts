@@ -4,7 +4,7 @@ import {
   categoriaCursos,
   curso,
   professor,
-} from '@/db/schema/index.ts'
+} from '@db/index.ts'
 
 import type {
   Curso,
@@ -12,7 +12,7 @@ import type {
   TCategoriaCurso,
   TCurso,
 } from '@/types/cursos.types.ts'
-import { curseResponse } from '@/utils/curso-response.ts'
+import { curseResponse } from '@utils/curso-response.ts'
 import type { ICursoRepository } from '@interface/curso.interface.ts'
 import { and, eq } from 'drizzle-orm'
 
