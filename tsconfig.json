@@ -10,6 +10,7 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
+    "experimentalDecorators": true,
     "moduleResolution": "nodenext",
     "allowImportingTsExtensions": true,
     "paths": {
