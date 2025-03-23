@@ -1,4 +1,4 @@
-import { authors } from '@/db/schema/books.ts'
+import { authors } from '@db/index.ts'
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
 
 export const authorsInsertSchema = createInsertSchema(authors, {

@@ -40,10 +40,3 @@ export interface IGenreServices {
   updateGenre(id: number, data: NewGenre): Promise<TGenre>
   deleteGenre(id: number): Promise<{ message: string }>
 }
-export interface IGenreRepository {
-  getAll(): Promise<TGenre[]>
-  create(data: NewGenre): Promise<TGenre>
-  getById(id: number): Promise<TGenre>
-  update(id: number, data: NewGenre): Promise<TGenre>
-  delete(id: number): Promise<TGenre>
-}

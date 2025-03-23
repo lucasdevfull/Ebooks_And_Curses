@@ -12,7 +12,7 @@ export interface Routes {
   router: (fastify: FastifyInstance, opts: FastifyPluginOptions) => void
 }
 
-export interface IServer {
+export interface Server {
   plugins(): void
   routes(routers: Routes[]): void
   run(): void

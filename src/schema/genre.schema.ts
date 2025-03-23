@@ -1,4 +1,4 @@
-import { genres } from '@/db/schema/books.ts'
+import { genres } from '@db/index.ts'
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
 
 export const genreIsertSchema = createInsertSchema(genres, {

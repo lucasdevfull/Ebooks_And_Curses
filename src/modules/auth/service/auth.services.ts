@@ -1,8 +1,9 @@
 import type { Login, Token, Users } from '@/types/user.types.ts'
-import { createToken } from '@utils/create-token.ts'
+import { createToken } from '@/common/utils/create-token.ts'
 import type { IAuthServices } from '@interface/auth.interface.ts'
 import { UserRepository } from '@repositories/user.repositories.ts'
-import { compare } from 'bcrypt'
+import { compare, compareSync } from 'bcrypt'
+import { BadRequestError } from '@/common/errors/bad-request.ts'
 
 export class AuthServices implements IAuthServices {
   private repository: UserRepository
@@ -12,12 +13,12 @@ export class AuthServices implements IAuthServices {
   async authenticate({ username, password }: Login): Promise<Token> {
     const userExists: Users = await this.repository.findUserByUsername(username)
     if (!userExists) {
-      throw new Error('Usuário não encontrado')
+      throw new BadRequestError('Usuário não encontrado')
     }
-    const validPassword: boolean = await compare(password, userExists.password)
+    //const validPassword: boolean = await compare(password, userExists.password)
 
-    if (!validPassword) {
-      throw new Error('Senha inválida')
+    if (!compareSync(password, userExists.password)) {
+      throw new BadRequestError('Senha inválida')
     }
 
     const { refreshtoken, acessToken }: Token = createToken(userExists)

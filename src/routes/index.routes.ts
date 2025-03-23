@@ -1,7 +1,0 @@
-export * from '@/routes/auth/auth.router.ts'
-export * from '@/routes/authors/authors.router.ts'
-export * from '@/routes/category/category.router.ts'
-export * from '@/routes/curso/curso.router.ts'
-export * from '@/routes/genre/genre.routes.ts'
-export * from '@/routes/professor/professor.router.ts'
-export * from '@/routes/user/user.router.ts'

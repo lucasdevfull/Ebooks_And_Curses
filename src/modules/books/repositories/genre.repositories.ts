@@ -1,27 +1,18 @@
 import { db } from '@/db/index.ts'
 import { genres } from '@db/index.ts'
 import type { NewGenre, TGenre } from '@/types/ebooks.types.ts'
-import type { IGenreRepository } from '@interface/genre.interface.ts'
-import { genreSelectSchema } from '@schema/genre.schema.ts'
 import { eq } from 'drizzle-orm'
+import type { Repository } from '@/common/base/repository.ts'
 
-export class GenreRepository implements IGenreRepository {
+export class GenreRepository implements Repository<TGenre, NewGenre> {
   async getAll(): Promise<TGenre[]> {
     const generes: TGenre[] = await db.select().from(genres)
-    const result = genreSelectSchema.array().safeParse(generes)
-    if (!result.success) {
-      throw new Error(result.error.message)
-    }
-    return result.data
+    return generes
   }
 
   async create(data: NewGenre): Promise<TGenre> {
     const genre: TGenre[] = await db.insert(genres).values(data).returning()
-    const result = genreSelectSchema.safeParse(genre)
-    if (!result.success) {
-      throw new Error(result.error.message)
-    }
-    return result.data
+    return genre[0]
   }
 
   async getById(id: number): Promise<TGenre> {
@@ -29,11 +20,7 @@ export class GenreRepository implements IGenreRepository {
       .select()
       .from(genres)
       .where(eq(genres.genreId, id))
-    const result = genreSelectSchema.safeParse(genre)
-    if (!result.success) {
-      throw new Error(result.error.message)
-    }
-    return result.data
+    return genre[0]
   }
 
   async getByName(nome: string): Promise<TGenre> {
@@ -41,11 +28,7 @@ export class GenreRepository implements IGenreRepository {
       .select()
       .from(genres)
       .where(eq(genres.name, nome))
-    const result = genreSelectSchema.safeParse(genre)
-    if (!result.success) {
-      throw new Error(result.error.message)
-    }
-    return result.data
+    return genre[0]
   }
 
   async update(id: number, data: NewGenre): Promise<TGenre> {

@@ -1,4 +1,4 @@
-import { professor } from '@/db/schema/cursos.ts'
+import { professor } from '@db/index.ts'
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
 
 export const professorInsertSchema = createInsertSchema(professor, {

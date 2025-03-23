@@ -31,10 +31,3 @@ export interface IUserServices {
   getAll(): Promise<Users[]>
   create(user: NewUser): Promise<Users>
 }
-
-export interface IUserRepository {
-  create(user: NewUser): Promise<Users>
-  findUserByEmail(email: string): Promise<Users>
-  findUserById(userId: number): Promise<Users>
-  findUserByUsername(username: string): Promise<Users>
-}

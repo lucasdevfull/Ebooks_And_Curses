@@ -44,12 +44,3 @@ export interface IAuthorServices {
   updateAuthor(authorId: number, data: NewAuthor): Promise<TAuthor>
   deleteAuthor(authorId: number): Promise<{ message: string }>
 }
-
-export interface IAuthorRepository {
-  create(data: NewAuthor): Promise<TAuthor>
-  findAuthorById(authorId: number): Promise<TAuthor>
-  getAllAuthors(): Promise<TAuthor[]>
-  findAuthorByName(name: string): Promise<TAuthor[]>
-  updateAuthor(id: number, data: NewAuthor): Promise<TAuthor>
-  deleteAuthor(id: number): Promise<TAuthor>
-}

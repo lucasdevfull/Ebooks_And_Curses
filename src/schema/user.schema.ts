@@ -1,4 +1,4 @@
-import { users } from '@/db/schema/tables/user.ts'
+import { users } from '@db/index.ts'
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
 import { z } from 'zod'
 

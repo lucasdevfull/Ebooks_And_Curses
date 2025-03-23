@@ -1,6 +1,6 @@
 import { randomInt } from 'node:crypto'
 import type { NewUser, Users } from '@/types/user.types.ts'
-import { passwordHash } from '@utils/hash.ts'
+import { passwordHash } from '@/common/utils/hash.ts'
 import type { IUserServices } from '@interface/user.interface.ts'
 import { UserRepository } from '@repositories/user.repositories.ts'
 
@@ -10,12 +10,12 @@ export class UserServices implements IUserServices {
     this.repository = new UserRepository()
   }
   async getAll(): Promise<Users[]> {
-    const users: Users[] = await this.repository.getAllUsers()
+    const users: Users[] = await this.repository.getAll()
     return users
   }
 
   async getUserById(id: number): Promise<Users> {
-    const user: Users = await this.repository.findUserById(id)
+    const user: Users = await this.repository.getById(id)
     return user
   }
   async create(user: NewUser): Promise<Users> {
