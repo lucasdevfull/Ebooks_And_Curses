@@ -1,15 +1,15 @@
-import { server } from '@/infrastructure/server.ts'
 import type { Users } from '@/types/user.types.ts'
+import type { JWT } from '@fastify/jwt'
 
-export function createToken(user: Users) {
+export function createToken(jwt: JWT, user: Users) {
   return {
-    refreshtoken: server.instance.jwt.sign(
+    refreshtoken: jwt.sign(
       { id: user.userId, email: user.email },
       {
         expiresIn: '1d',
       }
     ),
-    acessToken: server.instance.jwt.sign(
+    acessToken: jwt.sign(
       { id: user.userId, email: user.email },
       {
         expiresIn: '1h',

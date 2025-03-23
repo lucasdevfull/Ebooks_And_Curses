@@ -12,10 +12,10 @@ export class AuthController implements IAuthController {
   }
 
   login = async (
-    { body: user }: FastifyRequest<LoginRequest>,
+    { body: user, server: { jwt } }: FastifyRequest<LoginRequest>,
     reply: FastifyReply
   ) => {
-    const result = await this.service.authenticate(user)
+    const result = await this.service.authenticate(user, jwt)
     return reply.status(200).send(result)
   }
 }
