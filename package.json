@@ -2,18 +2,18 @@
   "name": "fast",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.ts",
   "type": "module",
   "scripts": {
     "studio": "drizzle-kit studio",
-    "start": "bun run dist/server.cjs",
+    "start": "node dist/main.cjs",
     "build": "tsup src --out-dir dist",
+    "build:bun": "bun build src/**/*.ts --outdir dist --target bun",
     "format": "biome format --write src",
     "check": "biome check --write src",
     "generate": "drizzle-kit generate",
     "migrate": "drizzle-kit migrate",
-    "dev:tsx": "tsx watch src/index.ts",
-    "dev": "bun run --watch src/index.ts",
+    "dev": "tsx watch src/main.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -40,12 +40,18 @@
     "@fastify/swagger": "^9.4.2",
     "@fastify/swagger-ui": "^5.2.2",
     "@types/bcrypt": "^5.0.2",
-    "@types/bun": "^1.2.5",
     "@types/node": "^22.13.11",
     "@types/pg": "^8.11.11",
     "drizzle-kit": "^0.30.5",
     "tsup": "^8.4.0",
     "tsx": "^4.19.3",
     "typescript": "^5.8.2"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@biomejs/biome",
+      "bcrypt",
+      "esbuild"
+    ]
   }
 }
