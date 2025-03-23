@@ -41,9 +41,6 @@ importers:
       fastify-type-provider-zod:
         specifier: ^4.0.2
         version: 4.0.2(fastify@5.2.1)(zod@3.24.2)
-      pg:
-        specifier: ^8.14.1
-        version: 8.14.1
       postgres:
         specifier: ^3.4.5
         version: 3.4.5
@@ -66,9 +63,6 @@ importers:
       '@types/node':
         specifier: ^22.13.11
         version: 22.13.11
-      '@types/pg':
-        specifier: ^8.11.11
-        version: 8.11.11
       drizzle-kit:
         specifier: ^0.30.5
         version: 0.30.5
@@ -2397,6 +2391,7 @@ snapshots:
       '@types/node': 22.13.11
       pg-protocol: 1.8.0
       pg-types: 4.0.2
+    optional: true
 
   '@types/ws@8.18.0':
     dependencies:
@@ -3041,7 +3036,8 @@ snapshots:
 
   obliterator@2.0.5: {}
 
-  obuf@1.1.2: {}
+  obuf@1.1.2:
+    optional: true
 
   on-exit-leak-free@2.1.2: {}
 
@@ -3074,7 +3070,8 @@ snapshots:
 
   pg-int8@1.0.1: {}
 
-  pg-numeric@1.0.2: {}
+  pg-numeric@1.0.2:
+    optional: true
 
   pg-pool@3.8.0(pg@8.14.1):
     dependencies:
@@ -3099,6 +3096,7 @@ snapshots:
       postgres-date: 2.1.0
       postgres-interval: 3.0.0
       postgres-range: 1.1.4
+    optional: true
 
   pg@8.14.1:
     dependencies:
@@ -3149,25 +3147,30 @@ snapshots:
 
   postgres-array@2.0.0: {}
 
-  postgres-array@3.0.4: {}
+  postgres-array@3.0.4:
+    optional: true
 
   postgres-bytea@1.0.0: {}
 
   postgres-bytea@3.0.0:
     dependencies:
       obuf: 1.1.2
+    optional: true
 
   postgres-date@1.0.7: {}
 
-  postgres-date@2.1.0: {}
+  postgres-date@2.1.0:
+    optional: true
 
   postgres-interval@1.2.0:
     dependencies:
       xtend: 4.0.2
 
-  postgres-interval@3.0.0: {}
+  postgres-interval@3.0.0:
+    optional: true
 
-  postgres-range@1.1.4: {}
+  postgres-range@1.1.4:
+    optional: true
 
   postgres@3.4.5: {}
 
