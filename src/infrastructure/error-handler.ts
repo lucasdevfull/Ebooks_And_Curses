@@ -3,7 +3,6 @@ import { ConflitError } from '@errors/conflit.ts'
 import { NotFoundError } from '@errors/not-found.ts'
 import type { FastifyError, FastifyReply, FastifyRequest } from 'fastify'
 
-
 export const errorHandler = (
   error: FastifyError,
   request: FastifyRequest,

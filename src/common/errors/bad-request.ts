@@ -1,8 +1,9 @@
-export class BadRequestError extends Error {
-  statusCode: number
+import { HttpException } from '../base/error.ts'
+import { HttpStatus } from '../enum/http.ts'
+
+export class BadRequestError extends HttpException {
   constructor(message: string) {
-    super(message)
-    this.statusCode = 400
+    super(message, HttpStatus.NOT_FOUND)
     this.name = 'BadRequestError'
   }
 }

@@ -1,5 +1,4 @@
-import { NotFoundError } from '@errors/not-found.ts'
-import type { NewProfessor, TProfessor } from '@/types/curse.types.ts'
+import type { TProfessor } from '@/types/curse.types.ts'
 import type {
   IProfessorController,
   ProfessorBodyRequest,
@@ -7,6 +6,7 @@ import type {
 } from '@interface/professor.interface.ts'
 import { ProfessorServices } from '@services/professor.services.ts'
 import type { FastifyReply, FastifyRequest } from 'fastify'
+import { HttpStatus } from '@/common/enum/http.ts'
 
 export class ProfessorController implements IProfessorController {
   private service: ProfessorServices
@@ -19,58 +19,38 @@ export class ProfessorController implements IProfessorController {
     reply: FastifyReply
   ): Promise<TProfessor[]> => {
     const professors = await this.service.getAllProfessors()
-    return reply.status(200).send(professors)
+    return reply.status(HttpStatus.OK).send(professors)
   }
 
   getProfessorById = async (
-    request: FastifyRequest<ProfessorRequest>,
+    { params: { id } }: FastifyRequest<ProfessorRequest>,
     reply: FastifyReply
   ): Promise<TProfessor | Error> => {
-    const { id } = request.params
     const professor = await this.service.getProfessorById(Number(id))
-    if (!professor) {
-      return new NotFoundError('Professor not found')
-    }
-    return reply.status(200).send(professor)
+    return reply.status(HttpStatus.OK).send(professor)
   }
 
   createProfessor = async (
-    request: FastifyRequest<ProfessorBodyRequest>,
+    { body }: FastifyRequest<ProfessorBodyRequest>,
     reply: FastifyReply
   ): Promise<TProfessor> => {
-    try {
-      const professor: NewProfessor = request.body
-      const result = await this.service.createProfessor(professor)
-      return reply.status(201).send(result)
-    } catch (error) {
-      return reply.send(error)
-    }
+    const result = await this.service.createProfessor(body)
+    return reply.status(HttpStatus.CREATED).send(result)
   }
 
   updateProfessor = async (
-    request: FastifyRequest<ProfessorBodyRequest>,
+    { body, params: { id } }: FastifyRequest<ProfessorBodyRequest>,
     reply: FastifyReply
   ): Promise<TProfessor> => {
-    try {
-      const { id } = request.params
-      const professor: NewProfessor = request.body
-      const result = await this.service.updateProfessor(Number(id), professor)
-      return reply.status(200).send(result)
-    } catch (error) {
-      return reply.send(error)
-    }
+    const result = await this.service.updateProfessor(Number(id), body)
+    return reply.status(HttpStatus.OK).send(result)
   }
 
   deleteProfessor = async (
-    request: FastifyRequest<ProfessorRequest>,
+    { params: { id } }: FastifyRequest<ProfessorRequest>,
     reply: FastifyReply
   ): Promise<{ message: string }> => {
-    try {
-      const { id } = request.params
-      const result = await this.service.deleteProfessor(Number(id))
-      return reply.status(204).send(result)
-    } catch (error) {
-      return reply.send(error)
-    }
+    const result = await this.service.deleteProfessor(Number(id))
+    return reply.status(HttpStatus.NO_CONTENT).send(result)
   }
 }

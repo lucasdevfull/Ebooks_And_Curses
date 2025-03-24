@@ -1,3 +1,4 @@
+import { HttpStatus } from '@/common/enum/http.ts'
 import type {
   IAuthController,
   LoginRequest,
@@ -16,6 +17,6 @@ export class AuthController implements IAuthController {
     reply: FastifyReply
   ) => {
     const result = await this.service.authenticate(user, jwt)
-    return reply.status(200).send(result)
+    return reply.status(HttpStatus.OK).send(result)
   }
 }

@@ -8,11 +8,15 @@ import {
   serializerCompiler,
   validatorCompiler,
 } from 'fastify-type-provider-zod'
-import { NODE_ENV,JWT_SECRET,PORT } from '@/infrastructure/env.ts'
+import { NODE_ENV, JWT_SECRET, PORT } from '@/infrastructure/env.ts'
 import { errorHandler } from './error-handler.ts'
 import { fastifySwagger } from '@fastify/swagger'
 import { fastifySwaggerUi } from '@fastify/swagger-ui'
-import type { FastifyInstanceZod, Routes, Server } from '@/types/server.types.ts'
+import type {
+  FastifyInstanceZod,
+  Routes,
+  Server,
+} from '@/types/server.types.ts'
 
 export class FastifyServer implements Server {
   instance: FastifyInstanceZod
@@ -49,7 +53,7 @@ export class FastifyServer implements Server {
           },
           transform: jsonSchemaTransform,
         })
-    
+
         this.instance.register(fastifySwaggerUi, {
           routePrefix: '/docs',
         })

@@ -66,6 +66,10 @@ export class CursoServices implements ICursoServices {
           return await this.category.getById(id)
         })
       )
+      for (const id of data.category) {
+        const cat = await this.category.getById(id)
+        category.push(cat)
+      }
     } else {
       category = await this.category.getById(data.category)
     }

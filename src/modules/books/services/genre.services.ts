@@ -1,3 +1,5 @@
+import { ConflitError } from '@/common/errors/conflit.ts'
+import { NotFoundError } from '@/common/errors/not-found.ts'
 import type { NewGenre, TGenre } from '@/types/ebooks.types.ts'
 import type { IGenreServices } from '@interface/genre.interface.ts'
 import { GenreRepository } from '@repositories/genre.repositories.ts'
@@ -15,7 +17,7 @@ export class GenreServices implements IGenreServices {
   async createGenre(data: NewGenre): Promise<TGenre> {
     const genreExists: TGenre = await this.repository.getByName(data.name)
     if (genreExists) {
-      throw new Error('Genre already exists')
+      throw new ConflitError('Genre already exists')
     }
     const genre = await this.repository.create(data)
     return genre
@@ -23,10 +25,17 @@ export class GenreServices implements IGenreServices {
 
   async getGenreById(id: number): Promise<TGenre> {
     const genre: TGenre = await this.repository.getById(id)
+    if (!genre) {
+      throw new NotFoundError('Genre not found')
+    }
     return genre
   }
 
   async updateGenre(id: number, data: NewGenre): Promise<TGenre> {
+    const genreExists: TGenre = await this.repository.getById(id)
+    if (!genreExists) {
+      throw new NotFoundError('Genre not found')
+    }
     const genre: TGenre = await this.repository.update(id, data)
     return genre
   }
@@ -34,7 +43,7 @@ export class GenreServices implements IGenreServices {
   async deleteGenre(id: number): Promise<{ message: string }> {
     const genreExists: TGenre = await this.repository.getById(id)
     if (!genreExists) {
-      throw new Error('Genre not found')
+      throw new NotFoundError('Genre not found')
     }
     try {
       const genre: TGenre = await this.repository.delete(id)

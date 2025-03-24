@@ -1,8 +1,9 @@
-export class NotFoundError extends Error {
-  statusCode: number
+import { HttpException } from '../base/error.ts'
+import { HttpStatus } from '../enum/http.ts'
+
+export class NotFoundError extends HttpException {
   constructor(message: string) {
-    super(message)
-    this.statusCode = 404
+    super(message, HttpStatus.NOT_FOUND)
     this.name = 'Not Found'
   }
 }

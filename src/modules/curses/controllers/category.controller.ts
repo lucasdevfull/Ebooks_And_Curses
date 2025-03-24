@@ -1,4 +1,5 @@
-import type { NewCategory, TCategory } from '@/types/curse.types.ts'
+import { HttpStatus } from '@/common/enum/http.ts'
+import type { TCategory } from '@/types/curse.types.ts'
 import type {
   CategoryBodyRequest,
   CategoryRequest,
@@ -17,52 +18,40 @@ export class CategoryController implements ICategoriaController {
     request: FastifyRequest,
     reply: FastifyReply
   ): Promise<TCategory[]> => {
-    try {
-      const categories = await this.service.getAllCategories()
-      return reply.status(200).send(categories)
-    } catch (error) {
-      return reply.send(error)
-    }
+    const categories = await this.service.getAllCategories()
+    return reply.status(HttpStatus.OK).send(categories)
   }
 
   getCategoryById = async (
-    request: FastifyRequest<CategoryRequest>,
+    { params: { id } }: FastifyRequest<CategoryRequest>,
     reply: FastifyReply
   ): Promise<TCategory | Error> => {
-    const { id } = request.params
     const category = await this.service.getCategoryById(Number(id))
 
-    return reply.status(200).send(category)
+    return reply.status(HttpStatus.OK).send(category)
   }
 
   createCategory = async (
-    request: FastifyRequest<CategoryBodyRequest>,
+    { body }: FastifyRequest<CategoryBodyRequest>,
     reply: FastifyReply
   ): Promise<TCategory> => {
-    const category: NewCategory = request.body
-    const newCategory = await this.service.createCategory(category)
-    return reply.status(201).send(newCategory)
+    const newCategory = await this.service.createCategory(body)
+    return reply.status(HttpStatus.CREATED).send(newCategory)
   }
 
   updateCategory = async (
-    request: FastifyRequest<CategoryBodyRequest>,
+    { body, params: { id } }: FastifyRequest<CategoryBodyRequest>,
     reply: FastifyReply
   ): Promise<TCategory> => {
-    const { id } = request.params
-    const category = request.body
-    const updatedCategory = await this.service.updateCategory(
-      Number(id),
-      category
-    )
-    return reply.status(200).send(updatedCategory)
+    const updatedCategory = await this.service.updateCategory(Number(id), body)
+    return reply.status(HttpStatus.OK).send(updatedCategory)
   }
 
   deleteCategory = async (
-    request: FastifyRequest<CategoryRequest>,
+    { params: { id } }: FastifyRequest<CategoryRequest>,
     reply: FastifyReply
   ): Promise<{ message: string }> => {
-    const { id } = request.params
     const result = await this.service.deleteCategory(Number(id))
-    return reply.send(result).status(200)
+    return reply.status(HttpStatus.NO_CONTENT).send(result)
   }
 }

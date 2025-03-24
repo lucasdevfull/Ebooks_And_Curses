@@ -21,31 +21,30 @@ export class AuthorServices implements IAuthorServices {
 
   async getAuthorById(authorId: number): Promise<TAuthor> {
     const author: TAuthor = await this.repository.getById(authorId)
+    if (!author) {
+      throw new NotFoundError('Author not found')
+    }
     return author
   }
 
   async updateAuthor(authorId: number, data: NewAuthor): Promise<TAuthor> {
     const author: TAuthor = await this.repository.getById(authorId)
     if (!author) {
-      throw new Error('Autor não encontrado')
+      throw new NotFoundError('Author not found')
     }
-    const updatedAuthor: TAuthor = await this.repository.update(
-      authorId,
-      data
-    )
+    const updatedAuthor: TAuthor = await this.repository.update(authorId, data)
     return updatedAuthor
   }
   async deleteAuthor(authorId: number): Promise<{ message: string }> {
     const author: TAuthor = await this.repository.getById(authorId)
     if (!author) {
-      throw new NotFoundError('Autor não encontrado')
+      throw new NotFoundError('Author not found')
     }
     try {
-      const deletedAuthor: TAuthor =
-        await this.repository.delete(authorId)
-      return { message: 'Autor deletado com sucesso' }
+      const deletedAuthor: TAuthor = await this.repository.delete(authorId)
+      return { message: 'Author deleted successfully' }
     } catch (error) {
-      throw new Error('Erro ao deletar autor')
+      throw new Error('Error deleting author')
     }
   }
 }

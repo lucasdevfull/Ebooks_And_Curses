@@ -1,8 +1,9 @@
-export class ConflitError extends Error {
-  statusCode: number
+import { HttpException } from '../base/error.ts'
+import { HttpStatus } from '../enum/http.ts'
+
+export class ConflitError extends HttpException {
   constructor(message: string) {
-    super(message)
-    this.statusCode = 409
+    super(message, HttpStatus.CONFLICT)
     this.name = 'Conflit'
   }
 }

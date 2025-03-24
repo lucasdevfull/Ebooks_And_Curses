@@ -1,3 +1,4 @@
+import { HttpStatus } from '@/common/enum/http.ts'
 import type { NewAuthor, TAuthor } from '@/types/ebooks.types.ts'
 import type {
   AuthorBodyRequest,
@@ -18,66 +19,38 @@ export class AuthorController implements IAuthorController {
     reply: FastifyReply
   ): Promise<TAuthor[]> => {
     const authors = await this.service.getAllAuthors()
-    return reply.status(200).send(authors)
+    return reply.status(HttpStatus.OK).send(authors)
   }
 
   createAuthor = async (
-    request: FastifyRequest<AuthorBodyRequest>,
+    { body }: FastifyRequest<AuthorBodyRequest>,
     reply: FastifyReply
   ): Promise<TAuthor> => {
-    try {
-      const author: NewAuthor = request.body
-      const result = await this.service.createAuthor(author)
-      return reply.status(201).send(result)
-    } catch (error) {
-      return reply.status(500).send(error)
-    }
+    const result = await this.service.createAuthor(body)
+    return reply.status(HttpStatus.CREATED).send(result)
   }
 
   getAuthor = async (
-    request: FastifyRequest<AuthorRequest>,
+    { params: { id } }: FastifyRequest<AuthorRequest>,
     reply: FastifyReply
   ): Promise<TAuthor> => {
-    try {
-      const { id } = request.params
-      const result = await this.service.getAuthorById(Number(id))
-      if (!result) {
-        return reply.status(404).send({
-          statusCode: 404,
-          error: 'Not Found',
-          message: 'Author not found',
-        })
-      }
-      return reply.status(200).send(result)
-    } catch (error) {
-      return reply.status(500).send(error)
-    }
+    const result = await this.service.getAuthorById(Number(id))
+    return reply.status(HttpStatus.OK).send(result)
   }
 
   updateAuthor = async (
-    request: FastifyRequest<AuthorBodyRequest>,
+    { body, params: { id } }: FastifyRequest<AuthorBodyRequest>,
     reply: FastifyReply
   ): Promise<TAuthor> => {
-    try {
-      const { id } = request.params
-      const author: NewAuthor = request.body
-      const result = await this.service.updateAuthor(Number(id), author)
-      return reply.status(200).send(result)
-    } catch (error) {
-      return reply.status(500).send(error)
-    }
+    const result = await this.service.updateAuthor(Number(id), body)
+    return reply.status(HttpStatus.OK).send(result)
   }
 
   deleteAuthor = async (
-    request: FastifyRequest<AuthorRequest>,
+    { params: { id } }: FastifyRequest<AuthorRequest>,
     reply: FastifyReply
   ): Promise<{ message: string }> => {
-    try {
-      const { id } = request.params
-      const result = await this.service.deleteAuthor(Number(id))
-      return reply.status(204).send(result)
-    } catch (error) {
-      return reply.status(500).send(error)
-    }
+    const result = await this.service.deleteAuthor(Number(id))
+    return reply.status(HttpStatus.NO_CONTENT).send(result)
   }
 }

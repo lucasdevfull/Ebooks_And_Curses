@@ -5,14 +5,10 @@ import type { Repository } from '@/common/base/repository.ts'
 import type { NewProfessor, TProfessor } from '@/types/curse.types.ts'
 
 export class ProfessorRepository
-  implements Repository<TProfessor, NewProfessor> {
+  implements Repository<TProfessor, NewProfessor>
+{
   async getAll(): Promise<TProfessor[]> {
     const data: TProfessor[] = await db.select().from(professor)
-    //const result = professorSelectSchema.array().safeParse(professors)
-    //if (!result.success) {
-    //  throw new Error(result.error.message)
-    //}
-    //return result.data
     return data
   }
 
@@ -29,11 +25,6 @@ export class ProfessorRepository
       .select()
       .from(professor)
       .where(eq(professor.professorId, id))
-    //const result = professorSelectSchema.array().safeParse(prof)
-    //if (!result.success) {
-    //  throw new Error(result.error.message)
-    //}
-    //return result.data[0]
     return data[0]
   }
 

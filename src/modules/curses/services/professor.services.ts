@@ -16,6 +16,9 @@ export class ProfessorServices implements IProfessorServices {
 
   async getProfessorById(id: number): Promise<TProfessor> {
     const professor: TProfessor = await this.repository.getById(id)
+    if (!professor) {
+      throw new NotFoundError('Professor not found')
+    }
     return professor
   }
 

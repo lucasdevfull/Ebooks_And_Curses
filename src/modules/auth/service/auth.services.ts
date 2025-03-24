@@ -22,7 +22,7 @@ export class AuthServices implements IAuthServices {
       throw new BadRequestError('Senha inválida')
     }
 
-    const { refreshtoken, acessToken }: Token = createToken(jwt,userExists)
+    const { refreshtoken, acessToken }: Token = createToken(jwt, userExists)
 
     return { refreshtoken, acessToken }
   }
