@@ -1,4 +1,4 @@
-import { verifyToken } from '@/common/hooks/verifyToken.ts'
+import { verifyToken } from '@/common/hooks/verify-token.ts'
 import {
   genreIsertSchema,
   genreSelectSchema,
