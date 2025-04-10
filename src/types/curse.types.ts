@@ -4,7 +4,7 @@ import type {
   curse,
   professor,
 } from '@/db/schema/index.ts'
-import type { curseInsertSchema, curseSchema } from '@/schema/curso.schema.ts'
+import type { curseInsertSchema, curseSchema } from '@/schema/curse.schema.ts'
 import type { z } from 'zod'
 
 export type NewCurse = z.infer<typeof curseInsertSchema>
