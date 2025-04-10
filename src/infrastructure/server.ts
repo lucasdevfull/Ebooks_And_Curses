@@ -8,7 +8,7 @@ import {
   serializerCompiler,
   validatorCompiler,
 } from 'fastify-type-provider-zod'
-import { NODE_ENV, JWT_SECRET, PORT } from '@/infrastructure/env.ts'
+import { env } from '@/infrastructure/env.ts'
 import { errorHandler } from './error-handler.ts'
 import { fastifySwagger } from '@fastify/swagger'
 import { fastifySwaggerUi } from '@fastify/swagger-ui'
@@ -17,6 +17,7 @@ import type {
   Routes,
   Server,
 } from '@/types/server.types.ts'
+import fastifyMultipart from '@fastify/multipart'
 
 export class FastifyServer implements Server {
   instance: FastifyInstanceZod
@@ -33,31 +34,36 @@ export class FastifyServer implements Server {
     this.instance.setValidatorCompiler(validatorCompiler)
     this.instance.setSerializerCompiler(serializerCompiler)
     this.instance.register(fastifyJwt, {
-      secret: JWT_SECRET,
+      secret: env.JWT_SECRET,
     })
     this.instance.register(fastifyHelmet)
     this.instance.register(fastifyCors, {
-      origin: '*',
+      origin: true,
     })
-    switch (NODE_ENV) {
-      case 'production':
-        break
-      default:
-        this.instance.register(fastifySwagger, {
-          openapi: {
-            info: {
-              title: 'Fastify API',
-              description: 'Fastify API documentation',
-              version: '1.0.0',
-            },
+    this.instance.register(fastifyMultipart, {
+      attachFieldsToBody: true,
+      throwFileSizeLimit: false,
+    })
+    if (env.NODE_ENV === 'development') {
+      this.instance.register(fastifySwagger, {
+        openapi: {
+          info: {
+            title: 'Fastify API',
+            description: 'Fastify API documentation',
+            version: '1.0.0',
           },
-          transform: jsonSchemaTransform,
-        })
+          servers: [
+            {
+              url: 'http://localhost:3333',
+            },
+          ],
+        },
+        transform: jsonSchemaTransform,
+      })
 
-        this.instance.register(fastifySwaggerUi, {
-          routePrefix: '/docs',
-        })
-        break
+      this.instance.register(fastifySwaggerUi, {
+        routePrefix: '/docs',
+      })
     }
   }
 
@@ -71,7 +77,7 @@ export class FastifyServer implements Server {
   }
 
   run(): void {
-    this.instance.listen({ port: PORT }, (error, adress) => {
+    this.instance.listen({ port: env.PORT }, (error, adress) => {
       if (error) {
         console.error(error)
         process.exit(1)

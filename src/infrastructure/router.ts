@@ -2,6 +2,7 @@ import type { Routes } from '@/types/index.types.ts'
 import {
   authRoutes,
   authorsRoutes,
+  booksRoutes,
   categoryRoutes,
   cursoRoutes,
   genreRoutes,
@@ -17,4 +18,5 @@ export const routes: Routes[] = [
   { router: categoryRoutes },
   { router: professorRoutes },
   { router: cursoRoutes },
+  { router: booksRoutes },
 ]
