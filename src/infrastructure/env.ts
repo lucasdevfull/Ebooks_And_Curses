@@ -1,4 +1,3 @@
-import { config } from 'dotenv'
 import { z } from 'zod'
 
 export const envSchema = z.object({
@@ -13,7 +12,6 @@ export const envSchema = z.object({
   JWT_SECRET: z.string(),
 })
 
-config()
 export const { PORT, NODE_ENV, DATABASE_URL, JWT_SECRET } = envSchema.parse(
   process.env
 )
