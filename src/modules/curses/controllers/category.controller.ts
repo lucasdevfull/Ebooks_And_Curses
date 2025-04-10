@@ -25,7 +25,7 @@ export class CategoryController implements ICategoriaController {
   getCategoryById = async (
     { params: { id } }: FastifyRequest<CategoryRequest>,
     reply: FastifyReply
-  ): Promise<TCategory | Error> => {
+  ): Promise<TCategory> => {
     const category = await this.service.getCategoryById(Number(id))
 
     return reply.status(HttpStatus.OK).send(category)

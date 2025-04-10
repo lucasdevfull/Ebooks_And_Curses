@@ -25,7 +25,7 @@ export class ProfessorController implements IProfessorController {
   getProfessorById = async (
     { params: { id } }: FastifyRequest<ProfessorRequest>,
     reply: FastifyReply
-  ): Promise<TProfessor | Error> => {
+  ): Promise<TProfessor> => {
     const professor = await this.service.getProfessorById(Number(id))
     return reply.status(HttpStatus.OK).send(professor)
   }

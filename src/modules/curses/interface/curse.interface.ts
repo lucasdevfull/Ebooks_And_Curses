@@ -22,8 +22,8 @@ export interface CursoBodyRequest extends CursoRequest {
 
 export interface CategoriaCursoRequest extends RouteGenericInterface {
   Params: {
-    categoriaId: string
-    cursoId: string
+    categoriaId: number
+    cursoId: number
   }
 }
 export interface ICursoController {

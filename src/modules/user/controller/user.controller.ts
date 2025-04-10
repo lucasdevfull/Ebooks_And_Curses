@@ -21,28 +21,19 @@ export class UserController implements IUserController {
   }
 
   getUser = async (
-    request: FastifyRequest<UserRequest>,
+    { params: { id } }: FastifyRequest<UserRequest>,
     reply: FastifyReply
   ): Promise<Users> => {
-    const { id } = request.params
     const user: Users = await this.service.getUserById(Number(id))
-    if (!user) {
-      return reply.status(404).send({
-        statusCode: 404,
-        error: 'Not Found',
-        message: 'User not found',
-      })
-    }
     return reply.status(200).send(user)
   }
 
   createUser = async (
-    request: FastifyRequest<UserBodyRequest>,
+    { body }: FastifyRequest<UserBodyRequest>,
     reply: FastifyReply
   ): Promise<Users | never> => {
     try {
-      const user: NewUser = request.body
-      const result: Users = await this.service.create(user)
+      const result: Users = await this.service.create(body)
       return reply.status(201).send(result)
     } catch (error) {
       return reply.status(500).send(error)

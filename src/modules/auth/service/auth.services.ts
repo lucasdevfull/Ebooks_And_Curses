@@ -16,7 +16,6 @@ export class AuthServices implements IAuthServices {
     if (!userExists) {
       throw new BadRequestError('Usuário não encontrado')
     }
-    //const validPassword: boolean = await compare(password, userExists.password)
 
     if (!compareSync(password, userExists.password)) {
       throw new BadRequestError('Senha inválida')

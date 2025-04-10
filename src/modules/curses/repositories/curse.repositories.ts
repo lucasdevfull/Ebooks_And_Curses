@@ -1,6 +1,5 @@
 import { db } from '@/db/index.ts'
 import { category, categoryCurses, curse, professor } from '@db/index.ts'
-
 import type {
   Curse,
   NewCurse,
@@ -8,55 +7,42 @@ import type {
   TCurse,
 } from '@/types/curse.types.ts'
 import type { ICursoRepository } from '@interface/curse.interface.ts'
-import { and, eq } from 'drizzle-orm'
+import { and, eq, sql } from 'drizzle-orm'
+import type { PgTable, TableConfig } from 'drizzle-orm/pg-core'
 
 export class CursoRepository implements ICursoRepository {
   async getAll(): Promise<Curse[]> {
-    const { cursesData, categoriesData } = await db.transaction(async tx => {
-      const cursesData = await tx
-        .select({
-          curseId: curse.curseId,
-          titulo: curse.title,
-          valor: curse.price,
-          professorId: curse.professorId,
-          professorName: professor.name,
-        })
-        .from(curse)
-        .innerJoin(professor, eq(curse.professorId, professor.professorId))
-
-      const categoriesData = []
-      for (const curse of cursesData) {
-        const categorydata = await tx
-          .select({
-            categoriaId: categoryCurses.categoryId,
-            categoriaName: category.name,
-          })
-          .from(categoryCurses)
-          .where(eq(categoryCurses.curseId, curse.curseId))
-          .innerJoin(
-            category,
-            eq(categoryCurses.categoryId, category.categoryId)
-          )
-        categoriesData.push(categorydata)
-      }
-
-      return { cursesData, categoriesData }
-    })
-
-    const response: Curse[] = cursesData.map((curse, index) => ({
-      curseId: curse.curseId,
-      title: curse.titulo,
-      price: curse.valor,
-      category: categoriesData[index].map(category => ({
-        categoryId: category.categoriaId,
-        name: category.categoriaName,
-      })),
-      professor: {
-        professorId: curse.professorId,
-        name: curse.professorName,
-      },
-    }))
-    return response
+    const data = await db
+      .select({
+        curseId: curse.curseId,
+        title: curse.title,
+        price: curse.price,
+        professor: sql<{
+          professorId: number
+          name: string
+        }>`
+      json_build_object(
+        'professorId', professor.professor_id,
+        'name', professor.professor_name
+      )`,
+        category: sql<
+          {
+            categoryId: number
+            name: string
+          }[]
+        >`json_agg(
+                jsonb_build_object(
+                  'categoryId', category.category_id,
+                  'name', category.category_name
+                )
+              )`,
+      })
+      .from(curse)
+      .innerJoin(professor, eq(professor.professorId, curse.professorId))
+      .innerJoin(categoryCurses, eq(categoryCurses.curseId, curse.curseId))
+      .innerJoin(category, eq(category.categoryId, categoryCurses.categoryId))
+      .groupBy(curse.curseId, professor.professorId)
+    return data
   }
 
   async getById(id: number): Promise<Curse> {
@@ -114,26 +100,23 @@ export class CursoRepository implements ICursoRepository {
       .where(eq(curse.title, name))
     return data[0]
   }
-  async create(data: NewCurse): Promise<TCurse> {
-    const { category } = data
+  async create({ category, ...data }: NewCurse): Promise<TCurse> {
     const curseData: TCurse[] = await db.insert(curse).values(data).returning()
-    const { curseId } = curseData[0]
-    if (Array.isArray(category)) {
-      await db
-        .insert(categoryCurses)
-        .values(category.map(categoryId => ({ categoryId, curseId })))
-    }
 
-    await db.insert(categoryCurses).values({
-      categoryId: Number(category),
-      curseId,
-    })
+    await this.insert<{ categoryId: number }>(
+      categoryCurses,
+      curseData[0].curseId,
+      category,
+      'categoryId'
+    )
 
     return curseData[0]
   }
 
-  async update(id: number, data: NewCurse): Promise<TCurse> {
-    const { category, title, price } = data
+  async update(
+    id: number,
+    { category, title, price }: NewCurse
+  ): Promise<TCurse> {
     const { curseData } = await db.transaction(async tx => {
       const curseData: TCurse[] = await tx
         .update(curse)
@@ -192,5 +175,20 @@ export class CursoRepository implements ICursoRepository {
         )
       )
     return categories
+  }
+
+  async insert<T>(
+    table: PgTable<TableConfig>,
+    curseId: number,
+    relation: number | number[],
+    id: keyof T
+  ) {
+    if (Array.isArray(relation)) {
+      await db
+        .insert(table)
+        .values(relation.map(relationId => ({ [id]: relationId, curseId })))
+    } else {
+      await db.insert(table).values({ [id]: relation, curseId })
+    }
   }
 }

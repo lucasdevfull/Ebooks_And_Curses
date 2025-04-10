@@ -13,6 +13,8 @@ import { CategoryRepository } from '@repositories/category.repositories.ts'
 import { CursoRepository } from '@repositories/curse.repositories.ts'
 import { ProfessorRepository } from '@repositories/professor.repositories.ts'
 
+type Number = number | number[]
+
 export class CursoServices implements ICursoServices {
   private category: CategoryRepository
   private professor: ProfessorRepository
@@ -37,17 +39,10 @@ export class CursoServices implements ICursoServices {
   }
   async createCurses(data: NewCurse): Promise<TCurse> {
     const professor: TProfessor = await this.professor.getById(data.professorId)
-    let category: Promise<TCategory>[] | TCategory
-
-    if (Array.isArray(data.category)) {
-      category = data.category.map(async (id: number) => {
-        return await this.category.getById(id)
-      })
-    } else {
-      category = await this.category.getById(data.category)
-    }
+    const category = await this.getCategory(data.category)
 
     const curseExists: TCurse = await this.curse.getByName(data.title)
+
     if (!professor) throw new NotFoundError('Professor not found')
     if (!category) throw new NotFoundError('Category not found')
     if (curseExists) throw new ConflitError('Curse already exists')
@@ -58,53 +53,24 @@ export class CursoServices implements ICursoServices {
   async updateCurses(id: number, data: NewCurse): Promise<TCurse> {
     const curseExists: Curse = await this.curse.getById(id)
     if (!curseExists) throw new NotFoundError('Curse not found')
-    let category: TCategory | TCategory[]
 
-    if (Array.isArray(data.category)) {
-      category = await Promise.all(
-        data.category.map(async (id: number) => {
-          return await this.category.getById(id)
-        })
-      )
-      for (const id of data.category) {
-        const cat = await this.category.getById(id)
-        category.push(cat)
-      }
-    } else {
-      category = await this.category.getById(data.category)
-    }
+    const category = await this.getCategory(data.category)
 
-    if (!category) {
-      throw new NotFoundError('Category not found')
-    }
+    if (!category) throw new NotFoundError('Category not found')
 
-    let categoryInCurse: TCategoryCurse | TCategoryCurse[]
+    const categoryInCurse = await this.checkCategoryInCurse(data.category, id)
 
-    if (Array.isArray(data.category)) {
-      categoryInCurse = await Promise.all(
-        data.category.map(async (id: number) => {
-          return await this.curse.findCategoryInCurse(id, curseExists.curseId)
-        })
-      )
-    } else {
-      categoryInCurse = await this.curse.findCategoryInCurse(
-        data.category,
-        curseExists.curseId
-      )
-    }
-
-    if (categoryInCurse) {
+    if (categoryInCurse)
       throw new ConflitError('Category já existente no curso')
-    }
+
     const curse: TCurse = await this.curse.update(id, data)
     return curse
   }
 
   async deleteCurses(id: number): Promise<{ message: string }> {
     const curseExists: Curse = await this.curse.getById(id)
-    if (!curseExists) {
-      throw new NotFoundError('Curse not found')
-    }
+
+    if (!curseExists) throw new NotFoundError('Curse not found')
 
     const curse = await this.curse.delete(id)
     return { message: 'Curse deleted successfully' }
@@ -118,11 +84,33 @@ export class CursoServices implements ICursoServices {
       categoryId,
       curseId
     )
-    if (!categoryExists) {
+    if (!categoryExists)
       throw new NotFoundError('Category not found in this curse')
-    }
 
-    const category = await this.curse.removeCategoryInCurse(categoryId, curseId)
+    await this.curse.removeCategoryInCurse(categoryId, curseId)
     return { message: 'Category removed successfully' }
+  }
+
+  async getCategory(category: Number): Promise<TCategory | TCategory[]> {
+    if (Array.isArray(category)) {
+      return await Promise.all(
+        category.map(async id => await this.category.getById(id))
+      )
+    }
+    return await this.category.getById(category)
+  }
+
+  async checkCategoryInCurse(
+    category: Number,
+    curseId: number
+  ): Promise<TCategoryCurse | TCategoryCurse[]> {
+    if (Array.isArray(category)) {
+      return await Promise.all(
+        category.map(
+          async id => await this.curse.findCategoryInCurse(id, curseId)
+        )
+      )
+    }
+    return await this.curse.findCategoryInCurse(category, curseId)
   }
 }

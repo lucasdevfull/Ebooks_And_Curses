@@ -25,7 +25,7 @@ export class CursoController implements ICursoController {
   getCursesById = async (
     { params: { id } }: FastifyRequest<CursoRequest>,
     reply: FastifyReply
-  ): Promise<Curse | Error> => {
+  ): Promise<Curse> => {
     const curso = await this.service.getCursesById(Number(id))
     return reply.status(HttpStatus.OK).send(curso)
   }
@@ -59,8 +59,8 @@ export class CursoController implements ICursoController {
     reply: FastifyReply
   ) => {
     const result = await this.service.deleteCategoryInCurse(
-      Number(cursoId),
-      Number(categoriaId)
+      cursoId,
+      categoriaId
     )
     return reply.status(HttpStatus.NO_CONTENT).send(result)
   }
