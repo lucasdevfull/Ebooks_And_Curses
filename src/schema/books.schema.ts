@@ -9,6 +9,8 @@ export const bookFormDataSchema = z.object({
     .refine(file => !(file.type in ['image/jpeg', 'image/png']), {
       message: 'File type must be image/jpeg or image/png',
     }),
+  authors: z.union([z.number().positive(), z.number().positive().array()]),
+  genres: z.union([z.number().positive(), z.number().positive().array()]),
 })
 
 export const bookSchema = z.object({
