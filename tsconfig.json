@@ -15,7 +15,7 @@
     "allowImportingTsExtensions": true,
     "paths": {
       "@/*": ["./src/*"],
-      "@router/*": ["./src/infrastructure/routes/*"],
+      "@router/*": ["./src/infra/routes/*"],
       "@hooks/*": ["./src/common/hooks/*"],
       "@schema/*": ["./src/schema/*"],
       "@db/*": ["./src/db/schema/*"],
