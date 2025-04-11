@@ -1,5 +1,5 @@
-import { FastifyServer } from '@/infrastructure/server.ts'
-import { routes } from '@/infrastructure/router.ts'
+import { FastifyServer } from '@/infra/server.ts'
+import { routes } from '@/infra/router.ts'
 
 function bootstrap() {
   const server = new FastifyServer(routes)
