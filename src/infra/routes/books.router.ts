@@ -1,3 +1,4 @@
+import { verifyToken } from '@/common/hooks/verify-token.ts'
 import { EbookController } from '@/modules/books/controller/books.controller.ts'
 import { bookSchema } from '@/schema/books.schema.ts'
 import { httpSchema } from '@/schema/http.schema.ts'
@@ -22,6 +23,7 @@ export function booksRoutes(
           500: httpSchema,
         },
       },
+      onRequest: verifyToken,
     },
     bookController.getAllBooks
   )

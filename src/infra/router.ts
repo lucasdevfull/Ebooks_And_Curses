@@ -8,7 +8,7 @@ import {
   genreRoutes,
   professorRoutes,
   userRoutes,
-} from '@/infrastructure/routes/index.routes.ts'
+} from '@/infra/routes/index.routes.ts'
 
 export const routes: Routes[] = [
   { router: userRoutes },

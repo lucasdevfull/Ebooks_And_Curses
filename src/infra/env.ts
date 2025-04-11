@@ -12,6 +12,4 @@ export const envSchema = z.object({
   JWT_SECRET: z.string(),
 })
 
-export const { DATABASE_URL, ...env } = envSchema.parse(
-  process.env
-)
+export const { DATABASE_URL, ...env } = envSchema.parse(process.env)

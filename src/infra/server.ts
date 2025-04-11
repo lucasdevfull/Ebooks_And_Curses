@@ -8,7 +8,7 @@ import {
   serializerCompiler,
   validatorCompiler,
 } from 'fastify-type-provider-zod'
-import { env } from '@/infrastructure/env.ts'
+import { env } from '@/infra/env.ts'
 import { errorHandler } from './error-handler.ts'
 import { fastifySwagger } from '@fastify/swagger'
 import { fastifySwaggerUi } from '@fastify/swagger-ui'
