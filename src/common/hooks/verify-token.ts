@@ -1,12 +1,11 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import { HttpStatus } from '../enum/http.ts'
 
-export const verifyToken = (
-  { headers: { authorization }, jwtVerify }: FastifyRequest,
-  reply: FastifyReply,
-  done: () => void
+export const verifyToken = async (
+  request: FastifyRequest,
+  reply: FastifyReply
 ) => {
-  const token = authorization?.split(' ')[1]
+  const token = request.headers.authorization?.split(' ')[1]
   if (!token) {
     return reply.status(HttpStatus.UNAUTHORIZED).send({
       statusCode: HttpStatus.UNAUTHORIZED,
@@ -14,7 +13,8 @@ export const verifyToken = (
       message: 'Token not provided',
     })
   }
-  const tokenAcepted = jwtVerify()
+  const tokenAcepted = await request.jwtVerify()
+
   if (!tokenAcepted) {
     return reply.status(HttpStatus.UNAUTHORIZED).send({
       statusCode: HttpStatus.UNAUTHORIZED,
@@ -22,5 +22,4 @@ export const verifyToken = (
       message: 'Invalid token',
     })
   }
-  done()
 }
