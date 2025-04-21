@@ -7,7 +7,7 @@
   "scripts": {
     "studio": "drizzle-kit studio",
     "start": "node --env-file=.env dist/main.cjs",
-    "build": "tsup src --out-dir dist",
+    "build": "tsc && tsup",
     "format": "biome format --write src",
     "check": "biome check --write src",
     "generate": "drizzle-kit generate",
@@ -28,17 +28,17 @@
     "drizzle-orm": "^0.38.4",
     "drizzle-zod": "^0.6.1",
     "fast": "file:",
-    "fastify": "^5.2.2",
+    "fastify": "^5.3.2",
     "fastify-type-provider-zod": "^4.0.2",
     "postgres": "^3.4.5",
-    "zod": "^3.24.2"
+    "zod": "^3.24.3"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
-    "@fastify/swagger": "^9.4.2",
+    "@fastify/swagger": "^9.5.0",
     "@fastify/swagger-ui": "^5.2.2",
     "@types/bcrypt": "^5.0.2",
-    "@types/node": "^22.14.0",
+    "@types/node": "^22.14.1",
     "drizzle-kit": "^0.30.6",
     "tsup": "^8.4.0",
     "tsx": "^4.19.3",
