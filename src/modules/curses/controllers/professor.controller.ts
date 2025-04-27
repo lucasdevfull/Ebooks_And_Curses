@@ -1,3 +1,4 @@
+import { HttpStatus } from '@/common/enum/http.ts'
 import type { TProfessor } from '@/types/curse.types.ts'
 import type {
   IProfessorController,
@@ -6,7 +7,6 @@ import type {
 } from '@interface/professor.interface.ts'
 import { ProfessorServices } from '@services/professor.services.ts'
 import type { FastifyReply, FastifyRequest } from 'fastify'
-import { HttpStatus } from '@/common/enum/http.ts'
 
 export class ProfessorController implements IProfessorController {
   private service: ProfessorServices

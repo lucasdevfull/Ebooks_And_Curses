@@ -1,13 +1,13 @@
-import type { FastifyInstanceZod } from '@/types/server.types.ts'
-import { CursoController } from '@controllers/curse.controller.ts'
-import type { FastifyPluginOptions } from 'fastify'
 import { verifyToken } from '@/common/hooks/verify-token.ts'
-import { httpSchema } from '@/schema/http.schema.ts'
 import {
   curseInsertSchema,
   curseSchema,
   curseSelectSchema,
 } from '@/schema/curse.schema.ts'
+import { httpSchema } from '@/schema/http.schema.ts'
+import type { FastifyInstanceZod } from '@/types/server.types.ts'
+import { CursoController } from '@controllers/curse.controller.ts'
+import type { FastifyPluginOptions } from 'fastify'
 import { z } from 'zod'
 
 export function cursoRoutes(

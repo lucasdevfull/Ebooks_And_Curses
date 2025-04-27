@@ -1,8 +1,8 @@
+import { httpSchema } from '@/schema/http.schema.ts'
+import { userInsertSchema, userSelectSchema } from '@/schema/user.schema.ts'
 import type { FastifyInstanceZod } from '@/types/server.types.ts'
 import { UserController } from '@controllers/user.controller.ts'
 import type { FastifyPluginOptions } from 'fastify'
-import { userInsertSchema, userSelectSchema } from '@/schema/user.schema.ts'
-import { httpSchema } from '@/schema/http.schema.ts'
 import { z } from 'zod'
 
 export function userRoutes(

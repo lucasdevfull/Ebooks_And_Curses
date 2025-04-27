@@ -1,12 +1,12 @@
-import type { FastifyInstanceZod } from '@/types/server.types.ts'
-import { AuthorController } from '@controllers/author.controller.ts'
-import type { FastifyPluginOptions } from 'fastify'
+import { verifyToken } from '@/common/hooks/verify-token.ts'
 import {
   authorsInsertSchema,
   authorsSelectSchema,
 } from '@/schema/authors.schema.ts'
 import { httpSchema } from '@/schema/http.schema.ts'
-import { verifyToken } from '@/common/hooks/verify-token.ts'
+import type { FastifyInstanceZod } from '@/types/server.types.ts'
+import { AuthorController } from '@controllers/author.controller.ts'
+import type { FastifyPluginOptions } from 'fastify'
 import { z } from 'zod'
 
 export function authorsRoutes(

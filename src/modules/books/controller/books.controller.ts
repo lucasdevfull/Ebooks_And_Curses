@@ -1,7 +1,7 @@
 import { HttpStatus } from '@/common/enum/http.ts'
 import { bookFormDataSchema } from '@schema/books.schema.ts'
-import type { FastifyReply, FastifyRequest } from 'fastify'
 import { EbookServices } from '@services/books.services.ts'
+import type { FastifyReply, FastifyRequest } from 'fastify'
 
 export class EbookController {
   private service: EbookServices

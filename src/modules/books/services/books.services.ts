@@ -1,13 +1,13 @@
-import type { Ebook, Ebooks, NewEbook } from '@/types/ebooks.types.ts'
-import { EbookRepository } from '../repositories/books.repositories.ts'
-import path from 'node:path'
 import {
   createReadStream,
   createWriteStream,
   existsSync,
   mkdirSync,
 } from 'node:fs'
+import path from 'node:path'
 import { pipeline } from 'node:stream/promises'
+import type { Ebook, Ebooks, NewEbook } from '@/types/ebooks.types.ts'
+import { EbookRepository } from '../repositories/books.repositories.ts'
 
 export class EbookServices {
   private repository: EbookRepository

@@ -1,9 +1,9 @@
+import { verifyToken } from '@/common/hooks/verify-token.ts'
+import { genreIsertSchema, genreSelectSchema } from '@/schema/genre.schema.ts'
+import { httpSchema } from '@/schema/http.schema.ts'
 import type { FastifyInstanceZod } from '@/types/server.types.ts'
 import { GenreController } from '@controllers/genre.controller.ts'
 import type { FastifyPluginOptions } from 'fastify'
-import { genreIsertSchema, genreSelectSchema } from '@/schema/genre.schema.ts'
-import { httpSchema } from '@/schema/http.schema.ts'
-import { verifyToken } from '@/common/hooks/verify-token.ts'
 import { z } from 'zod'
 
 export function genreRoutes(

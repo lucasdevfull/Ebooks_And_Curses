@@ -1,8 +1,8 @@
-import { db } from '@/db/index.ts'
-import { genres } from '@db/index.ts'
-import type { NewGenre, TGenre } from '@/types/ebooks.types.ts'
-import { eq } from 'drizzle-orm'
 import type { Repository } from '@/common/base/repository.ts'
+import { db } from '@/db/index.ts'
+import type { NewGenre, TGenre } from '@/types/ebooks.types.ts'
+import { genres } from '@db/index.ts'
+import { eq } from 'drizzle-orm'
 
 export class GenreRepository implements Repository<TGenre, NewGenre> {
   async getAll(): Promise<TGenre[]> {

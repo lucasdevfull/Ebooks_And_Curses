@@ -1,8 +1,8 @@
-import { db } from '@/db/index.ts'
-import { eq } from 'drizzle-orm'
-import { professor } from '@db/index.ts'
 import type { Repository } from '@/common/base/repository.ts'
+import { db } from '@/db/index.ts'
 import type { NewProfessor, TProfessor } from '@/types/curse.types.ts'
+import { professor } from '@db/index.ts'
+import { eq } from 'drizzle-orm'
 
 export class ProfessorRepository
   implements Repository<TProfessor, NewProfessor>

@@ -1,9 +1,9 @@
+import type { Repository } from '@/common/base/repository.ts'
 import { db } from '@/db/index.ts'
-import { authors } from '@db/index.ts'
 import type { NewAuthor, TAuthor } from '@/types/ebooks.types.ts'
+import { authors } from '@db/index.ts'
 import { authorsSelectSchema } from '@schema/authors.schema.ts'
 import { eq } from 'drizzle-orm'
-import type { Repository } from '@/common/base/repository.ts'
 
 export class AuthorRepository implements Repository<TAuthor, NewAuthor> {
   async create(data: NewAuthor): Promise<TAuthor> {

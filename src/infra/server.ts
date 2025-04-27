@@ -1,8 +1,17 @@
+import path from 'node:path'
+import { env } from '@/infra/env.ts'
+import type {
+  FastifyInstanceZod,
+  Routes,
+  Server,
+} from '@/types/server.types.ts'
 import fastifyCors from '@fastify/cors'
 import fastifyHelmet from '@fastify/helmet'
 import fastifyJwt from '@fastify/jwt'
 import fastifyMultipart from '@fastify/multipart'
 import fastifyStatic from '@fastify/static'
+import { fastifySwagger } from '@fastify/swagger'
+import { fastifySwaggerUi } from '@fastify/swagger-ui'
 import { fastify } from 'fastify'
 import {
   type ZodTypeProvider,
@@ -10,20 +19,11 @@ import {
   serializerCompiler,
   validatorCompiler,
 } from 'fastify-type-provider-zod'
-import { env } from '@/infra/env.ts'
-import { errorHandler } from './error-handler.ts'
-import { fastifySwagger } from '@fastify/swagger'
-import { fastifySwaggerUi } from '@fastify/swagger-ui'
-import type {
-  FastifyInstanceZod,
-  Routes,
-  Server,
-} from '@/types/server.types.ts'
-import path from 'node:path'
 import { v4 } from 'uuid'
+import { errorHandler } from './error-handler.ts'
 
 export class FastifyServer implements Server {
-  instance: FastifyInstanceZod
+  private instance: FastifyInstanceZod
   constructor(routes: Routes[]) {
     this.instance = fastify({
       logger: true,

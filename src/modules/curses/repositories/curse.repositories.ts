@@ -1,11 +1,11 @@
 import { db } from '@/db/index.ts'
-import { category, categoryCurses, curse, professor } from '@db/index.ts'
 import type {
   Curse,
   NewCurse,
   TCategoryCurse,
   TCurse,
 } from '@/types/curse.types.ts'
+import { category, categoryCurses, curse, professor } from '@db/index.ts'
 import type { ICursoRepository } from '@interface/curse.interface.ts'
 import { and, eq, sql } from 'drizzle-orm'
 import type { PgTable, TableConfig } from 'drizzle-orm/pg-core'
