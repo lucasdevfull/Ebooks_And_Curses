@@ -31,12 +31,8 @@ export class UserController implements IUserController {
   createUser = async (
     { body }: FastifyRequest<UserBodyRequest>,
     reply: FastifyReply
-  ): Promise<Users | never> => {
-    try {
-      const result: Users = await this.service.create(body)
-      return reply.status(201).send(result)
-    } catch (error) {
-      return reply.status(500).send(error)
-    }
+  ): Promise<Users> => {
+    const result: Users = await this.service.create(body)
+    return reply.status(201).send(result)
   }
 }

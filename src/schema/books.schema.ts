@@ -9,10 +9,17 @@ export const bookFormDataSchema = z.object({
     .refine(file => !(file.type in ['image/jpeg', 'image/png']), {
       message: 'File type must be image/jpeg or image/png',
     }),
-  authors: z.union([z.number().positive(), z.number().positive().array()]),
-  genres: z.union([z.number().positive(), z.number().positive().array()]),
+  authors: z
+    .union([z.string(), z.string().array()])
+    .transform(val =>
+      Array.isArray(val) ? val.map(val => Number(val)) : Number(val)
+    ),
+  genres: z
+    .union([z.string(), z.string().array()])
+    .transform(val =>
+      Array.isArray(val) ? val.map(val => Number(val)) : Number(val)
+    ),
 })
-
 export const bookSchema = z.object({
   ebookId: z.number(),
   title: z.string().nullable(),

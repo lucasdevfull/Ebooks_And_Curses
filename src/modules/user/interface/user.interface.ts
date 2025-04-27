@@ -23,7 +23,7 @@ export interface IUserController {
   createUser: (
     request: FastifyRequest<UserBodyRequest>,
     reply: FastifyReply
-  ) => Promise<Users | never>
+  ) => Promise<Users>
 }
 
 export interface IUserServices {

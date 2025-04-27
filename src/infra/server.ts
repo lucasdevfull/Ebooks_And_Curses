@@ -1,6 +1,8 @@
 import fastifyCors from '@fastify/cors'
 import fastifyHelmet from '@fastify/helmet'
 import fastifyJwt from '@fastify/jwt'
+import fastifyMultipart from '@fastify/multipart'
+import fastifyStatic from '@fastify/static'
 import { fastify } from 'fastify'
 import {
   type ZodTypeProvider,
@@ -17,7 +19,7 @@ import type {
   Routes,
   Server,
 } from '@/types/server.types.ts'
-import fastifyMultipart from '@fastify/multipart'
+import path from 'node:path'
 
 export class FastifyServer implements Server {
   instance: FastifyInstanceZod
@@ -36,14 +38,21 @@ export class FastifyServer implements Server {
     this.instance.register(fastifyJwt, {
       secret: env.JWT_SECRET,
     })
+
     this.instance.register(fastifyHelmet)
     this.instance.register(fastifyCors, {
       origin: true,
     })
+
     this.instance.register(fastifyMultipart, {
       attachFieldsToBody: true,
       throwFileSizeLimit: false,
     })
+
+    this.instance.register(fastifyStatic, {
+      root: path.resolve('media'),
+    })
+
     if (env.NODE_ENV === 'development') {
       this.instance.register(fastifySwagger, {
         openapi: {

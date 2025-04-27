@@ -18,6 +18,7 @@ export class CursoController implements ICursoController {
     request: FastifyRequest,
     reply: FastifyReply
   ): Promise<Curse[]> => {
+    console.log(request.user)
     const cursos = await this.service.getAllCurses()
     return reply.status(HttpStatus.OK).send(cursos)
   }
