@@ -20,6 +20,7 @@ import type {
   Server,
 } from '@/types/server.types.ts'
 import path from 'node:path'
+import { v4 } from 'uuid'
 
 export class FastifyServer implements Server {
   instance: FastifyInstanceZod
@@ -37,6 +38,10 @@ export class FastifyServer implements Server {
     this.instance.setSerializerCompiler(serializerCompiler)
     this.instance.register(fastifyJwt, {
       secret: env.JWT_SECRET,
+      sign: {
+        expiresIn: env.EXPIRES_IN,
+        jti: v4(),
+      },
     })
 
     this.instance.register(fastifyHelmet)
