@@ -68,7 +68,7 @@ export class FastifyServer implements Server {
           },
           servers: [
             {
-              url: 'http://localhost:3333',
+              url: env.SERVER_URL,
             },
           ],
         },
