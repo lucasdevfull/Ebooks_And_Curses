@@ -2,7 +2,7 @@ import type { Login, Token, Users } from '@/types/user.types.ts'
 import { createToken } from '@/common/utils/create-token.ts'
 import type { IAuthServices } from '@interface/auth.interface.ts'
 import { UserRepository } from '@repositories/user.repositories.ts'
-import { compare, compareSync } from 'bcrypt'
+import { compareSync } from '@node-rs/bcrypt'
 import { BadRequestError } from '@/common/errors/bad-request.ts'
 import type { JWT } from '@fastify/jwt'
 
