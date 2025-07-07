@@ -1,8 +1,8 @@
-import { HttpStatus } from '@/common/enum/http.ts'
 import { BadRequestError } from '@errors/bad-request.ts'
 import { ConflitError } from '@errors/conflit.ts'
 import { NotFoundError } from '@errors/not-found.ts'
 import type { FastifyError, FastifyReply, FastifyRequest } from 'fastify'
+import { HttpStatus } from '@/common/enum/http.ts'
 
 export const errorHandler = (
   error: FastifyError,

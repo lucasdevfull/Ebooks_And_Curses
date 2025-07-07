@@ -1,15 +1,14 @@
-import { HttpStatus } from '@/common/enum/http.ts'
 import type {
   IAuthController,
   LoginRequest,
 } from '@interface/auth.interface.ts'
-import { AuthServices } from '@services/auth.services.ts'
+import type { AuthServices } from '@services/auth.services.ts'
 import type { FastifyReply, FastifyRequest } from 'fastify'
+import { HttpStatus } from '@/common/enum/http.ts'
 
 export class AuthController implements IAuthController {
-  private service: AuthServices
-  constructor() {
-    this.service = new AuthServices()
+  constructor(private service: AuthServices) {
+    this.service = service
   }
 
   login = async (

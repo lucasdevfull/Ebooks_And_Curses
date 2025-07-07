@@ -1,12 +1,16 @@
-import { professor } from '@db/index.ts'
-import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
+import z from 'zod'
 
-export const professorInsertSchema = createInsertSchema(professor, {
-  name: schema =>
-    schema.min(1, {
-      message: 'O nome deve ter pelo menos 1 caracteres',
-    }),
-  email: schema => schema.email({ message: 'O email deve ser valido' }),
+export const professorInsertSchema = z.object({
+  name: z.string().min(1, {
+    message: 'O nome deve ter pelo menos 1 caracteres',
+  }),
+  email: z.string().email({ message: 'O email deve ser valido' }),
 })
 
-export const professorSelectSchema = createSelectSchema(professor)
+export const professorSelectSchema = z.object({
+  professorId: z.number().positive(),
+  name: z
+    .string()
+    .min(1, { message: 'O nome deve ter pelo menos 1 caracteres' }),
+  email: z.string().email({ message: 'O email deve ser valido' }),
+})

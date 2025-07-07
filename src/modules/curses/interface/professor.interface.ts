@@ -1,9 +1,9 @@
-import type { NewProfessor, TProfessor } from '@/types/curse.types.ts'
 import type {
   FastifyReply,
   FastifyRequest,
   RouteGenericInterface,
 } from 'fastify'
+import type { NewProfessor, TProfessor } from '@/types/curse.types.ts'
 
 export interface ProfessorRequest extends RouteGenericInterface {
   Params: {

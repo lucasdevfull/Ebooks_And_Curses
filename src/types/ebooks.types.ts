@@ -1,6 +1,6 @@
+import type { z } from 'zod'
 import type { authors, ebooks, genres } from '@/db/schema/index.ts'
 import type { bookSchema } from '@/schema/books.schema.ts'
-import type { z } from 'zod'
 
 export type NewAuthor = typeof authors.$inferInsert
 export type TAuthor = typeof authors.$inferSelect

@@ -1,13 +1,12 @@
+import type { IGenreServices } from '@interface/genre.interface.ts'
+import type { GenreRepository } from '@repositories/genre.repositories.ts'
 import { ConflitError } from '@/common/errors/conflit.ts'
 import { NotFoundError } from '@/common/errors/not-found.ts'
 import type { NewGenre, TGenre } from '@/types/ebooks.types.ts'
-import type { IGenreServices } from '@interface/genre.interface.ts'
-import { GenreRepository } from '@repositories/genre.repositories.ts'
 
 export class GenreServices implements IGenreServices {
-  private repository: GenreRepository
-  constructor() {
-    this.repository = new GenreRepository()
+  constructor(private repository: GenreRepository) {
+    this.repository = repository
   }
 
   async getAllGenres(): Promise<TGenre[]> {
@@ -46,9 +45,9 @@ export class GenreServices implements IGenreServices {
       throw new NotFoundError('Genre not found')
     }
     try {
-      const genre: TGenre = await this.repository.delete(id)
+      await this.repository.delete(id)
       return { message: 'Genre deleted successfully' }
-    } catch (error) {
+    } catch (_error) {
       throw new Error('Error deleting genre')
     }
   }

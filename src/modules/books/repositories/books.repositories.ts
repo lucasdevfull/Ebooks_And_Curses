@@ -1,3 +1,5 @@
+import { eq, sql } from 'drizzle-orm'
+import type { PgTable, TableConfig } from 'drizzle-orm/pg-core'
 import { db } from '@/db/index.ts'
 import {
   authors,
@@ -8,8 +10,6 @@ import {
   users,
 } from '@/db/schema/index.ts'
 import type { Ebook, Ebooks } from '@/types/ebooks.types.ts'
-import { eq, sql } from 'drizzle-orm'
-import type { PgTable, TableConfig } from 'drizzle-orm/pg-core'
 
 export class EbookRepository {
   async getAll(): Promise<Ebooks[]> {

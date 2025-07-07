@@ -1,5 +1,3 @@
-import { curse } from '@db/index.ts'
-import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
 import { z } from 'zod'
 
 export const curseSchema = z.object({
@@ -18,8 +16,20 @@ export const curseSchema = z.object({
   }),
 })
 
-export const curseInsertSchema = createInsertSchema(curse).extend({
-  category: z.union([z.number().positive(), z.number().positive().array()]),
-})
+export const curseInsertSchema = z
+  .object({
+    curseId: z.number().positive(),
+    title: z.string(),
+    price: z.string().transform(val => Number(val).toFixed(2)),
+    professorId: z.number().positive(),
+  })
+  .extend({
+    category: z.union([z.number().positive(), z.number().positive().array()]),
+  })
 
-export const curseSelectSchema = createSelectSchema(curse)
+export const curseSelectSchema = z.object({
+  curseId: z.number().positive(),
+  title: z.string(),
+  professorId: z.number().positive(),
+  price: z.string().transform(val => Number(val).toFixed(2)),
+})

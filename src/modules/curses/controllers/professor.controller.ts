@@ -1,21 +1,20 @@
-import { HttpStatus } from '@/common/enum/http.ts'
-import type { TProfessor } from '@/types/curse.types.ts'
 import type {
   IProfessorController,
   ProfessorBodyRequest,
   ProfessorRequest,
 } from '@interface/professor.interface.ts'
-import { ProfessorServices } from '@services/professor.services.ts'
+import type { ProfessorServices } from '@services/professor.services.ts'
 import type { FastifyReply, FastifyRequest } from 'fastify'
+import { HttpStatus } from '@/common/enum/http.ts'
+import type { TProfessor } from '@/types/curse.types.ts'
 
 export class ProfessorController implements IProfessorController {
-  private service: ProfessorServices
-  constructor() {
-    this.service = new ProfessorServices()
+  constructor(private service: ProfessorServices) {
+    this.service = service
   }
 
   getAllProfessors = async (
-    request: FastifyRequest,
+    _request: FastifyRequest,
     reply: FastifyReply
   ): Promise<TProfessor[]> => {
     const professors = await this.service.getAllProfessors()

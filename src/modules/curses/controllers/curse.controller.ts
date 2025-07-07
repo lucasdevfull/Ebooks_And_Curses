@@ -1,24 +1,22 @@
-import { HttpStatus } from '@/common/enum/http.ts'
-import type { Curse, TCurse } from '@/types/curse.types.ts'
 import type {
   CategoriaCursoRequest,
   CursoBodyRequest,
   CursoRequest,
   ICursoController,
 } from '@interface/curse.interface.ts'
-import { CursoServices } from '@services/curse.services.ts'
+import type { CursoServices } from '@services/curse.services.ts'
 import type { FastifyReply, FastifyRequest } from 'fastify'
+import { HttpStatus } from '@/common/enum/http.ts'
+import type { Curse, TCurse } from '@/types/curse.types.ts'
 
 export class CursoController implements ICursoController {
-  private service: CursoServices
-  constructor() {
-    this.service = new CursoServices()
+  constructor(private service: CursoServices) {
+    this.service = service
   }
   getAllCurses = async (
-    request: FastifyRequest,
+    _request: FastifyRequest,
     reply: FastifyReply
   ): Promise<Curse[]> => {
-    console.log(request.user)
     const cursos = await this.service.getAllCurses()
     return reply.status(HttpStatus.OK).send(cursos)
   }

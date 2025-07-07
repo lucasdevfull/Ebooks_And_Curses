@@ -1,20 +1,28 @@
-import { verifyToken } from '@/common/hooks/verify-token.ts'
+import { CursoController } from '@controllers/curse.controller.ts'
+import { verifyToken } from '@hooks/verify-token.ts'
+import { CategoryRepository } from '@repositories/category.repositories.ts'
+import { CursoRepository } from '@repositories/curse.repositories.ts'
+import { ProfessorRepository } from '@repositories/professor.repositories.ts'
 import {
   curseInsertSchema,
   curseSchema,
   curseSelectSchema,
-} from '@/schema/curse.schema.ts'
-import { httpSchema } from '@/schema/http.schema.ts'
-import type { FastifyInstanceZod } from '@/types/server.types.ts'
-import { CursoController } from '@controllers/curse.controller.ts'
+} from '@schema/curse.schema.ts'
+import { httpSchema } from '@schema/http.schema.ts'
+import { CursoServices } from '@services/curse.services.ts'
 import type { FastifyPluginOptions } from 'fastify'
 import { z } from 'zod'
+import type { FastifyInstanceZod } from '@/types/server.types.ts'
 
 export function cursoRoutes(
   fastify: FastifyInstanceZod,
   opts: FastifyPluginOptions
 ) {
-  const cursoController = new CursoController()
+  const category = new CategoryRepository()
+  const professor = new ProfessorRepository()
+  const curse = new CursoRepository()
+  const cursoServices = new CursoServices(category, professor, curse)
+  const cursoController = new CursoController(cursoServices)
 
   fastify.get(
     '/cursos',

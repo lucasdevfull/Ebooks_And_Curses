@@ -1,9 +1,9 @@
-import type { NewUser, Users } from '@/types/user.types.ts'
 import type {
   FastifyReply,
   FastifyRequest,
   RouteGenericInterface,
 } from 'fastify'
+import type { NewUser, Users } from '@/types/user.types.ts'
 
 export interface UserRequest extends RouteGenericInterface {
   Params: {

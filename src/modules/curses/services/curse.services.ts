@@ -1,3 +1,7 @@
+import type { ICursoServices } from '@interface/curse.interface.ts'
+import type { CategoryRepository } from '@repositories/category.repositories.ts'
+import type { CursoRepository } from '@repositories/curse.repositories.ts'
+import type { ProfessorRepository } from '@repositories/professor.repositories.ts'
 import { ConflitError } from '@/common/errors/conflit.ts'
 import { NotFoundError } from '@/common/errors/not-found.ts'
 import type {
@@ -8,21 +12,18 @@ import type {
   TCurse,
   TProfessor,
 } from '@/types/curse.types.ts'
-import type { ICursoServices } from '@interface/curse.interface.ts'
-import { CategoryRepository } from '@repositories/category.repositories.ts'
-import { CursoRepository } from '@repositories/curse.repositories.ts'
-import { ProfessorRepository } from '@repositories/professor.repositories.ts'
 
 type Number = number | number[]
 
 export class CursoServices implements ICursoServices {
-  private category: CategoryRepository
-  private professor: ProfessorRepository
-  private curse: CursoRepository
-  constructor() {
-    this.category = new CategoryRepository()
-    this.professor = new ProfessorRepository()
-    this.curse = new CursoRepository()
+  constructor(
+    private category: CategoryRepository,
+    private professor: ProfessorRepository,
+    private curse: CursoRepository
+  ) {
+    this.category = category
+    this.professor = professor
+    this.curse = curse
   }
 
   async getAllCurses(): Promise<Curse[]> {
@@ -72,7 +73,7 @@ export class CursoServices implements ICursoServices {
 
     if (!curseExists) throw new NotFoundError('Curse not found')
 
-    const curse = await this.curse.delete(id)
+    await this.curse.delete(id)
     return { message: 'Curse deleted successfully' }
   }
 

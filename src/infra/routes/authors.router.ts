@@ -1,19 +1,23 @@
-import { verifyToken } from '@/common/hooks/verify-token.ts'
+import { AuthorController } from '@controllers/author.controller.ts'
+import { verifyToken } from '@hooks/verify-token.ts'
+import { AuthorRepository } from '@repositories/author.repositories.ts'
 import {
   authorsInsertSchema,
   authorsSelectSchema,
-} from '@/schema/authors.schema.ts'
-import { httpSchema } from '@/schema/http.schema.ts'
-import type { FastifyInstanceZod } from '@/types/server.types.ts'
-import { AuthorController } from '@controllers/author.controller.ts'
+} from '@schema/authors.schema.ts'
+import { httpSchema } from '@schema/http.schema.ts'
+import { AuthorServices } from '@services/author.services.ts'
 import type { FastifyPluginOptions } from 'fastify'
 import { z } from 'zod'
+import type { FastifyInstanceZod } from '@/types/server.types.ts'
 
 export function authorsRoutes(
   fastify: FastifyInstanceZod,
   opts: FastifyPluginOptions
 ) {
-  const authorsController = new AuthorController()
+  const repository = new AuthorRepository()
+  const authorsServices = new AuthorServices(repository)
+  const authorsController = new AuthorController(authorsServices)
 
   fastify.get(
     '/authors',

@@ -1,13 +1,12 @@
+import type { ICategoriaServices } from '@interface/category.interface.ts'
+import type { CategoryRepository } from '@repositories/category.repositories.ts'
 import { ConflitError } from '@/common/errors/conflit.ts'
 import { NotFoundError } from '@/common/errors/not-found.ts'
 import type { NewCategory, TCategory } from '@/types/curse.types.ts'
-import type { ICategoriaServices } from '@interface/category.interface.ts'
-import { CategoryRepository } from '@repositories/category.repositories.ts'
 
 export class CategoryServices implements ICategoriaServices {
-  private repository: CategoryRepository
-  constructor() {
-    this.repository = new CategoryRepository()
+  constructor(private repository: CategoryRepository) {
+    this.repository = repository
   }
 
   async getAllCategories(): Promise<TCategory[]> {
@@ -45,7 +44,7 @@ export class CategoryServices implements ICategoriaServices {
     const categoryExist: TCategory = await this.repository.getById(id)
     if (!categoryExist) throw new NotFoundError('Category not found')
 
-    const category: TCategory = await this.repository.delete(id)
+    await this.repository.delete(id)
     return { message: 'Category deleted successfully' }
   }
 }

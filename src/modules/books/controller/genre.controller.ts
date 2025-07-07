@@ -1,21 +1,20 @@
-import { HttpStatus } from '@/common/enum/http.ts'
-import type { NewGenre, TGenre } from '@/types/ebooks.types.ts'
 import type {
   GerneBodyRequest,
   GerneRequest,
   IGenreController,
 } from '@interface/genre.interface.ts'
-import { GenreServices } from '@services/genre.services.ts'
+import type { GenreServices } from '@services/genre.services.ts'
 import type { FastifyReply, FastifyRequest } from 'fastify'
+import { HttpStatus } from '@/common/enum/http.ts'
+import type { TGenre } from '@/types/ebooks.types.ts'
 
 export class GenreController implements IGenreController {
-  private service: GenreServices
-  constructor() {
-    this.service = new GenreServices()
+  constructor(private service: GenreServices) {
+    this.service = service
   }
 
   getAllGenres = async (
-    request: FastifyRequest,
+    _request: FastifyRequest,
     reply: FastifyReply
   ): Promise<TGenre[]> => {
     const genres = await this.service.getAllGenres()

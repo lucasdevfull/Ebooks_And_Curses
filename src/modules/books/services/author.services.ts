@@ -1,12 +1,11 @@
+import type { IAuthorServices } from '@interface/authors.interface.ts'
+import type { AuthorRepository } from '@repositories/author.repositories.ts'
 import { NotFoundError } from '@/common/errors/not-found.ts'
 import type { NewAuthor, TAuthor } from '@/types/ebooks.types.ts'
-import type { IAuthorServices } from '@interface/authors.interface.ts'
-import { AuthorRepository } from '@repositories/author.repositories.ts'
 
 export class AuthorServices implements IAuthorServices {
-  private repository: AuthorRepository
-  constructor() {
-    this.repository = new AuthorRepository()
+  constructor(private repository: AuthorRepository) {
+    this.repository = repository
   }
 
   async getAllAuthors(): Promise<TAuthor[]> {
@@ -41,9 +40,9 @@ export class AuthorServices implements IAuthorServices {
       throw new NotFoundError('Author not found')
     }
     try {
-      const deletedAuthor: TAuthor = await this.repository.delete(authorId)
+      await this.repository.delete(authorId)
       return { message: 'Author deleted successfully' }
-    } catch (error) {
+    } catch (_error) {
       throw new Error('Error deleting author')
     }
   }

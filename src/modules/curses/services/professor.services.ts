@@ -1,12 +1,11 @@
+import type { IProfessorServices } from '@interface/professor.interface.ts'
+import type { ProfessorRepository } from '@repositories/professor.repositories.ts'
 import { NotFoundError } from '@/common/errors/not-found.ts'
 import type { NewProfessor, TProfessor } from '@/types/curse.types.ts'
-import type { IProfessorServices } from '@interface/professor.interface.ts'
-import { ProfessorRepository } from '@repositories/professor.repositories.ts'
 
 export class ProfessorServices implements IProfessorServices {
-  private repository: ProfessorRepository
-  constructor() {
-    this.repository = new ProfessorRepository()
+  constructor(private repository: ProfessorRepository) {
+    this.repository = repository
   }
 
   async getAllProfessors(): Promise<TProfessor[]> {
@@ -39,7 +38,7 @@ export class ProfessorServices implements IProfessorServices {
     const professorExist = await this.repository.getById(id)
     if (!professorExist) throw new NotFoundError('Professor not found')
 
-    const professor: TProfessor = await this.repository.delete(id)
+    await this.repository.delete(id)
     return { message: 'Professor deleted successfully' }
   }
 }

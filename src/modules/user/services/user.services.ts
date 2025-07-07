@@ -1,15 +1,14 @@
 import { randomInt } from 'node:crypto'
+import type { IUserServices } from '@interface/user.interface.ts'
+import type { UserRepository } from '@repositories/user.repositories.ts'
 import { ConflitError } from '@/common/errors/conflit.ts'
 import { NotFoundError } from '@/common/errors/not-found.ts'
 import { passwordHash } from '@/common/utils/hash.ts'
 import type { NewUser, Users } from '@/types/user.types.ts'
-import type { IUserServices } from '@interface/user.interface.ts'
-import { UserRepository } from '@repositories/user.repositories.ts'
 
 export class UserServices implements IUserServices {
-  private repository: UserRepository
-  constructor() {
-    this.repository = new UserRepository()
+  constructor(private repository: UserRepository) {
+    this.repository = repository
   }
   async getAll(): Promise<Users[]> {
     const users: Users[] = await this.repository.getAll()

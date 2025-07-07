@@ -1,21 +1,20 @@
-import { HttpStatus } from '@/common/enum/http.ts'
-import type { TCategory } from '@/types/curse.types.ts'
 import type {
   CategoryBodyRequest,
   CategoryRequest,
   ICategoriaController,
 } from '@interface/category.interface.ts'
-import { CategoryServices } from '@services/category.services.ts'
+import type { CategoryServices } from '@services/category.services.ts'
 import type { FastifyReply, FastifyRequest } from 'fastify'
+import { HttpStatus } from '@/common/enum/http.ts'
+import type { TCategory } from '@/types/curse.types.ts'
 
 export class CategoryController implements ICategoriaController {
-  private service: CategoryServices
-  constructor() {
-    this.service = new CategoryServices()
+  constructor(private service: CategoryServices) {
+    this.service = service
   }
 
   getAllCategories = async (
-    request: FastifyRequest,
+    _request: FastifyRequest,
     reply: FastifyReply
   ): Promise<TCategory[]> => {
     const categories = await this.service.getAllCategories()

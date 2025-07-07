@@ -1,10 +1,10 @@
-import type { Login, Token } from '@/types/user.types.ts'
 import type { JWT } from '@fastify/jwt'
 import type {
   FastifyReply,
   FastifyRequest,
   RouteGenericInterface,
 } from 'fastify'
+import type { Login, Token } from '@/types/user.types.ts'
 
 export interface IAuthController {
   login: (

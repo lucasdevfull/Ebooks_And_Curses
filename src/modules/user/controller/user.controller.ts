@@ -1,19 +1,18 @@
-import type { NewUser, Users } from '@/types/user.types.ts'
 import type {
   IUserController,
   UserBodyRequest,
   UserRequest,
 } from '@interface/user.interface.ts'
-import { UserServices } from '@services/user.services.ts'
+import type { UserServices } from '@services/user.services.ts'
 import type { FastifyReply, FastifyRequest } from 'fastify'
+import type { Users } from '@/types/user.types.ts'
 
 export class UserController implements IUserController {
-  private service: UserServices
-  constructor() {
-    this.service = new UserServices()
+  constructor(private service: UserServices) {
+    this.service = service
   }
   getUsers = async (
-    request: FastifyRequest,
+    _request: FastifyRequest,
     reply: FastifyReply
   ): Promise<Users[]> => {
     const users: Users[] = await this.service.getAll()

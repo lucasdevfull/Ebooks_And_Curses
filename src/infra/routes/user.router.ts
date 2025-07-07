@@ -1,15 +1,19 @@
-import { httpSchema } from '@/schema/http.schema.ts'
-import { userInsertSchema, userSelectSchema } from '@/schema/user.schema.ts'
-import type { FastifyInstanceZod } from '@/types/server.types.ts'
 import { UserController } from '@controllers/user.controller.ts'
+import { UserRepository } from '@repositories/user.repositories.ts'
+import { httpSchema } from '@schema/http.schema.ts'
+import { userInsertSchema, userSelectSchema } from '@schema/user.schema.ts'
+import { UserServices } from '@services/user.services.ts'
 import type { FastifyPluginOptions } from 'fastify'
 import { z } from 'zod'
+import type { FastifyInstanceZod } from '@/types/server.types.ts'
 
 export function userRoutes(
   fastify: FastifyInstanceZod,
   opts: FastifyPluginOptions
 ) {
-  const userController = new UserController()
+  const repository = new UserRepository()
+  const userServices = new UserServices(repository)
+  const userController = new UserController(userServices)
 
   fastify.get(
     '/users',

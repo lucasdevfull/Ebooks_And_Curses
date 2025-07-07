@@ -1,19 +1,23 @@
-import { verifyToken } from '@/common/hooks/verify-token.ts'
-import { httpSchema } from '@/schema/http.schema.ts'
+import { ProfessorController } from '@controllers/professor.controller.ts'
+import { verifyToken } from '@hooks/verify-token.ts'
+import { ProfessorRepository } from '@repositories/professor.repositories.ts'
+import { httpSchema } from '@schema/http.schema.ts'
 import {
   professorInsertSchema,
   professorSelectSchema,
-} from '@/schema/professor.schema.ts'
-import type { FastifyInstanceZod } from '@/types/server.types.ts'
-import { ProfessorController } from '@controllers/professor.controller.ts'
+} from '@schema/professor.schema.ts'
+import { ProfessorServices } from '@services/professor.services.ts'
 import type { FastifyPluginOptions } from 'fastify'
 import { z } from 'zod'
+import type { FastifyInstanceZod } from '@/types/server.types.ts'
 
 export function professorRoutes(
   fastify: FastifyInstanceZod,
   opts: FastifyPluginOptions
 ) {
-  const professorController = new ProfessorController()
+  const repository = new ProfessorRepository()
+  const professorServices = new ProfessorServices(repository)
+  const professorController = new ProfessorController(professorServices)
 
   fastify.get(
     '/professor',

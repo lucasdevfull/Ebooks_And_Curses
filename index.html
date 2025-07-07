@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form onsubmit=" sendForm(event)" method="post" enctype="multipart/form-data">
+        <input type="text" name="title">
+        <input type="text" name="summary">
+        <input type="number" name="numPages">
+        <input type="text" name="authors">
+        <input type="text" name="genres">
+        <input type="file" name="file" id="file">
+        <button type="submit">Button</button>
+    </form>
+    <script>
+        function sendForm(event, value) {
+            event.preventDefault()
+            const formData = new FormData(event.target)
+            fetch('http://localhost:3333/api/books', {
+                method: 'POST',
+                body: formData
+            }).then(res => res.json()).then(res => console.log(res))
+        }
+    </script>
+</body>
+</html>

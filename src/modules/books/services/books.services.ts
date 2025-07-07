@@ -6,13 +6,12 @@ import {
 } from 'node:fs'
 import path from 'node:path'
 import { pipeline } from 'node:stream/promises'
-import type { Ebook, Ebooks, NewEbook } from '@/types/ebooks.types.ts'
-import { EbookRepository } from '../repositories/books.repositories.ts'
+import type { Ebook, Ebooks } from '@/types/ebooks.types.ts'
+import type { EbookRepository } from '../repositories/books.repositories.ts'
 
 export class EbookServices {
-  private repository: EbookRepository
-  constructor() {
-    this.repository = new EbookRepository()
+  constructor(private repository: EbookRepository) {
+    this.repository = repository
   }
 
   async getAllBooks(): Promise<Ebooks[]> {

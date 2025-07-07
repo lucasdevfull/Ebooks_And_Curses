@@ -1,21 +1,20 @@
-import { HttpStatus } from '@/common/enum/http.ts'
-import type { NewAuthor, TAuthor } from '@/types/ebooks.types.ts'
 import type {
   AuthorBodyRequest,
   AuthorRequest,
   IAuthorController,
 } from '@interface/authors.interface.ts'
-import { AuthorServices } from '@services/author.services.ts'
+import type { AuthorServices } from '@services/author.services.ts'
 import type { FastifyReply, FastifyRequest } from 'fastify'
+import { HttpStatus } from '@/common/enum/http.ts'
+import type { TAuthor } from '@/types/ebooks.types.ts'
 
 export class AuthorController implements IAuthorController {
-  private service: AuthorServices
-  constructor() {
-    this.service = new AuthorServices()
+  constructor(private service: AuthorServices) {
+    this.service = service
   }
 
   getAllAuthors = async (
-    request: FastifyRequest,
+    _request: FastifyRequest,
     reply: FastifyReply
   ): Promise<TAuthor[]> => {
     const authors = await this.service.getAllAuthors()

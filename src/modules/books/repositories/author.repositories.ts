@@ -1,9 +1,8 @@
+import { authors } from '@db/index.ts'
+import { eq } from 'drizzle-orm'
 import type { Repository } from '@/common/base/repository.ts'
 import { db } from '@/db/index.ts'
 import type { NewAuthor, TAuthor } from '@/types/ebooks.types.ts'
-import { authors } from '@db/index.ts'
-import { authorsSelectSchema } from '@schema/authors.schema.ts'
-import { eq } from 'drizzle-orm'
 
 export class AuthorRepository implements Repository<TAuthor, NewAuthor> {
   async create(data: NewAuthor): Promise<TAuthor> {
@@ -21,7 +20,7 @@ export class AuthorRepository implements Repository<TAuthor, NewAuthor> {
 
   async getAll(): Promise<TAuthor[]> {
     const autores: TAuthor[] = await db.select().from(authors)
-    const result = authorsSelectSchema.array().safeParse(autores)
+    //const result = authorsSelectSchema.array().safeParse(autores)
     return autores
   }
   async findAuthorByName(name: string): Promise<TAuthor[]> {

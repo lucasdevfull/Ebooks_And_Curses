@@ -1,19 +1,23 @@
-import { verifyToken } from '@/common/hooks/verify-token.ts'
+import { CategoryController } from '@controllers/category.controller.ts'
+import { verifyToken } from '@hooks/verify-token.ts'
+import { CategoryRepository } from '@repositories/category.repositories.ts'
 import {
   categoryInsertSchema,
   categorySelectSchema,
-} from '@/schema/categories.schema.ts'
-import { httpSchema } from '@/schema/http.schema.ts'
-import type { FastifyInstanceZod } from '@/types/server.types.ts'
-import { CategoryController } from '@controllers/category.controller.ts'
+} from '@schema/categories.schema.ts'
+import { httpSchema } from '@schema/http.schema.ts'
+import { CategoryServices } from '@services/category.services.ts'
 import type { FastifyPluginOptions } from 'fastify'
 import { z } from 'zod'
+import type { FastifyInstanceZod } from '@/types/server.types.ts'
 
 export function categoryRoutes(
   fastify: FastifyInstanceZod,
   opts: FastifyPluginOptions
 ) {
-  const categoryController = new CategoryController()
+  const repository = new CategoryRepository()
+  const categoryServices = new CategoryServices(repository)
+  const categoryController = new CategoryController(categoryServices)
 
   fastify.get(
     '/categories',

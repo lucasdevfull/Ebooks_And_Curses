@@ -1,15 +1,19 @@
-import { verifyToken } from '@/common/hooks/verify-token.ts'
-import { EbookController } from '@/modules/books/controller/books.controller.ts'
-import { bookSchema } from '@/schema/books.schema.ts'
-import { httpSchema } from '@/schema/http.schema.ts'
-import type { FastifyInstanceZod } from '@/types/server.types.ts'
+import { EbookController } from '@controllers/books.controller.ts'
+import { verifyToken } from '@hooks/verify-token.ts'
+import { EbookRepository } from '@repositories/books.repositories.ts'
+import { bookSchema } from '@schema/books.schema.ts'
+import { httpSchema } from '@schema/http.schema.ts'
+import { EbookServices } from '@services/books.services.ts'
 import type { FastifyPluginOptions } from 'fastify'
+import type { FastifyInstanceZod } from '@/types/server.types.ts'
 
 export function booksRoutes(
   fastify: FastifyInstanceZod,
   opts: FastifyPluginOptions
 ) {
-  const bookController = new EbookController()
+  const repository = new EbookRepository()
+  const bookServices = new EbookServices(repository)
+  const bookController = new EbookController(bookServices)
 
   fastify.get(
     '/books',

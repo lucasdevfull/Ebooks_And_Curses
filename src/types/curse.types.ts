@@ -1,13 +1,18 @@
+import type { curseSchema } from '@schema/curse.schema.ts'
+import type { z } from 'zod'
 import type {
   category,
   categoryCurses,
   curse,
   professor,
 } from '@/db/schema/index.ts'
-import type { curseInsertSchema, curseSchema } from '@/schema/curse.schema.ts'
-import type { z } from 'zod'
 
-export type NewCurse = z.infer<typeof curseInsertSchema>
+export type NewCurse = {
+  title: string
+  professorId: number
+  price: string
+  category: number | number[]
+}
 
 export type TCurse = typeof curse.$inferSelect
 

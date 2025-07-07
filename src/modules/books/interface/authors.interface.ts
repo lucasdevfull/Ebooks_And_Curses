@@ -1,9 +1,9 @@
-import type { NewAuthor, TAuthor } from '@/types/ebooks.types.ts'
 import type {
   FastifyReply,
   FastifyRequest,
   RouteGenericInterface,
 } from 'fastify'
+import type { NewAuthor, TAuthor } from '@/types/ebooks.types.ts'
 
 export interface AuthorRequest extends RouteGenericInterface {
   Params: {

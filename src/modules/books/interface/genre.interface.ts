@@ -1,9 +1,9 @@
-import type { NewGenre, TGenre } from '@/types/ebooks.types.ts'
 import type {
   FastifyReply,
   FastifyRequest,
   RouteGenericInterface,
 } from 'fastify'
+import type { NewGenre, TGenre } from '@/types/ebooks.types.ts'
 
 export interface GerneRequest extends RouteGenericInterface {
   Params: {

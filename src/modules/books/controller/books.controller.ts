@@ -1,15 +1,14 @@
-import { HttpStatus } from '@/common/enum/http.ts'
 import { bookFormDataSchema } from '@schema/books.schema.ts'
-import { EbookServices } from '@services/books.services.ts'
+import type { EbookServices } from '@services/books.services.ts'
 import type { FastifyReply, FastifyRequest } from 'fastify'
+import { HttpStatus } from '@/common/enum/http.ts'
 
 export class EbookController {
-  private service: EbookServices
-  constructor() {
-    this.service = new EbookServices()
+  constructor(private service: EbookServices) {
+    this.service = service
   }
 
-  getAllBooks = async (request: FastifyRequest, reply: FastifyReply) => {
+  getAllBooks = async (_request: FastifyRequest, reply: FastifyReply) => {
     const books = await this.service.getAllBooks()
     return reply.status(HttpStatus.OK).send(books)
   }

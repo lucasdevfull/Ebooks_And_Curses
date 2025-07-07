@@ -1,9 +1,9 @@
-import type { NewCategory, TCategory } from '@/types/curse.types.ts'
 import type {
   FastifyReply,
   FastifyRequest,
   RouteGenericInterface,
 } from 'fastify'
+import type { NewCategory, TCategory } from '@/types/curse.types.ts'
 
 export interface CategoryRequest extends RouteGenericInterface {
   Params: {

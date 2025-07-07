@@ -1,15 +1,14 @@
-import { BadRequestError } from '@/common/errors/bad-request.ts'
-import { createToken } from '@/common/utils/create-token.ts'
-import type { Login, Token, Users } from '@/types/user.types.ts'
 import type { JWT } from '@fastify/jwt'
 import type { IAuthServices } from '@interface/auth.interface.ts'
 import { compareSync } from '@node-rs/bcrypt'
-import { UserRepository } from '@repositories/user.repositories.ts'
+import type { UserRepository } from '@repositories/user.repositories.ts'
+import { BadRequestError } from '@/common/errors/bad-request.ts'
+import { createToken } from '@/common/utils/create-token.ts'
+import type { Login, Token, Users } from '@/types/user.types.ts'
 
 export class AuthServices implements IAuthServices {
-  private repository: UserRepository
-  constructor() {
-    this.repository = new UserRepository()
+  constructor(private repository: UserRepository) {
+    this.repository = repository
   }
   async authenticate({ username, password }: Login, jwt: JWT): Promise<Token> {
     const userExists: Users = await this.repository.findUserByUsername(username)

@@ -1,10 +1,4 @@
 import path from 'node:path'
-import { env } from '@/infra/env.ts'
-import type {
-  FastifyInstanceZod,
-  Routes,
-  Server,
-} from '@/types/server.types.ts'
 import fastifyCors from '@fastify/cors'
 import fastifyHelmet from '@fastify/helmet'
 import fastifyJwt from '@fastify/jwt'
@@ -14,12 +8,18 @@ import { fastifySwagger } from '@fastify/swagger'
 import { fastifySwaggerUi } from '@fastify/swagger-ui'
 import { fastify } from 'fastify'
 import {
-  type ZodTypeProvider,
   jsonSchemaTransform,
   serializerCompiler,
   validatorCompiler,
+  type ZodTypeProvider,
 } from 'fastify-type-provider-zod'
 import { v4 } from 'uuid'
+import { env } from '@/infra/env.ts'
+import type {
+  FastifyInstanceZod,
+  Routes,
+  Server,
+} from '@/types/server.types.ts'
 import { errorHandler } from './error-handler.ts'
 
 export class FastifyServer implements Server {

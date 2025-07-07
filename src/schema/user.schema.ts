@@ -1,18 +1,15 @@
-import { users } from '@db/index.ts'
-import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
 import { z } from 'zod'
 
-export const userInsertSchema = createInsertSchema(users, {
-  username: schema =>
-    schema.min(1, {
+export const userInsertSchema = z
+  .object({
+    username: z.string().min(1, {
       message: 'O username deve ter pelo menos 1 caracteres',
     }),
-  email: schema => schema.email({ message: 'O email deve ser valido' }),
-  password: schema =>
-    schema.min(8, {
+    email: z.string().email({ message: 'O email deve ser valido' }),
+    password: z.string().min(8, {
       message: 'A senha deve ter pelo menos 8 caracteres',
     }),
-})
+  })
   .extend({
     confirmPassword: z
       .string()
@@ -23,20 +20,17 @@ export const userInsertSchema = createInsertSchema(users, {
     path: ['confirmPassword'],
   })
 
-export const userSelectSchema = createSelectSchema(users, {
-  userId: schema => schema.positive(),
-  username: schema =>
-    schema.min(1, {
-      message: 'O username deve ter pelo menos 1 caracteres',
-    }),
-  email: schema =>
-    schema.email({
-      message: 'O email deve ser valido',
-    }),
-  password: schema =>
-    schema.min(8, {
-      message: 'A senha deve ter pelo menos 8 caracteres',
-    }),
+export const userSelectSchema = z.object({
+  userId: z
+    .number()
+    .positive({ message: 'O userId deve ser um número positivo' }),
+  username: z
+    .string()
+    .min(1, { message: 'O username deve ter pelo menos 1 caracteres' }),
+  email: z.string().email({ message: 'O email deve ser valido' }),
+  password: z
+    .string()
+    .min(8, { message: 'A senha deve ter pelo menos 8 caracteres' }),
 })
 
 export const loginSchema = userInsertSchema._def.schema.pick({

@@ -1,14 +1,14 @@
 import type {
+  FastifyReply,
+  FastifyRequest,
+  RouteGenericInterface,
+} from 'fastify'
+import type {
   Curse,
   NewCurse,
   TCategoryCurse,
   TCurse,
 } from '@/types/curse.types.ts'
-import type {
-  FastifyReply,
-  FastifyRequest,
-  RouteGenericInterface,
-} from 'fastify'
 
 export interface CursoRequest extends RouteGenericInterface {
   Params: {

@@ -1,8 +1,8 @@
+import { category } from '@db/index.ts'
+import { eq } from 'drizzle-orm'
 import type { Repository } from '@/common/base/repository.ts'
 import { db } from '@/db/index.ts'
 import type { NewCategory, TCategory } from '@/types/curse.types.ts'
-import { category } from '@db/index.ts'
-import { eq } from 'drizzle-orm'
 
 export class CategoryRepository implements Repository<TCategory, NewCategory> {
   async getAll(): Promise<TCategory[]> {

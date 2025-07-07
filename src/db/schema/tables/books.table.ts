@@ -7,7 +7,7 @@ import {
 } from 'drizzle-orm/pg-core'
 import { authors } from './authors.table.ts'
 import { genres } from './genre.table.ts'
-import { users } from './user.ts'
+import { users } from './user.table.ts'
 
 export const ebooks = pgTable('ebooks', {
   ebookId: integer('ebook_id')

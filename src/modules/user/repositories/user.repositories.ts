@@ -1,8 +1,8 @@
+import { users } from '@db/index.ts'
+import { eq } from 'drizzle-orm'
 import type { Repository } from '@/common/base/repository.ts'
 import { db } from '@/db/index.ts'
 import type { NewUser, Users } from '@/types/user.types.ts'
-import { users } from '@db/index.ts'
-import { eq } from 'drizzle-orm'
 
 export class UserRepository implements Repository<Users, NewUser> {
   async getAll(): Promise<Users[]> {
