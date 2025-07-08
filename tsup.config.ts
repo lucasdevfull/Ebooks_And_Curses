@@ -14,3 +14,4 @@ export default defineConfig({
   //esbuildPlugins: [tsconfigPathsPlugin()],// resolve aliases do tsconfig.json
   //external: []                            // liste libs a excluir do bundle, se houver
 })
+ 
