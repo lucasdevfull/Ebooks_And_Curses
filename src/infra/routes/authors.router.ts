@@ -7,14 +7,10 @@ import {
 } from '@schema/authors.schema.ts'
 import { httpSchema } from '@schema/http.schema.ts'
 import { AuthorServices } from '@services/author.services.ts'
-import type { FastifyPluginOptions } from 'fastify'
+import type { FastifyPluginCallbackZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'
-import type { FastifyInstanceZod } from '@/types/server.types.ts'
 
-export function authorsRoutes(
-  fastify: FastifyInstanceZod,
-  opts: FastifyPluginOptions
-) {
+export const authorsRoutes: FastifyPluginCallbackZod = fastify => {
   const repository = new AuthorRepository()
   const authorsServices = new AuthorServices(repository)
   const authorsController = new AuthorController(authorsServices)

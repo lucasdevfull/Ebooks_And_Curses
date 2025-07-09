@@ -1004,12 +1004,6 @@ packages:
       sqlite3:
         optional: true
 
-  drizzle-zod@0.8.2:
-    resolution: {integrity: sha512-9Do/16OjFFNrQDZgvMtxtDDwKWbFOxUAIwNPKX98SfxrP8H18vhN1BvNXbhelLcdgCE7GEaXDJqBjMExSkhpkA==}
-    peerDependencies:
-      drizzle-orm: '>=0.36.0'
-      zod: ^3.25.1
-
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
 
@@ -2276,11 +2270,6 @@ snapshots:
       gel: 2.0.2
       postgres: 3.4.7
 
-  drizzle-zod@0.8.2(drizzle-orm@0.44.2(@libsql/client@0.14.0)(gel@2.0.2)(postgres@3.4.7))(zod@3.25.75):
-    dependencies:
-      drizzle-orm: 0.44.2(@libsql/client@0.14.0)(gel@2.0.2)(postgres@3.4.7)
-      zod: 3.25.75
-
   eastasianwidth@0.2.0: {}
 
   ecdsa-sig-formatter@1.0.11:
@@ -2393,7 +2382,6 @@ snapshots:
       '@fastify/static': 8.2.0
       '@node-rs/bcrypt': 1.10.7
       drizzle-orm: 0.44.2(@libsql/client@0.14.0)(gel@2.0.2)(postgres@3.4.7)
-      drizzle-zod: 0.8.2(drizzle-orm@0.44.2(@libsql/client@0.14.0)(gel@2.0.2)(postgres@3.4.7))(zod@3.25.75)
       fastify: 5.4.0
       fastify-type-provider-zod: 5.0.1(@fastify/swagger@9.5.1)(fastify@5.4.0)(zod@3.25.75)
       postgres: 3.4.7

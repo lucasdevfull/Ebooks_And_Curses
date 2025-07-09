@@ -6,7 +6,7 @@ import { HttpStatus } from '@/common/enum/http.ts'
 
 export const errorHandler = (
   error: FastifyError,
-  request: FastifyRequest,
+  _request: FastifyRequest,
   reply: FastifyReply
 ) => {
   if (error instanceof ConflitError) {

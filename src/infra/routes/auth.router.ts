@@ -1,16 +1,12 @@
 import { AuthController } from '@controllers/auth.controller.ts'
-import type { FastifyPluginOptions } from 'fastify'
+import type { FastifyPluginCallbackZod } from 'fastify-type-provider-zod'
 import { AuthServices } from '@/modules/auth/service/auth.services.ts'
 import { UserRepository } from '@/modules/user/repositories/user.repositories.ts'
 import { tokenSchema } from '@/schema/auth.schema.ts'
 import { httpSchema } from '@/schema/http.schema.ts'
 import { loginSchema } from '@/schema/user.schema.ts'
-import type { FastifyInstanceZod } from '@/types/server.types.ts'
 
-export function authRoutes(
-  fastify: FastifyInstanceZod,
-  opts: FastifyPluginOptions
-) {
+export const authRoutes: FastifyPluginCallbackZod = fastify => {
   const repository = new UserRepository()
   const authService = new AuthServices(repository)
   const authController = new AuthController(authService)

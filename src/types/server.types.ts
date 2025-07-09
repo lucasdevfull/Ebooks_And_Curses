@@ -1,7 +1,6 @@
 import type {
   FastifyBaseLogger,
   FastifyInstance,
-  FastifyPluginOptions,
   RawReplyDefaultExpression,
   RawRequestDefaultExpression,
   RawServerDefault,
@@ -9,7 +8,7 @@ import type {
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 
 export interface Routes {
-  router: (fastify: FastifyInstance, opts: FastifyPluginOptions) => void
+  router: (fastify: FastifyInstance) => void
 }
 
 export interface Server {

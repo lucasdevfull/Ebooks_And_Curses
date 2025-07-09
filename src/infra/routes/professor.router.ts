@@ -7,14 +7,10 @@ import {
   professorSelectSchema,
 } from '@schema/professor.schema.ts'
 import { ProfessorServices } from '@services/professor.services.ts'
-import type { FastifyPluginOptions } from 'fastify'
+import type { FastifyPluginCallbackZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'
-import type { FastifyInstanceZod } from '@/types/server.types.ts'
 
-export function professorRoutes(
-  fastify: FastifyInstanceZod,
-  opts: FastifyPluginOptions
-) {
+export const professorRoutes: FastifyPluginCallbackZod = fastify => {
   const repository = new ProfessorRepository()
   const professorServices = new ProfessorServices(repository)
   const professorController = new ProfessorController(professorServices)

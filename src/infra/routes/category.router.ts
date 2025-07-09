@@ -7,14 +7,10 @@ import {
 } from '@schema/categories.schema.ts'
 import { httpSchema } from '@schema/http.schema.ts'
 import { CategoryServices } from '@services/category.services.ts'
-import type { FastifyPluginOptions } from 'fastify'
+import type { FastifyPluginCallbackZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'
-import type { FastifyInstanceZod } from '@/types/server.types.ts'
 
-export function categoryRoutes(
-  fastify: FastifyInstanceZod,
-  opts: FastifyPluginOptions
-) {
+export const categoryRoutes: FastifyPluginCallbackZod = fastify => {
   const repository = new CategoryRepository()
   const categoryServices = new CategoryServices(repository)
   const categoryController = new CategoryController(categoryServices)
