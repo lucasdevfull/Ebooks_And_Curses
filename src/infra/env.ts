@@ -6,10 +6,7 @@ export const envSchema = z.object({
     .default('development'),
   DATABASE_URL: z.string(),
   SERVER_URL: z.string(),
-  PORT: z
-    .string()
-    .default('3000')
-    .transform(val => Number(val)),
+  PORT: z.coerce.number().default(3000),
   JWT_SECRET: z.string(),
   EXPIRES_IN: z.string(),
   REFRESH_EXPIRES_IN: z.string(),
