@@ -26,6 +26,11 @@ export class AuthController implements IAuthController {
     { body }: FastifyRequest<PasswordResetRequest>,
     reply: FastifyReply
   ) => {
+    // const result = rabbitmq.channel.sendToQueue(
+    //   'send-email',
+    //   Buffer.from(JSON.stringify(body)),
+    //   { persistent: true }
+    // )
     const transport = createTransport({
       service: 'gmail',
       host: 'smtp.gmail.com',
