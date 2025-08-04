@@ -4,10 +4,10 @@ import { GenreRepository } from '@repositories/genre.repositories.ts'
 import { genreIsertSchema, genreSelectSchema } from '@schema/genre.schema.ts'
 import { httpSchema } from '@schema/http.schema.ts'
 import { GenreServices } from '@services/genre.services.ts'
-import type { FastifyPluginCallbackZod } from 'fastify-type-provider-zod'
+import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 
-export const genreRoutes: FastifyPluginCallbackZod = fastify => {
+export const genreRoutes: FastifyPluginAsyncZod = async fastify => {
   const repository = new GenreRepository()
   const genreServices = new GenreServices(repository)
   const genreController = new GenreController(genreServices)

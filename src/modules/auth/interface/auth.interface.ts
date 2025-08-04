@@ -19,3 +19,9 @@ export interface IAuthServices {
 export interface LoginRequest extends RouteGenericInterface {
   Body: Login
 }
+
+export interface PasswordResetRequest extends RouteGenericInterface {
+  Body: {
+    to: string
+  }
+}

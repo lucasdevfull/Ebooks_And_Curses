@@ -3,10 +3,10 @@ import { UserRepository } from '@repositories/user.repositories.ts'
 import { httpSchema } from '@schema/http.schema.ts'
 import { userInsertSchema, userSelectSchema } from '@schema/user.schema.ts'
 import { UserServices } from '@services/user.services.ts'
-import type { FastifyPluginCallbackZod } from 'fastify-type-provider-zod'
+import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 
-export const userRoutes: FastifyPluginCallbackZod = fastify => {
+export const userRoutes: FastifyPluginAsyncZod = async fastify => {
   const repository = new UserRepository()
   const userServices = new UserServices(repository)
   const userController = new UserController(userServices)

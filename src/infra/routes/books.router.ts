@@ -4,9 +4,9 @@ import { EbookRepository } from '@repositories/books.repositories.ts'
 import { bookSchema } from '@schema/books.schema.ts'
 import { httpSchema } from '@schema/http.schema.ts'
 import { EbookServices } from '@services/books.services.ts'
-import type { FastifyPluginCallbackZod } from 'fastify-type-provider-zod'
+import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 
-export const booksRoutes: FastifyPluginCallbackZod = fastify => {
+export const booksRoutes: FastifyPluginAsyncZod = async fastify => {
   const repository = new EbookRepository()
   const bookServices = new EbookServices(repository)
   const bookController = new EbookController(bookServices)

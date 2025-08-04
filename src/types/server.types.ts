@@ -5,7 +5,10 @@ import type {
   RawRequestDefaultExpression,
   RawServerDefault,
 } from 'fastify'
-import type { FastifyPluginCallbackZod, ZodTypeProvider } from 'fastify-type-provider-zod'
+import type {
+  FastifyPluginCallbackZod,
+  ZodTypeProvider,
+} from 'fastify-type-provider-zod'
 
 export interface Routes {
   router: FastifyPluginCallbackZod

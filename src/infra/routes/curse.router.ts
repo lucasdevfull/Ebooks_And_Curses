@@ -10,10 +10,10 @@ import {
 } from '@schema/curse.schema.ts'
 import { httpSchema } from '@schema/http.schema.ts'
 import { CursoServices } from '@services/curse.services.ts'
-import type { FastifyPluginCallbackZod } from 'fastify-type-provider-zod'
+import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 
-export const cursoRoutes: FastifyPluginCallbackZod = fastify => {
+export const cursoRoutes: FastifyPluginAsyncZod = async fastify => {
   const category = new CategoryRepository()
   const professor = new ProfessorRepository()
   const curse = new CursoRepository()

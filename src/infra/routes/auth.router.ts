@@ -1,12 +1,13 @@
 import { AuthController } from '@controllers/auth.controller.ts'
-import type { FastifyPluginCallbackZod } from 'fastify-type-provider-zod'
+import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
+import z from 'zod'
 import { AuthServices } from '@/modules/auth/service/auth.services.ts'
 import { UserRepository } from '@/modules/user/repositories/user.repositories.ts'
 import { tokenSchema } from '@/schema/auth.schema.ts'
 import { httpSchema } from '@/schema/http.schema.ts'
 import { loginSchema } from '@/schema/user.schema.ts'
 
-export const authRoutes: FastifyPluginCallbackZod = fastify => {
+export const authRoutes: FastifyPluginAsyncZod = async fastify => {
   const repository = new UserRepository()
   const authService = new AuthServices(repository)
   const authController = new AuthController(authService)
@@ -26,5 +27,24 @@ export const authRoutes: FastifyPluginCallbackZod = fastify => {
       },
     },
     authController.login
+  )
+
+  fastify.post(
+    '/auth/reset-password',
+    {
+      schema: {
+        tags: ['auth'],
+        description: 'Reset password',
+        body: z.object({
+          to: z.string().email(),
+        }),
+        response: {
+          200: httpSchema,
+          400: httpSchema,
+          500: httpSchema,
+        },
+      },
+    },
+    authController.passwordReset
   )
 }
