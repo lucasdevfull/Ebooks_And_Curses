@@ -1,5 +1,5 @@
 import type { JWT } from '@fastify/jwt'
-import { REFRESH_EXPIRES_IN } from '@/infra/env.ts'
+import { env } from '@/infra/env.ts'
 import type { Users } from '@/types/user.types.ts'
 
 export function createToken(jwt: JWT, { userId, email }: Users) {
@@ -7,7 +7,7 @@ export function createToken(jwt: JWT, { userId, email }: Users) {
     refreshtoken: jwt.sign(
       { userId, email },
       {
-        expiresIn: REFRESH_EXPIRES_IN,
+        expiresIn: env.REFRESH_EXPIRES_IN,
       }
     ),
     acessToken: jwt.sign({ userId, email }),

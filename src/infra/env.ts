@@ -12,6 +12,4 @@ export const envSchema = z.object({
   REFRESH_EXPIRES_IN: z.string(),
 })
 
-export const { DATABASE_URL, REFRESH_EXPIRES_IN, ...env } = envSchema.parse(
-  process.env
-)
+export const env = envSchema.parse(process.env)
