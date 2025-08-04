@@ -13,6 +13,7 @@
     "experimentalDecorators": true,
     "moduleResolution": "nodenext",
     "allowImportingTsExtensions": true,
+    
     "paths": {
       "@/*": ["./src/*"],
       "@router/*": ["./src/infra/routes/*"],
@@ -46,5 +47,6 @@
       "@errors/*": ["./src/common/errors/*"],
       "@utils/*": ["./src/common/utils/*"]
     }
-  }
+  },
+  "include": ["src", "src/env.d.ts"],
 }
