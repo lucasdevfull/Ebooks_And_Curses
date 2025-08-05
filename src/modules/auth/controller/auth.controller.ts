@@ -40,14 +40,17 @@ export class AuthController implements IAuthController {
         user: env.EMAIL,
         clientId: env.GOOGLE_CLIENT_ID,
         clientSecret: env.GOOGLE_CLIENT_KEY,
-        refreshToken: process.env.REFRESH_TOKEN,
+        refreshToken: env.REFRESH_TOKEN,
       },
+      tls: {
+        rejectUnauthorized: false,
+      }
     })
     await transport.sendMail({
       from: env.EMAIL,
-      to: body.to,
+      to: body.to.trim(),
       subject: 'Teste',
-      html: '<h1>Teste</h1>',
+      text: 'link de teste',
     })
     return reply.status(HttpStatus.OK).send({
       statusCode: HttpStatus.OK,
