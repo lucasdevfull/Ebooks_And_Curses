@@ -36,12 +36,12 @@ export const authRoutes: FastifyPluginAsyncZod = async fastify => {
         tags: ['auth'],
         description: 'Reset password',
         body: z.object({
-          to: z.string().email(),
+          to: z.string(),
         }),
         response: {
-          200: httpSchema,
-          400: httpSchema,
-          500: httpSchema,
+          //200: httpSchema,
+          // 400: httpSchema,
+          // 500: httpSchema,
         },
       },
     },

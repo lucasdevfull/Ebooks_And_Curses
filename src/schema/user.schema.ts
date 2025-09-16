@@ -33,7 +33,11 @@ export const userSelectSchema = z.object({
     .min(8, { message: 'A senha deve ter pelo menos 8 caracteres' }),
 })
 
-export const loginSchema = userInsertSchema._def.schema.pick({
-  username: true,
-  password: true,
+export const loginSchema = z.object({
+  username: z.string().min(1, {
+    message: 'O username deve ter pelo menos 1 caracteres',
+  }),
+  password: z.string().min(8, {
+    message: 'A senha deve ter pelo menos 8 caracteres',
+  })
 })
